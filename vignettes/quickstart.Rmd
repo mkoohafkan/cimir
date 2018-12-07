@@ -1,0 +1,33 @@
+---
+title: "Quick Start"
+author: "Michael Koohafkan"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Quick Start}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+
+```{r}
+library(cimir)
+
+set_key(readline("Enter your AppKey: "))
+
+targets = 170
+start.date = Sys.Date() - 5
+end.date = Sys.Date() - 1
+items = c("day-air-tmp-avg", "hly-wind-dir")
+
+d = get_data(targets, start.date, end.date, items)
+
+```

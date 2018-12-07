@@ -1,0 +1,29 @@
+Package: cimir
+Title: R Interface to the CIMIS Web API
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Michael",
+           family = "Koohafkan",
+           role = c("aut", "cre"),
+           email = "michael.koohafkan@gmail.com")
+Description: Connect to CIMIS web API.
+License: GPL (>= 3)
+Depends: R (>= 3.5)
+Imports:
+    RCurl (>= 1.95),
+    glue (>= 1.3),
+    readr (>= 1.1),
+    stringr (>= 1.3),
+    dplyr (>= 0.7),
+    tidyr (>= 0.8),
+    jsonlite (>= 1.5),
+    purrr (>= 0.2),
+    rlang (>= 0.3)
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 6.1.1
+Roxygen: list(markdown = TRUE)
