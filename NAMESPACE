@@ -2,6 +2,9 @@
 
 export(data_items)
 export(get_data)
+export(get_station)
+export(get_station_spatial_zipcode)
+export(get_station_zipcode)
 export(remove_key)
 export(set_key)
 importFrom(RCurl,basicHeaderGatherer)

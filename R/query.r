@@ -57,15 +57,11 @@ default.items = c("day-asce-eto", "day-precip", "day-sol-rad-avg",
 #'   CIMIS System (SCS) will be used as the preferred data provider.
 #' @return A `tibble` object.
 #'
-#' @importFrom RCurl getURL basicHeaderGatherer basicTextGatherer
 #' @importFrom glue glue
-#' @importFrom jsonlite fromJSON
-#' @importFrom stringr str_c str_to_upper str_replace_all
+#' @importFrom stringr str_c str_to_upper
 #' @export
 get_data = function(targets, start.date, end.date, items,
   measure.unit = c("E", "M"), prioritize.SCS = TRUE) {
-  if (length(authenv$appkey) < 1)
-    stop('No API key available. Specify key with"set_key()"')
   if (missing(items))
     items = default.items 
   measure.unit = match.arg(str_to_upper(measure.unit), c("E", "M"), FALSE)
@@ -73,9 +69,7 @@ get_data = function(targets, start.date, end.date, items,
   start.date = as.Date(start.date)
   end.date = as.Date(end.date)
   # query
-  header = basicHeaderGatherer()
-  content = basicTextGatherer()
-  getURL(
+  result = basic_query(
     glue("http://et.water.ca.gov/api/data?",
       "appKey={authenv$appkey}", "&",
       "targets={str_c(targets, collapse = ',')}", "&",
@@ -84,11 +78,94 @@ get_data = function(targets, start.date, end.date, items,
       "dataItems={str_c(items, collapse = ',')}", "&",
       "unitOfMeasure={measure.unit}", ";",
       "prioritizeSCS={prioritize.SCS}"
-    ),
-    httpheader = c(Accept = "application/json"),
-    header = FALSE, headerfunction = header$update,
-    write = content$update, curl = authenv$handle
+    )
   )
+  bind_records(result)
+}
+
+#' Get CIMIS Station Data
+#'
+#' Get CIMIS station metadata.
+#'
+#' @param station The station ID. If missing, metadata for all stations
+#'   is returned.
+#' @return A `tibble` object.
+#'
+#' @importFrom purrr map
+#' @importFrom glue glue
+#' @importFrom dplyr as_tibble bind_rows
+#' @export
+get_station = function(station) {
+  if (missing(station)) {
+    url = "http://et.water.ca.gov/api/station"
+  } else {
+    url = glue("http://et.water.ca.gov/api/station/{station}")
+  }
+  if (length(url) > 1L)
+    warning("Multiple station ids provided. Only the first will be used.")
+  result = basic_query(url)
+  bind_rows(map(result$Stations, as_tibble))
+}
+
+#' @rdname get_station
+#'
+#' @param zipcode The (spatial) zip code. If missing, metadata for all 
+#'   stations is returned.
+#'
+#' @importFrom purrr map
+#' @importFrom glue glue
+#' @importFrom dplyr as_tibble bind_rows
+#' @export
+get_station_spatial_zipcode = function(zipcode) {
+  if (missing(zipcode)) {
+    url = "http://et.water.ca.gov/api/spatialzipcode"
+  } else {
+    url = glue("http://et.water.ca.gov/api/spatialzipcode/{zipcode}")
+  }
+  if (length(url) > 1L)
+    warning("Multiple station zip codes provided. Only the first will be used.")
+  result = basic_query(url)
+  bind_rows(map(result$ZipCodes, as_tibble))
+}
+
+#' @rdname get_station
+#'
+#' @importFrom purrr map
+#' @importFrom glue glue
+#' @importFrom dplyr as_tibble bind_rows
+#' @export
+get_station_zipcode = function(zipcode) {
+  if (missing(zipcode)) {
+    url = "http://et.water.ca.gov/api/stationzipcode"
+  } else {
+    url = glue("http://et.water.ca.gov/api/stationzipcode/{zipcode}")
+  }
+  if (length(url) > 1L)
+    warning("Multiple station zip codes provided. Only the first will be used.")
+  result = basic_query(url)
+  bind_rows(map(result$ZipCodes, as_tibble))
+}
+
+
+#' Basic Query
+#'
+#' Helper function for CIMIS query handling.
+#'
+#' @param url The query URL.
+#' @return The parsed JSON string, as a list.
+#'
+#' @importFrom RCurl getURL basicHeaderGatherer basicTextGatherer
+#' @importFrom jsonlite fromJSON
+#' @importFrom stringr str_replace_all
+#' @keywords internal
+basic_query = function(url) {
+  if (length(authenv$appkey) < 1)
+    stop('No API key available. Specify key with "set_key()".')
+  header = basicHeaderGatherer()
+  content = basicTextGatherer()
+  getURL(url, httpheader = c(Accept = "application/json"),
+    header = FALSE, headerfunction = header$update,
+    write = content$update, curl = authenv$handle)
 
   if (header$value()[['status']] != "200")
     stop("CIMIS query failed. HTTP status ",
@@ -96,6 +173,5 @@ get_data = function(targets, start.date, end.date, items,
       header$value()[["statusMessage"]], "\n",
       parse(text = content$value()))
 
-  result = fromJSON(str_replace_all(content$value(), ":null", ':[null]'), simplifyDataFrame = FALSE)
-  bind_records(result)
+  fromJSON(str_replace_all(content$value(), ":null", ':[null]'), simplifyDataFrame = FALSE)
 }
