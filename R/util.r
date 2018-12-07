@@ -38,8 +38,8 @@ record_to_df = function(record) {
 #' @importFrom rlang .data
 #' @keywords internal
 bind_records = function(result) {
-  unnest(mutate(
+  mutate(unnest(mutate(
     bind_rows(map(result[[c("Data", "Providers")]], as_tibble)),
     Records = map(.data$Records, record_to_df)
-  ))
+  )), Value = as.numeric(.data$Value))
 }

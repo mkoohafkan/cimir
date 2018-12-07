@@ -60,7 +60,7 @@ default.items = c("day-asce-eto", "day-precip", "day-sol-rad-avg",
 #' @importFrom RCurl getURL basicHeaderGatherer basicTextGatherer
 #' @importFrom glue glue
 #' @importFrom jsonlite fromJSON
-#' @importFrom stringr str_c str_to_upper
+#' @importFrom stringr str_c str_to_upper str_replace_all
 #' @export
 get_data = function(targets, start.date, end.date, items,
   measure.unit = c("E", "M"), prioritize.SCS = TRUE) {
@@ -96,6 +96,6 @@ get_data = function(targets, start.date, end.date, items,
       header$value()[["statusMessage"]], "\n",
       parse(text = content$value()))
 
-  result = fromJSON(content$value(), simplifyDataFrame = FALSE)
+  result = fromJSON(str_replace_all(content$value(), ":null", ':[null]'), simplifyDataFrame = FALSE)
   bind_records(result)
 }
