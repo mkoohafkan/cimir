@@ -93,7 +93,9 @@ get_data = function(targets, start.date, end.date, items,
   if (header$value()[['status']] != "200")
     stop("CIMIS query failed. HTTP status ",
       header$value()[["status"]], ": ",
-      header$value()[["statusMessage"]])
+      header$value()[["statusMessage"]], "\n",
+      parse(text = content$value()))
+
   result = fromJSON(content$value(), simplifyDataFrame = FALSE)
   bind_records(result)
 }
