@@ -19,4 +19,3 @@ remove_key = function() {
   assign("appkey", character(0), envir = authenv)
   invisible(TRUE)
 }
-
