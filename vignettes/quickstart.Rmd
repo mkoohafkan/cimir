@@ -34,7 +34,7 @@ getURL("http://et.water.ca.gov/api/station/2",
     )
 
 
-set_key("36cd26b8-c932-4bbb-a2d3-371399661b86")
+set_key("YOUR-APP-KEY-HERE")
 
 targets = 170
 start.date = "2018-09-25"
