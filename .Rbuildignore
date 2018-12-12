@@ -11,3 +11,4 @@ README.md
 .sln
 ^.*\.Rproj$
 ^\.Rproj\.user$
+vignettes/_quickstart.rmd

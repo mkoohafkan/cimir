@@ -1,0 +1,76 @@
+---
+title: "Quick Start"
+author: "Michael Koohafkan"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Quick Start}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This document gets you up and running with `cimir `, an R interface to
+the 
+[California Irrigiation Management Information System](https://cimis.water.ca.gov/)
+(CIMIS) [Web API](http://et.water.ca.gov/Home/Index).
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = TRUE
+)
+```
+
+
+```{r}
+library(cimir)
+```
+
+I previously set the option `cimir.appkey`, so `cimir` automatically 
+registered that AppKey. To set your own App Key for the session, use
+`set_key()`:
+
+```{r eval = FALSE}
+set_key("YOUR-APP-KEY-HERE")
+```
+
+There are two types of CIMIS queries: station queries and data queries.
+Station queries return metadata on stations, while data queries return
+environmental monitoring data. To get a list of station IDs, use 
+`get_station()`:
+
+```{r}
+get_station()
+```
+
+To get metadata for a subset of stations, simply pass a vector of 
+station IDs. You can also query metadata for stations associated 
+with a particular zipcode (or spatial zipcode) 
+`get_station_zipcode()` and `get_station_spatial_zipcode()`:
+
+```{r}
+get_station_zipcode()
+get_station_spatial_zipcode()
+```
+
+Once the stations of interest are identified, you can query data
+for those stations using `get_data()`:
+
+```{r}
+get_data(targets = 170, start.date = "2018-09-25", end.date = "2018-10-01")
+```
+
+The CIMIS web API returns a predefined set of data items by default,
+but custom item lists can also be passed to `get_data()`. For a list
+of possible data items, use the function `data_items()`:
+
+```{r}
+data_items()
+```
+
+Data queries also support zipcodes, spatial coordinates (latitude and 
+longitude, in decimal degrees) and street addresses, as well as options
+for data units and data providers. See `?get_data` and the 
+[CIMIS Web API documentation](http://et.water.ca.gov/Rest/Index) for
+more information.

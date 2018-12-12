@@ -1,7 +1,7 @@
 ---
 title: "Quick Start"
 author: "Michael Koohafkan"
-date: "`r Sys.Date()`"
+date: "2018-12-12"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Quick Start}
@@ -9,38 +9,171 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  eval = FALSE
-)
-```
+This document gets you up and running with `cimir `, an R interface to
+the 
+[California Irrigiation Management Information System](https://cimis.water.ca.gov/)
+(CIMIS) [Web API](http://et.water.ca.gov/Home/Index).
 
 
-```{r}
+
+
+
+```r
 library(cimir)
-
-
-
-library(RCurl)
-header = basicHeaderGatherer()
-content = basicTextGatherer()
-
-getURL("http://et.water.ca.gov/api/station/2",
-    httpheader = c(Accept = "application/json"),
-    header = FALSE, headerfunction = header$update,
-    write = content$update, curl = authenv$handle
-    )
-
-
-set_key("YOUR-APP-KEY-HERE")
-
-targets = 170
-start.date = "2018-09-25"
-end.date = "2018-10-01"
-items = "day-air-tmp-avg"
-
-d = get_data(targets, start.date, end.date, items)
-
+#> Using existing CIMIS appkey.
 ```
+
+I previously set the option `cimir.appkey`, so `cimir` automatically 
+registered that AppKey. To set your own App Key for the session, use
+`set_key()`:
+
+
+```r
+set_key("YOUR-APP-KEY-HERE")
+```
+
+There are two types of CIMIS queries: station queries and data queries.
+Station queries return metadata on stations, while data queries return
+environmental monitoring data. To get a list of station IDs, use 
+`get_station()`:
+
+
+```r
+get_station()
+#> # A tibble: 1,391 x 15
+#>    StationNbr Name  City  RegionalOffice County ConnectDate DisconnectDate
+#>    <chr>      <chr> <chr> <chr>          <chr>  <chr>       <chr>         
+#>  1 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
+#>  2 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
+#>  3 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
+#>  4 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
+#>  5 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
+#>  6 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
+#>  7 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
+#>  8 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
+#>  9 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
+#> 10 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
+#> # ... with 1,381 more rows, and 8 more variables: IsActive <chr>,
+#> #   IsEtoStation <chr>, Elevation <chr>, GroundCover <chr>,
+#> #   HmsLatitude <chr>, HmsLongitude <chr>, ZipCodes <chr>,
+#> #   SitingDesc <chr>
+```
+
+To get metadata for a subset of stations, simply pass a vector of 
+station IDs. You can also query metadata for stations associated 
+with a particular zipcode (or spatial zipcode) 
+`get_station_zipcode()` and `get_station_spatial_zipcode()`:
+
+
+```r
+get_station_zipcode()
+#> # A tibble: 1,391 x 5
+#>    StationNbr ZipCode ConnectDate DisconnectDate IsActive
+#>         <int> <chr>   <chr>       <chr>          <chr>   
+#>  1         99 90401   12/11/1992  5/8/2050       True    
+#>  2         99 90402   12/11/1992  5/8/2050       True    
+#>  3         99 90403   12/11/1992  5/8/2050       True    
+#>  4         99 90404   12/11/1992  5/8/2050       True    
+#>  5         99 90405   12/11/1992  5/8/2050       True    
+#>  6         99 90406   12/11/1992  5/8/2050       True    
+#>  7         99 90407   12/11/1992  5/8/2050       True    
+#>  8         99 90408   12/11/1992  5/8/2050       True    
+#>  9         99 90409   12/11/1992  5/8/2050       True    
+#> 10         99 90410   12/11/1992  5/8/2050       True    
+#> # ... with 1,381 more rows
+get_station_spatial_zipcode()
+#> # A tibble: 1,715 x 4
+#>    ZipCode ConnectDate DisconnectDate IsActive
+#>    <chr>   <chr>       <chr>          <chr>   
+#>  1 85328   2/20/2003   12/31/2030     True    
+#>  2 85334   2/20/2003   12/31/2030     True    
+#>  3 85344   2/20/2003   12/31/2030     True    
+#>  4 85364   2/20/2003   12/31/2030     True    
+#>  5 85365   2/20/2003   12/31/2030     True    
+#>  6 86440   2/20/2003   12/31/2030     True    
+#>  7 89003   2/20/2003   12/31/2030     True    
+#>  8 89010   2/20/2003   12/31/2030     True    
+#>  9 89013   2/20/2003   12/31/2030     True    
+#> 10 89019   2/20/2003   12/31/2030     True    
+#> # ... with 1,705 more rows
+```
+
+Once the stations of interest are identified, you can query data
+for those stations using `get_data()`:
+
+
+```r
+get_data(targets = 170, start.date = "2018-09-25", end.date = "2018-10-01")
+#> # A tibble: 98 x 13
+#>    Name  Type  Owner Date       Julian Station Standard ZipCodes Scope
+#>    <chr> <chr> <chr> <date>      <int> <chr>   <chr>    <chr>    <chr>
+#>  1 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
+#>  2 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
+#>  3 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
+#>  4 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
+#>  5 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
+#>  6 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
+#>  7 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
+#>  8 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
+#>  9 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
+#> 10 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
+#> # ... with 88 more rows, and 4 more variables: Item <chr>, Value <dbl>,
+#> #   Qc <chr>, Unit <chr>
+```
+
+The CIMIS web API returns a predefined set of data items by default,
+but custom item lists can also be passed to `get_data()`. For a list
+of possible data items, use the function `data_items()`:
+
+
+```r
+data_items()
+#>                Item                      Name  Class  Provider
+#> 1   day-air-tmp-avg   Average Air Temperature  Daily       WSN
+#> 2   day-air-tmp-avg   Average Air Temperature  Daily       WSN
+#> 3   day-air-tmp-min   Minimum Air Temperature  Daily       WSN
+#> 4       day-dew-pnt                 Dew Point  Daily       WSN
+#> 5           day-eto                 CIMIS ETo  Daily       WSN
+#> 6      day-asce-eto                  ASCE ETo  Daily WSN & SCS
+#> 7      day-asce-etr                  ASCE ETr  Daily       WSN
+#> 8        day-precip             Precipitation  Daily       WSN
+#> 9   day-rel-hum-avg Average Relative Humidity  Daily       WSN
+#> 10  day-rel-hum-max Maximum Relative Humidity  Daily       WSN
+#> 11  day-rel-hum-min Minimum Relative Humidity  Daily       WSN
+#> 12 day-soil-tmp-avg  Average Soil Temperature  Daily       WSN
+#> 13 day-soil-tmp-max  Maximum Soil Temperature  Daily       WSN
+#> 14 day-soil-tmp-min  Minimum Soil Temperature  Daily       WSN
+#> 15  day-sol-rad-avg   Average Solar Radiation  Daily WSN & SCS
+#> 16  day-sol-rad-net       Net Solar Radiation  Daily       WSN
+#> 17 day-vap-pres-max    Maximum Vapor Pressure  Daily       WSN
+#> 18 day-vap-pres-avg    Average Vapor Pressure  Daily       WSN
+#> 19     day-wind-ene      Wind East-North-East  Daily       WSN
+#> 20     day-wind-ese      Wind East-South-East  Daily       WSN
+#> 21     day-wind-nne     Wind North-North-East  Daily       WSN
+#> 22     day-wind-nnw     Wind North-North-West  Daily       WSN
+#> 23     day-wind-run                  Wind Run  Daily       WSN
+#> 24 day-wind-spd-avg        Average Wind Speed  Daily       WSN
+#> 25     day-wind-ssw     Wind South-South-West  Daily       WSN
+#> 26     day-wind-wnw      Wind West-North-West  Daily       WSN
+#> 27     day-wind-wsw      Wind West-South-West  Daily       WSN
+#> 28      hly-air-tmp           Air Temperature Hourly       WSN
+#> 29      hly-dew-pnt                 Dew Point Hourly       WSN
+#> 30          hly-eto                 CIMIS ETo Hourly       WSN
+#> 31      hly-net-rad             Net Radiation Hourly       WSN
+#> 32     hly-asce-eto                  ASCE ETo Hourly       WSN
+#> 33     hly-asce-etr                  ASCE ETr Hourly       WSN
+#> 34       hly-precip             Precipitation Hourly       WSN
+#> 35      hly-rel-hum         Relative Humidity Hourly       WSN
+#> 36     hly-res-wind            Resultant Wind Hourly       WSN
+#> 37     hly-soil-tmp          Soil Temperature Hourly       WSN
+#> 38      hly-sol-rad           Solar Radiation Hourly       WSN
+#> 39     hly-vap-pres            Vapor Pressure Hourly       WSN
+#> 40     hly-wind-dir            Wind Direction Hourly       WSN
+#> 41     hly-wind-spd                Wind Speed Hourly       WSN
+```
+
+Data queries also support zipcodes, spatial coordinates (latitude and 
+longitude, in decimal degrees) and street addresses, as well as options
+for data units and data providers. See `?get_data` and the 
+[CIMIS Web API documentation](http://et.water.ca.gov/Rest/Index) for
+more information.
