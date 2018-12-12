@@ -21,12 +21,25 @@ knitr::opts_chunk$set(
 ```{r}
 library(cimir)
 
-set_key(readline("Enter your AppKey: "))
+
+
+library(RCurl)
+header = basicHeaderGatherer()
+content = basicTextGatherer()
+
+getURL("http://et.water.ca.gov/api/station/2",
+    httpheader = c(Accept = "application/json"),
+    header = FALSE, headerfunction = header$update,
+    write = content$update, curl = authenv$handle
+    )
+
+
+set_key("36cd26b8-c932-4bbb-a2d3-371399661b86")
 
 targets = 170
-start.date = Sys.Date() - 5
-end.date = Sys.Date() - 1
-items = c("day-air-tmp-avg", "hly-wind-dir")
+start.date = "2018-09-25"
+end.date = "2018-10-01"
+items = "day-air-tmp-avg"
 
 d = get_data(targets, start.date, end.date, items)
 

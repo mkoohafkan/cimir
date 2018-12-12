@@ -32,10 +32,13 @@
 .onAttach = function(libname, pkgname) {
   # check for existing AppKey
   if (!is.null(options()[["cimir.appkey"]])) {
-    assign("appkey", options()[["cimir.appkey"]], envir = authenv)
+    set_key(options()[["cimir.appkey"]])
     packageStartupMessage("Using existing CIMIS appkey.")
   } else {
-    assign("appkey", character(0), envir = authenv)
+    remove_key()
+  }
+  if (is.null(options()[["cimir.timeout"]])) {
+    options(cimir.timeout = 30)
   }
 }
 

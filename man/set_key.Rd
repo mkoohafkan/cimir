@@ -2,13 +2,27 @@
 % Please edit documentation in R/setup.r
 \name{set_key}
 \alias{set_key}
+\alias{remove_key}
+\alias{is_key_set}
 \title{Specify CIMIS API key}
 \usage{
 set_key(key)
+
+remove_key()
+
+is_key_set()
 }
 \arguments{
 \item{key}{A CIMIS AppKey.}
 }
 \description{
 Enter your CIMIS AppKey for web API data access.
+}
+\examples{
+\dontrun{
+set_key("YOUR-APP-KEY")
+is_key_set()
+remove_key()
+}
+
 }

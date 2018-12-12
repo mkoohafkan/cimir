@@ -4,18 +4,32 @@
 #'
 #' @param key A CIMIS AppKey.
 #'
+#' @examples
+#' \dontrun{
+#' set_key("YOUR-APP-KEY")
+#' is_key_set()
+#' remove_key()
+#' }
+#'
 #' @export
 set_key = function(key) {
   assign("appkey", key, envir = authenv)
+  assign("is_key_set", TRUE, envir = authenv)  
   invisible(TRUE)
 }
 
-#' Remove CIMIS API key
-#'
-#' Remove existing CIMIS AppKey for web API data access.
+#' @rdname set_key
 #'
 #' @export
 remove_key = function() {
   assign("appkey", character(0), envir = authenv)
+  assign("is_key_set", FALSE, envir = authenv)
   invisible(TRUE)
+}
+
+#' @rdname set_key
+#'
+#' @export
+is_key_set = function() {
+  authenv$is_key_set
 }

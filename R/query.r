@@ -57,11 +57,22 @@ default.items = c("day-asce-eto", "day-precip", "day-sol-rad-avg",
 #'   CIMIS System (SCS) will be used as the preferred data provider.
 #' @return A `tibble` object.
 #'
+#' @examples
+#' if(is_key_set()) {
+#'   get_data(targets = 170, start.date = Sys.Date() - 4, 
+#'     end.date = Sys.Date() - 1)
+#' } 
+#'
 #' @importFrom glue glue
 #' @importFrom stringr str_c str_to_upper
 #' @export
 get_data = function(targets, start.date, end.date, items,
   measure.unit = c("E", "M"), prioritize.SCS = TRUE) {
+  if (any(is.na(suppressWarnings(as.numeric(targets))))) {
+    target.sep = ";"
+  } else {
+    target.sep = ","
+  }
   if (missing(items))
     items = default.items 
   measure.unit = match.arg(str_to_upper(measure.unit), c("E", "M"), FALSE)
@@ -72,7 +83,7 @@ get_data = function(targets, start.date, end.date, items,
   result = basic_query(
     glue("http://et.water.ca.gov/api/data?",
       "appKey={authenv$appkey}", "&",
-      "targets={str_c(targets, collapse = ',')}", "&",
+      "targets={str_c(targets, collapse = target.sep)}", "&",
       "startDate={start.date}", "&",
       "endDate={end.date}", "&",
       "dataItems={str_c(items, collapse = ',')}", "&",
@@ -91,6 +102,12 @@ get_data = function(targets, start.date, end.date, items,
 #'   is returned.
 #' @return A `tibble` object.
 #'
+#' @examples
+#' if(is_key_set()) {
+#'   get_station()
+#'   get_station_zipcode()
+#'   get_station_spatial_zipcode()
+#' } 
 #' @importFrom purrr map
 #' @importFrom glue glue
 #' @importFrom dplyr as_tibble bind_rows
@@ -154,7 +171,7 @@ get_station_zipcode = function(zipcode) {
 #' @param url The query URL.
 #' @return The parsed JSON string, as a list.
 #'
-#' @importFrom RCurl getURL basicHeaderGatherer basicTextGatherer
+#' @importFrom RCurl getURL basicHeaderGatherer basicTextGatherer curlOptions
 #' @importFrom jsonlite fromJSON
 #' @importFrom stringr str_replace_all
 #' @keywords internal
@@ -163,9 +180,11 @@ basic_query = function(url) {
     stop('No API key available. Specify key with "set_key()".')
   header = basicHeaderGatherer()
   content = basicTextGatherer()
+  opts = curlOptions(connecttimeout = options()[["cimir.timeout"]])
   getURL(url, httpheader = c(Accept = "application/json"),
     header = FALSE, headerfunction = header$update,
-    write = content$update, curl = authenv$handle)
+    write = content$update, curl = authenv$handle,
+    .opts = opts)
 
   if (header$value()[['status']] != "200")
     stop("CIMIS query failed. HTTP status ",

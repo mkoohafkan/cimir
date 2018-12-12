@@ -25,3 +25,10 @@ A \code{tibble} object.
 \description{
 Get CIMIS station metadata.
 }
+\examples{
+if(is_key_set()) {
+  get_station()
+  get_station_zipcode()
+  get_station_spatial_zipcode()
+} 
+}
