@@ -13,6 +13,8 @@
 #'
 #' \itemize{
 #'   \item `cimir.appkey`: The CIMIS AppKey to use for queries.
+#'   \item `cimir.timeout`: The maximum time to wait for a response 
+#'     from the CIMIS Web API.
 #' }
 #'
 #' @docType package

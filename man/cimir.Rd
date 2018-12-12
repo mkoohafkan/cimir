@@ -20,6 +20,8 @@ cimir uses the following \code{\link[=options]{options()}} to configure behavior
 
 \itemize{
 \item \code{cimir.appkey}: The CIMIS AppKey to use for queries.
+\item \code{cimir.timeout}: The maximum time to wait for a response
+from the CIMIS Web API.
 }
 }
 

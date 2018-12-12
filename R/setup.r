@@ -31,5 +31,5 @@ remove_key = function() {
 #'
 #' @export
 is_key_set = function() {
-  authenv$is_key_set
+  get("is_key_set", envir = authenv)
 }
