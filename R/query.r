@@ -108,7 +108,7 @@ get_data = function(targets, start.date, end.date, items,
 #'   get_station_zipcode()
 #'   get_station_spatial_zipcode()
 #' } 
-#' @importFrom purrr map
+#' @importFrom purrr map map_dfr
 #' @importFrom glue glue
 #' @importFrom dplyr as_tibble bind_rows
 #' @export
@@ -118,10 +118,8 @@ get_station = function(station) {
   } else {
     url = glue("http://et.water.ca.gov/api/station/{station}")
   }
-  if (length(url) > 1L)
-    warning("Multiple station ids provided. Only the first will be used.")
-  result = basic_query(url)
-  bind_rows(map(result$Stations, as_tibble))
+  result = map(url, basic_query)
+  map_dfr(result, function(s) map_dfr(s$Stations, as_tibble))
 }
 
 #' @rdname get_station
@@ -129,7 +127,7 @@ get_station = function(station) {
 #' @param zipcode The (spatial) zip code. If missing, metadata for all 
 #'   stations is returned.
 #'
-#' @importFrom purrr map
+#' @importFrom purrr map_dfr
 #' @importFrom glue glue
 #' @importFrom dplyr as_tibble bind_rows
 #' @export
@@ -139,15 +137,13 @@ get_station_spatial_zipcode = function(zipcode) {
   } else {
     url = glue("http://et.water.ca.gov/api/spatialzipcode/{zipcode}")
   }
-  if (length(url) > 1L)
-    warning("Multiple station zip codes provided. Only the first will be used.")
-  result = basic_query(url)
-  bind_rows(map(result$ZipCodes, as_tibble))
+  result = map(url, basic_query)
+  map_dfr(result, function(s) map_dfr(s$ZipCodes, as_tibble))
 }
 
 #' @rdname get_station
 #'
-#' @importFrom purrr map
+#' @importFrom purrr map_dfr
 #' @importFrom glue glue
 #' @importFrom dplyr as_tibble bind_rows
 #' @export
@@ -157,10 +153,8 @@ get_station_zipcode = function(zipcode) {
   } else {
     url = glue("http://et.water.ca.gov/api/stationzipcode/{zipcode}")
   }
-  if (length(url) > 1L)
-    warning("Multiple station zip codes provided. Only the first will be used.")
-  result = basic_query(url)
-  bind_rows(map(result$ZipCodes, as_tibble))
+  result = map(url, basic_query)
+  map_dfr(result, function(s) map_dfr(s$ZipCodes, as_tibble))
 }
 
 
@@ -190,7 +184,8 @@ basic_query = function(url) {
     stop("CIMIS query failed. HTTP status ",
       header$value()[["status"]], ": ",
       header$value()[["statusMessage"]], "\n",
-      parse(text = content$value()))
+      parse(text = content$value()), call. = FALSE)
 
-  fromJSON(str_replace_all(content$value(), ":null", ':[null]'), simplifyDataFrame = FALSE)
+  fromJSON(str_replace_all(content$value(), ":null", ':[null]'),
+    simplifyDataFrame = FALSE)
 }
