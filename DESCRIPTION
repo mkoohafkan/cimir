@@ -22,7 +22,7 @@ Imports:
 Encoding: UTF-8
 LazyData: true
 Suggests: 
-    knitr(>= 1.21),
+    knitr (>= 1.21),
     rmarkdown (>= 1.11)
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
