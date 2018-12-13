@@ -17,7 +17,7 @@
 #'     from the CIMIS Web API.
 #' }
 #' Alternatively, the CIMIS App Key can be saved to an environment
-#' variable "CIMIS_APPKEY".
+#' variable `CIMIS_APPKEY`.
 #'
 #' @docType package
 #' @name cimir

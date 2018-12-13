@@ -15,3 +15,7 @@ a dataframe of data items.
 \description{
 List CIMIS data items.
 }
+\examples{
+data_items()
+
+}

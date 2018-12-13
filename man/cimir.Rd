@@ -24,9 +24,17 @@ cimir uses the following \code{\link[=options]{options()}} to configure behavior
 from the CIMIS Web API.
 }
 Alternatively, the CIMIS App Key can be saved to an environment
-variable "CIMIS_APPKEY".
+variable \code{CIMIS_APPKEY}.
 }
 
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/mkoohafkan/cimir}
+  \item Report bugs at \url{https://github.com/mkoohafkan/cimir/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Michael Koohafkan \email{michael.koohafkan@gmail.com}
 
