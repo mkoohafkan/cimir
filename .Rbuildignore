@@ -1,4 +1,5 @@
 ^\.travis\.yml$
+^cran-comments\.md$
 LICENSE
 README.md
 .gitignore

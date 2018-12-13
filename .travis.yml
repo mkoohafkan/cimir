@@ -1,8 +1,9 @@
 language: r
 r:
+  - oldrel
   - release
   - devel
-sudo: required
+sudo: false
 cache: packages
 
 # Be strict when checking our package
