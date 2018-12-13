@@ -16,6 +16,8 @@
 #'   \item `cimir.timeout`: The maximum time to wait for a response 
 #'     from the CIMIS Web API.
 #' }
+#' Alternatively, the CIMIS App Key can be saved to an environment
+#' variable "CIMIS_APPKEY".
 #'
 #' @docType package
 #' @name cimir
@@ -33,9 +35,14 @@
 
 .onAttach = function(libname, pkgname) {
   # check for existing AppKey
-  if (!is.null(options()[["cimir.appkey"]])) {
+  if (length(options()[["cimir.appkey"]]) > 0L) {
     set_key(options()[["cimir.appkey"]])
-    packageStartupMessage("Using existing CIMIS appkey.")
+    packageStartupMessage("Using existing App Key from ",
+      'option "cimir.appkey".')
+  } else if (length(Sys.getenv("CIMIS_APPKEY") > 0L)) {
+    set_key(Sys.getenv("CIMIS_APPKEY"))
+    packageStartupMessage("Using existing App Key from ",
+      '"CIMIS_APPKEY" environment variable.')
   } else {
     remove_key()
   }
