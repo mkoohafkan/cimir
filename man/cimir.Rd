@@ -23,6 +23,8 @@ cimir uses the following \code{\link[=options]{options()}} to configure behavior
 \item \code{cimir.timeout}: The maximum time to wait for a response
 from the CIMIS Web API.
 }
+Alternatively, the CIMIS App Key can be saved to an environment
+variable "CIMIS_APPKEY".
 }
 
 \author{

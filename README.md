@@ -3,6 +3,8 @@ title: "cimir: R Interface to CIMIS"
 output: html_document
 ---
 
+[![Build Status](https://travis-ci.org/mkoohafkan/cimir.svg?branch=master)](https://travis-ci.org/mkoohafkan/cimir)
+
 This package provides an R interface to the 
 [California Irrigation Management Information System](https://cimis.water.ca.gov/)
 (CIMIS) [Web API](http://et.water.ca.gov/Home/Index). In order to use 

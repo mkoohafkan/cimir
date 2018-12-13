@@ -11,7 +11,7 @@ to_datetime(d)
 }
 \value{
 The data frame, with a new \code{"Datetime"} column replacing
-the \code{"Date"} and \code{"Hoyr"} columns.
+the \code{"Date"} and \code{"Hour"} columns.
 }
 \description{
 Collapse The Date and Hour columns to a single DateTime Column.
