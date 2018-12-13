@@ -1,7 +1,7 @@
 ---
 title: "Quick Start"
 author: "Michael Koohafkan"
-date: "2018-12-12"
+date: "2018-12-13"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Quick Start}
@@ -12,10 +12,14 @@ vignette: >
 This document gets you up and running with `cimir `, an R interface to
 the 
 [California Irrigiation Management Information System](https://cimis.water.ca.gov/)
-(CIMIS) [Web API](http://et.water.ca.gov/Home/Index).
+(CIMIS) [Web API](http://et.water.ca.gov/Home/Index). In order to use 
+this package, you will need to 
+[create a CIMIS account](https://cimis.water.ca.gov/Auth/Register.aspx) 
+and [request a web services AppKey](http://et.water.ca.gov/Home/Register/).
 
 
 
+First, simply load the `cimir` library:
 
 
 ```r
@@ -23,9 +27,9 @@ library(cimir)
 #> Using existing CIMIS appkey.
 ```
 
-I previously set the option `cimir.appkey`, so `cimir` automatically 
-registered that AppKey. To set your own App Key for the session, use
-`set_key()`:
+I previously specified my AppKey via the option `cimir.appkey`, so 
+`cimir` automatically registered that key when I attached the library. 
+To set your own AppKey for the session, use `set_key()`:
 
 
 ```r
@@ -34,8 +38,57 @@ set_key("YOUR-APP-KEY-HERE")
 
 There are two types of CIMIS queries: station queries and data queries.
 Station queries return metadata on stations, while data queries return
-environmental monitoring data. To get a list of station IDs, use 
-`get_station()`:
+environmental monitoring data. For a list of possible data items, use 
+the function  `data_items()`:
+
+
+```r
+data_items()
+#>                Item                      Name  Class  Provider
+#> 1   day-air-tmp-avg   Average Air Temperature  Daily       WSN
+#> 2   day-air-tmp-avg   Average Air Temperature  Daily       WSN
+#> 3   day-air-tmp-min   Minimum Air Temperature  Daily       WSN
+#> 4       day-dew-pnt                 Dew Point  Daily       WSN
+#> 5           day-eto                 CIMIS ETo  Daily       WSN
+#> 6      day-asce-eto                  ASCE ETo  Daily WSN & SCS
+#> 7      day-asce-etr                  ASCE ETr  Daily       WSN
+#> 8        day-precip             Precipitation  Daily       WSN
+#> 9   day-rel-hum-avg Average Relative Humidity  Daily       WSN
+#> 10  day-rel-hum-max Maximum Relative Humidity  Daily       WSN
+#> 11  day-rel-hum-min Minimum Relative Humidity  Daily       WSN
+#> 12 day-soil-tmp-avg  Average Soil Temperature  Daily       WSN
+#> 13 day-soil-tmp-max  Maximum Soil Temperature  Daily       WSN
+#> 14 day-soil-tmp-min  Minimum Soil Temperature  Daily       WSN
+#> 15  day-sol-rad-avg   Average Solar Radiation  Daily WSN & SCS
+#> 16  day-sol-rad-net       Net Solar Radiation  Daily       WSN
+#> 17 day-vap-pres-max    Maximum Vapor Pressure  Daily       WSN
+#> 18 day-vap-pres-avg    Average Vapor Pressure  Daily       WSN
+#> 19     day-wind-ene      Wind East-North-East  Daily       WSN
+#> 20     day-wind-ese      Wind East-South-East  Daily       WSN
+#> 21     day-wind-nne     Wind North-North-East  Daily       WSN
+#> 22     day-wind-nnw     Wind North-North-West  Daily       WSN
+#> 23     day-wind-run                  Wind Run  Daily       WSN
+#> 24 day-wind-spd-avg        Average Wind Speed  Daily       WSN
+#> 25     day-wind-ssw     Wind South-South-West  Daily       WSN
+#> 26     day-wind-wnw      Wind West-North-West  Daily       WSN
+#> 27     day-wind-wsw      Wind West-South-West  Daily       WSN
+#> 28      hly-air-tmp           Air Temperature Hourly       WSN
+#> 29      hly-dew-pnt                 Dew Point Hourly       WSN
+#> 30          hly-eto                 CIMIS ETo Hourly       WSN
+#> 31      hly-net-rad             Net Radiation Hourly       WSN
+#> 32     hly-asce-eto                  ASCE ETo Hourly       WSN
+#> 33     hly-asce-etr                  ASCE ETr Hourly       WSN
+#> 34       hly-precip             Precipitation Hourly       WSN
+#> 35      hly-rel-hum         Relative Humidity Hourly       WSN
+#> 36     hly-res-wind            Resultant Wind Hourly       WSN
+#> 37     hly-soil-tmp          Soil Temperature Hourly       WSN
+#> 38      hly-sol-rad           Solar Radiation Hourly       WSN
+#> 39     hly-vap-pres            Vapor Pressure Hourly       WSN
+#> 40     hly-wind-dir            Wind Direction Hourly       WSN
+#> 41     hly-wind-spd                Wind Speed Hourly       WSN
+```
+
+To get a list of station IDs, use  `get_station()`:
 
 
 ```r
@@ -98,8 +151,12 @@ get_station_spatial_zipcode()
 #> # ... with 1,705 more rows
 ```
 
-Once the stations of interest are identified, you can query data
-for those stations using `get_data()`:
+Data queries also support zipcodes, spatial coordinates (latitude and 
+longitude, in decimal degrees) and street addresses, as well as options
+for data units and data providers. See `?get_data` and the 
+[CIMIS Web API documentation](http://et.water.ca.gov/Rest/Index) for
+more information. Once the stations or regions of interest are identified, 
+you can retrieve data using `get_data()`:
 
 
 ```r
@@ -121,59 +178,14 @@ get_data(targets = 170, start.date = "2018-09-25", end.date = "2018-10-01")
 #> #   Qc <chr>, Unit <chr>
 ```
 
-The CIMIS web API returns a predefined set of data items by default,
-but custom item lists can also be passed to `get_data()`. For a list
-of possible data items, use the function `data_items()`:
+The data are returned in tidy format, i.e. the `"Value"` column 
+displays the recorded value for the data item specified in the 
+`"Item"`column. The CIMIS Web API returns a predefined set of data 
+items by default, but custom item sets can also be passed to 
+`get_data()`. 
 
-
-```r
-data_items()
-#>                Item                      Name  Class  Provider
-#> 1   day-air-tmp-avg   Average Air Temperature  Daily       WSN
-#> 2   day-air-tmp-avg   Average Air Temperature  Daily       WSN
-#> 3   day-air-tmp-min   Minimum Air Temperature  Daily       WSN
-#> 4       day-dew-pnt                 Dew Point  Daily       WSN
-#> 5           day-eto                 CIMIS ETo  Daily       WSN
-#> 6      day-asce-eto                  ASCE ETo  Daily WSN & SCS
-#> 7      day-asce-etr                  ASCE ETr  Daily       WSN
-#> 8        day-precip             Precipitation  Daily       WSN
-#> 9   day-rel-hum-avg Average Relative Humidity  Daily       WSN
-#> 10  day-rel-hum-max Maximum Relative Humidity  Daily       WSN
-#> 11  day-rel-hum-min Minimum Relative Humidity  Daily       WSN
-#> 12 day-soil-tmp-avg  Average Soil Temperature  Daily       WSN
-#> 13 day-soil-tmp-max  Maximum Soil Temperature  Daily       WSN
-#> 14 day-soil-tmp-min  Minimum Soil Temperature  Daily       WSN
-#> 15  day-sol-rad-avg   Average Solar Radiation  Daily WSN & SCS
-#> 16  day-sol-rad-net       Net Solar Radiation  Daily       WSN
-#> 17 day-vap-pres-max    Maximum Vapor Pressure  Daily       WSN
-#> 18 day-vap-pres-avg    Average Vapor Pressure  Daily       WSN
-#> 19     day-wind-ene      Wind East-North-East  Daily       WSN
-#> 20     day-wind-ese      Wind East-South-East  Daily       WSN
-#> 21     day-wind-nne     Wind North-North-East  Daily       WSN
-#> 22     day-wind-nnw     Wind North-North-West  Daily       WSN
-#> 23     day-wind-run                  Wind Run  Daily       WSN
-#> 24 day-wind-spd-avg        Average Wind Speed  Daily       WSN
-#> 25     day-wind-ssw     Wind South-South-West  Daily       WSN
-#> 26     day-wind-wnw      Wind West-North-West  Daily       WSN
-#> 27     day-wind-wsw      Wind West-South-West  Daily       WSN
-#> 28      hly-air-tmp           Air Temperature Hourly       WSN
-#> 29      hly-dew-pnt                 Dew Point Hourly       WSN
-#> 30          hly-eto                 CIMIS ETo Hourly       WSN
-#> 31      hly-net-rad             Net Radiation Hourly       WSN
-#> 32     hly-asce-eto                  ASCE ETo Hourly       WSN
-#> 33     hly-asce-etr                  ASCE ETr Hourly       WSN
-#> 34       hly-precip             Precipitation Hourly       WSN
-#> 35      hly-rel-hum         Relative Humidity Hourly       WSN
-#> 36     hly-res-wind            Resultant Wind Hourly       WSN
-#> 37     hly-soil-tmp          Soil Temperature Hourly       WSN
-#> 38      hly-sol-rad           Solar Radiation Hourly       WSN
-#> 39     hly-vap-pres            Vapor Pressure Hourly       WSN
-#> 40     hly-wind-dir            Wind Direction Hourly       WSN
-#> 41     hly-wind-spd                Wind Speed Hourly       WSN
-```
-
-Data queries also support zipcodes, spatial coordinates (latitude and 
-longitude, in decimal degrees) and street addresses, as well as options
-for data units and data providers. See `?get_data` and the 
-[CIMIS Web API documentation](http://et.water.ca.gov/Rest/Index) for
-more information.
+When hourly data is retrieved, an additional column `"Hour"` is 
+returned. The `to_datetime()` function provides a quick way to convert
+these two columns to a single `"Datetime"` column. Note that when mixed
+daily and hourly data is present in the dataframe, the daily values are
+assumed to correspond to midnight (00:00).
