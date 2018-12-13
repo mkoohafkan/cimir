@@ -8,4 +8,4 @@ This package provides an R interface to the
 (CIMIS) [Web API](http://et.water.ca.gov/Home/Index). In order to use 
 this package, you will need to 
 [create a CIMIS account](https://cimis.water.ca.gov/Auth/Register.aspx) 
-and request a web services AppKey. 
+and [request a web services AppKey](https://et.water.ca.gov/Home/Register/). 
