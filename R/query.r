@@ -5,6 +5,9 @@
 #' @param type The type of data item, i.e. `"Daily"` or `"Hourly"`.
 #' @return a dataframe of data items.
 #'
+#' @examples
+#' data_items()
+#'
 #' @importFrom stringr str_to_title
 #' @importFrom dplyr filter
 #' @export
