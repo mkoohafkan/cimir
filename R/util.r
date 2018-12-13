@@ -1,3 +1,25 @@
+#' To Datetime
+#'
+#' Collapse The Date and Hour columns to a single DateTime Column.
+#'
+#' @param d A data frame of CIMIS data results.
+#' @return The data frame, with a new `"Datetime"` column replacing
+#'   the `"Date"` and `"Hour"` columns.
+#'
+#' @importFrom dplyr select mutate if_else
+#' @importFrom stringr str_c
+#' @export
+to_datetime = function(d) {
+  if (!("Hour" %in% names(d)))
+    d = mutate(d, Hour = "0000")
+  select(mutate(d,
+    Hour = if_else(is.na(.data$Hour), "0000", .data$Hour),
+    Datetime = as.POSIXct(str_c(.data$Date, " ", .data$Hour),
+      format = "%Y-%m-%d %H%M")),
+    -.data$Date, -.data$Hour
+  )
+}
+
 #' Record to Data Frame
 #'
 #' Convert a single record, containing one or more data items, to a to
