@@ -35,11 +35,12 @@
 
 .onAttach = function(libname, pkgname) {
   # check for existing AppKey
-  if (length(options()[["cimir.appkey"]]) > 0L) {
+  if (!is.null(options()[["cimir.appkey"]]) &&
+      nchar(options()[["cimir.appkey"]]) > 0L) {
     set_key(options()[["cimir.appkey"]])
     packageStartupMessage("Using existing App Key from ",
       'option "cimir.appkey".')
-  } else if (length(Sys.getenv("CIMIS_APPKEY") > 0L)) {
+  } else if (nchar(Sys.getenv("CIMIS_APPKEY")) > 0L) {
     set_key(Sys.getenv("CIMIS_APPKEY"))
     packageStartupMessage("Using existing App Key from ",
       '"CIMIS_APPKEY" environment variable.')
