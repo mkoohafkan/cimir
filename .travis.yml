@@ -11,7 +11,7 @@ warnings_are_errors: true
 
 # System dependencies for HTTP calling
 
-r_packages:
+r_binary_packages:
  - RCurl
  - glue
  - readr
