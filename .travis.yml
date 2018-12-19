@@ -23,3 +23,9 @@ r_binary_packages:
  - rlang
  - knitr
  - rmarkdown
+
+ r_packages:
+  - covr
+
+after_success:
+  - Rscript -e 'library(covr); codecov()'

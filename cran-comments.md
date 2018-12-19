@@ -2,7 +2,7 @@ This is the first submission of this package to CRAN.
 
 Because the CIMIS Web API requires an App Key, examples are only
 run on build if the App Key is defined. In my test environments, 
-I create the environment variable CIMIS_APPKEY with my personal 
+I created the environment variable CIMIS_APPKEY with my personal 
 key to run the examples on build.
 
 ## Test environments
