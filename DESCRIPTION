@@ -1,5 +1,5 @@
 Package: cimir
-Title: R Interface to the CIMIS Web API
+Title: Interface to the CIMIS Web API
 Version: 0.1-0
 Authors@R: 
     person(given = "Michael",
@@ -7,7 +7,9 @@ Authors@R:
            role = c("aut", "cre"),
            email = "michael.koohafkan@gmail.com")
 Description: Connect to the California Irrigation Management 
-    Information System (CIMIS) Web API.
+    Information System (CIMIS) Web API. See the CIMIS main page 
+    <https://cimis.water.ca.gov/> and web API documentation
+    <http://et.water.ca.gov> for more information.
 License: GPL (>= 3)
 URL: https://github.com/mkoohafkan/cimir
 BugReports: https://github.com/mkoohafkan/cimir/issues

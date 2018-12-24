@@ -1,4 +1,7 @@
-This is the first submission of this package to CRAN. 
+Resubmission of cimir 0.1-0. 
+
+- Removed redundant R in title
+- Added link to the CIMIS service in the form <http...>
 
 Because the CIMIS Web API requires an App Key, examples are only
 run on build if the App Key is defined. In my test environments, 

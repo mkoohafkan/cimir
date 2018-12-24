@@ -6,6 +6,12 @@
 #' @return The data frame, with a new `"Datetime"` column replacing
 #'   the `"Date"` and `"Hour"` columns.
 #'
+#' @examples
+#' if(is_key_set()) {
+#'   d = get_data(targets = 170, start.date = Sys.Date() - 4, 
+#'     end.date = Sys.Date() - 1, items = "hly-air-tmp")
+#'   to_datetime(d)
+#' } 
 #' @importFrom dplyr select mutate if_else
 #' @importFrom stringr str_c
 #' @export

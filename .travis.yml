@@ -3,7 +3,7 @@ r:
   - oldrel
   - release
   - devel
-sudo: false
+sudo: required
 cache: packages
 
 # Be strict when checking our package

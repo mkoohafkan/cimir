@@ -1,4 +1,4 @@
-#' cimir: R Interface to CIMIS
+#' cimir: Interface to CIMIS
 #'
 #' This package provides an R interface to the 
 #' [California Irrigation Management Information System](https://cimis.water.ca.gov/)

@@ -4,7 +4,7 @@
 \name{cimir}
 \alias{cimir}
 \alias{cimir-package}
-\title{cimir: R Interface to CIMIS}
+\title{cimir: Interface to CIMIS}
 \description{
 This package provides an R interface to the
 \href{https://cimis.water.ca.gov/}{California Irrigation Management Information System}
