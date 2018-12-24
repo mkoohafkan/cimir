@@ -31,9 +31,10 @@ First, simply load the `cimir` library:
 library(cimir)
 ```
 
-I previously specified my AppKey via the option `cimir.appkey`, so 
-`cimir` automatically registered that key when I attached the library. 
-To set your own AppKey for the session, use `set_key()`:
+If you want `cimir` to automatically use an existing AppKey when you attach
+the library, you can either set the option `cimir.appkey` in your 
+`.Rprofile` or create an environment variable `CIMIS_APPKEY`. 
+To set an AppKey for a single session, use `set_key()`:
 
 ```{r eval = FALSE}
 set_key("YOUR-APP-KEY-HERE")
