@@ -23,7 +23,17 @@ default.items = c("day-asce-eto", "day-precip", "day-sol-rad-avg",
   "day-rel-hum-avg", "day-dew-pnt", "day-wind-spd-avg",
   "day-wind-run", "day-soil-tmp-avg")
 
-#' Get CIMIS Data
+#' @name query_cimis
+#' @export
+get_data = function(targets, start.date, end.date, items,
+  measure.unit = c("E", "M"), prioritize.SCS = TRUE) {
+  warning('Function "get_data" is deprecated. ', 
+    'Use "query_cimis" instead.', call. = FALSE)
+  query_cimis(targets, start.date, end.date, items,
+  measure.unit, prioritize.SCS)
+}
+
+#' Query CIMIS
 #'
 #' Query CIMIS data using the Web API.
 #'
@@ -69,7 +79,7 @@ default.items = c("day-asce-eto", "day-precip", "day-sol-rad-avg",
 #' @importFrom glue glue
 #' @importFrom stringr str_c str_to_upper
 #' @export
-get_data = function(targets, start.date, end.date, items,
+query_cimis = function(targets, start.date, end.date, items,
   measure.unit = c("E", "M"), prioritize.SCS = TRUE) {
   if (any(is.na(suppressWarnings(as.numeric(targets))))) {
     target.sep = ";"
