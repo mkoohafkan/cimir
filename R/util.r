@@ -15,7 +15,7 @@
 #' @importFrom dplyr select mutate if_else
 #' @importFrom stringr str_c
 #' @export
-to_datetime = function(d) {
+cimis_to_datetime = function(d) {
   if (!("Hour" %in% names(d)))
     d = mutate(d, Hour = "0000")
   select(mutate(d,

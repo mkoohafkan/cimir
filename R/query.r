@@ -1,3 +1,18 @@
+# Default CIMIS query items
+default.items = c("day-asce-eto", "day-precip", "day-sol-rad-avg",
+  "day-vap-pres-avg", "day-air-tmp-max", "day-air-tmp-min",
+  "day-air-tmp-avg", "day-rel-hum-max", "day-rel-hum-min",
+  "day-rel-hum-avg", "day-dew-pnt", "day-wind-spd-avg",
+  "day-wind-run", "day-soil-tmp-avg")
+
+#' dataitems
+#'
+#' A tibble of data items and their names, classes, and providers.
+#' @docType data
+#' @keywords internal
+"dataitems"
+
+
 #' CIMIS Data Items
 #'
 #' List CIMIS data items.
@@ -6,31 +21,14 @@
 #' @return a dataframe of data items.
 #'
 #' @examples
-#' data_items()
+#' cimis_items()
 #'
 #' @importFrom stringr str_to_title
 #' @importFrom dplyr filter
 #' @export
-data_items = function(type = c("Daily", "Hourly")) {
+cimis_items = function(type = c("Daily", "Hourly")) {
   type = match.arg(str_to_title(type), c("Daily", "Hourly"), TRUE)
   filter(dataitems, .data$Class %in% type)
-}
-
-# Default CIMIS query items
-default.items = c("day-asce-eto", "day-precip", "day-sol-rad-avg",
-  "day-vap-pres-avg", "day-air-tmp-max", "day-air-tmp-min",
-  "day-air-tmp-avg", "day-rel-hum-max", "day-rel-hum-min",
-  "day-rel-hum-avg", "day-dew-pnt", "day-wind-spd-avg",
-  "day-wind-run", "day-soil-tmp-avg")
-
-#' @name query_cimis
-#' @export
-get_data = function(targets, start.date, end.date, items,
-  measure.unit = c("E", "M"), prioritize.SCS = TRUE) {
-  warning('Function "get_data" is deprecated. ', 
-    'Use "query_cimis" instead.', call. = FALSE)
-  query_cimis(targets, start.date, end.date, items,
-  measure.unit, prioritize.SCS)
 }
 
 #' Query CIMIS
@@ -72,14 +70,14 @@ get_data = function(targets, start.date, end.date, items,
 #'
 #' @examples
 #' if(is_key_set()) {
-#'   get_data(targets = 170, start.date = Sys.Date() - 4, 
+#'   cimis_data(targets = 170, start.date = Sys.Date() - 4, 
 #'     end.date = Sys.Date() - 1)
 #' } 
 #'
 #' @importFrom glue glue
 #' @importFrom stringr str_c str_to_upper
 #' @export
-query_cimis = function(targets, start.date, end.date, items,
+cimis_data = function(targets, start.date, end.date, items,
   measure.unit = c("E", "M"), prioritize.SCS = TRUE) {
   if (any(is.na(suppressWarnings(as.numeric(targets))))) {
     target.sep = ";"
@@ -107,9 +105,10 @@ query_cimis = function(targets, start.date, end.date, items,
   bind_records(result)
 }
 
-#' Get CIMIS Station Data
+
+#' Query CIMIS Station Data
 #'
-#' Get CIMIS station metadata.
+#' Query CIMIS station metadata.
 #'
 #' @param station The station ID. If missing, metadata for all stations
 #'   is returned.
@@ -117,15 +116,15 @@ query_cimis = function(targets, start.date, end.date, items,
 #'
 #' @examples
 #' if(is_key_set()) {
-#'   get_station()
-#'   get_station_zipcode()
-#'   get_station_spatial_zipcode()
+#'   cimis_station()
+#'   cimis_zipcode()
+#'   cimis_spatial_zipcode()
 #' } 
 #' @importFrom purrr map map_dfr
 #' @importFrom glue glue
 #' @importFrom dplyr as_tibble bind_rows
 #' @export
-get_station = function(station) {
+cimis_station = function(station) {
   if (missing(station)) {
     url = "http://et.water.ca.gov/api/station"
   } else {
@@ -135,7 +134,8 @@ get_station = function(station) {
   map_dfr(result, function(s) map_dfr(s$Stations, as_tibble))
 }
 
-#' @rdname get_station
+
+#' @rdname cimis_station
 #'
 #' @param zipcode The (spatial) zip code. If missing, metadata for all 
 #'   stations is returned.
@@ -144,7 +144,7 @@ get_station = function(station) {
 #' @importFrom glue glue
 #' @importFrom dplyr as_tibble bind_rows
 #' @export
-get_station_spatial_zipcode = function(zipcode) {
+cimis_spatial_zipcode = function(zipcode) {
   if (missing(zipcode)) {
     url = "http://et.water.ca.gov/api/spatialzipcode"
   } else {
@@ -154,13 +154,14 @@ get_station_spatial_zipcode = function(zipcode) {
   map_dfr(result, function(s) map_dfr(s$ZipCodes, as_tibble))
 }
 
-#' @rdname get_station
+
+#' @rdname cimis_station
 #'
 #' @importFrom purrr map_dfr
 #' @importFrom glue glue
 #' @importFrom dplyr as_tibble bind_rows
 #' @export
-get_station_zipcode = function(zipcode) {
+cimis_zipcode = function(zipcode) {
   if (missing(zipcode)) {
     url = "http://et.water.ca.gov/api/stationzipcode"
   } else {
