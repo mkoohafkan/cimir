@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 
 First, simply load the `cimir` library:
 
-```{r}
+```{r eval = FALSE}
 library(cimir)
 ```
 
@@ -43,47 +43,53 @@ set_key("YOUR-APP-KEY-HERE")
 There are two types of CIMIS queries: station queries and data queries.
 Station queries return metadata on stations, while data queries return
 environmental monitoring data. For a list of possible data items, use 
-the function  `data_items()`:
+the function  `cimis_items()`:
 
 ```{r}
-data_items()
+cimis_items()
 ```
 
-To get a list of station IDs, use  `get_station()`:
+To get a list of station IDs, use  `cimis_station()`:
 
 ```{r}
-get_station()
+cimis_station()
 ```
 
 To get metadata for a subset of stations, simply pass a vector of 
 station IDs. You can also query metadata for stations associated 
 with a particular zipcode (or spatial zipcode) 
-`get_station_zipcode()` and `get_station_spatial_zipcode()`:
+`cimis_zipcode()` and `cimis_spatial_zipcode()`:
 
 ```{r}
-get_station_zipcode()
-get_station_spatial_zipcode()
+cimis_zipcode()
+cimis_spatial_zipcode()
 ```
 
-Data queries also support zipcodes, spatial coordinates (latitude and 
-longitude, in decimal degrees) and street addresses, as well as options
-for data units and data providers. See `?get_data` and the 
-[CIMIS Web API documentation](http://et.water.ca.gov/Rest/Index) for
-more information. Once the stations or regions of interest are identified, 
-you can retrieve data using `get_data()`:
+Once the stations or regions of interest are identified, 
+you can retrieve data using `query_cimis()`:
 
 ```{r}
-get_data(targets = 170, start.date = "2018-09-25", end.date = "2018-10-01")
+cimis_data(targets = 170, start.date = "2018-09-25", end.date = "2018-10-01")
 ```
 
 The data are returned in tidy format, i.e. the `"Value"` column 
 displays the recorded value for the data item specified in the 
 `"Item"`column. The CIMIS Web API returns a predefined set of data 
 items by default, but custom item sets can also be passed to 
-`get_data()`. 
+`cimis_data()`. Data queries also support zipcodes, spatial coordinates 
+(latitude and longitude, in decimal degrees) and street addresses, 
+as well as additional options for data units and data providers. See 
+`?cimis_data` and the 
+[CIMIS Web API documentation](http://et.water.ca.gov/Rest/Index) for
+more information. 
 
 When hourly data is retrieved, an additional column `"Hour"` is 
-returned. The `to_datetime()` function provides a quick way to convert
+returned. The `cimis_to_datetime()` function provides a quick way to convert
 these two columns to a single `"Datetime"` column. Note that when mixed
 daily and hourly data is present in the dataframe, the daily values are
 assumed to correspond to midnight (00:00).
+
+```{r}
+cimis_to_datetime(cimis_data(targets = 170, start.date = "2018-09-25",
+  end.date = "2018-09-27", items = c("hly-soil-tmp", "day-air-tmp-avg")))
+```

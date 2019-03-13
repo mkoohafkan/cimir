@@ -14,3 +14,5 @@ README.md
 ^.*\.Rproj$
 ^\.Rproj\.user$
 vignettes/_quickstart.rmd
+vignettes/markdown.rmd
+^_build_vignette.r$

@@ -1,7 +1,7 @@
 ---
 title: "Quick Start"
 author: "Michael Koohafkan"
-date: "2018-12-24"
+date: "2019-03-13"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Quick Start}
@@ -39,11 +39,11 @@ set_key("YOUR-APP-KEY-HERE")
 There are two types of CIMIS queries: station queries and data queries.
 Station queries return metadata on stations, while data queries return
 environmental monitoring data. For a list of possible data items, use 
-the function  `data_items()`:
+the function  `cimis_items()`:
 
 
 ```r
-data_items()
+cimis_items()
 #>                Item                      Name  Class  Provider
 #> 1   day-air-tmp-avg   Average Air Temperature  Daily       WSN
 #> 2   day-air-tmp-avg   Average Air Temperature  Daily       WSN
@@ -88,12 +88,12 @@ data_items()
 #> 41     hly-wind-spd                Wind Speed Hourly       WSN
 ```
 
-To get a list of station IDs, use  `get_station()`:
+To get a list of station IDs, use  `cimis_station()`:
 
 
 ```r
-get_station()
-#> # A tibble: 1,391 x 15
+cimis_station()
+#> # A tibble: 1,394 x 15
 #>    StationNbr Name  City  RegionalOffice County ConnectDate DisconnectDate
 #>    <chr>      <chr> <chr> <chr>          <chr>  <chr>       <chr>         
 #>  1 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
@@ -106,7 +106,7 @@ get_station()
 #>  8 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
 #>  9 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
 #> 10 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
-#> # ... with 1,381 more rows, and 8 more variables: IsActive <chr>,
+#> # ... with 1,384 more rows, and 8 more variables: IsActive <chr>,
 #> #   IsEtoStation <chr>, Elevation <chr>, GroundCover <chr>,
 #> #   HmsLatitude <chr>, HmsLongitude <chr>, ZipCodes <chr>,
 #> #   SitingDesc <chr>
@@ -115,12 +115,12 @@ get_station()
 To get metadata for a subset of stations, simply pass a vector of 
 station IDs. You can also query metadata for stations associated 
 with a particular zipcode (or spatial zipcode) 
-`get_station_zipcode()` and `get_station_spatial_zipcode()`:
+`cimis_zipcode()` and `cimis_spatial_zipcode()`:
 
 
 ```r
-get_station_zipcode()
-#> # A tibble: 1,391 x 5
+cimis_zipcode()
+#> # A tibble: 1,394 x 5
 #>    StationNbr ZipCode ConnectDate DisconnectDate IsActive
 #>         <int> <chr>   <chr>       <chr>          <chr>   
 #>  1         99 90401   12/11/1992  5/8/2050       True    
@@ -133,8 +133,8 @@ get_station_zipcode()
 #>  8         99 90408   12/11/1992  5/8/2050       True    
 #>  9         99 90409   12/11/1992  5/8/2050       True    
 #> 10         99 90410   12/11/1992  5/8/2050       True    
-#> # ... with 1,381 more rows
-get_station_spatial_zipcode()
+#> # ... with 1,384 more rows
+cimis_spatial_zipcode()
 #> # A tibble: 1,715 x 4
 #>    ZipCode ConnectDate DisconnectDate IsActive
 #>    <chr>   <chr>       <chr>          <chr>   
@@ -151,16 +151,12 @@ get_station_spatial_zipcode()
 #> # ... with 1,705 more rows
 ```
 
-Data queries also support zipcodes, spatial coordinates (latitude and 
-longitude, in decimal degrees) and street addresses, as well as options
-for data units and data providers. See `?get_data` and the 
-[CIMIS Web API documentation](http://et.water.ca.gov/Rest/Index) for
-more information. Once the stations or regions of interest are identified, 
-you can retrieve data using `get_data()`:
+Once the stations or regions of interest are identified, 
+you can retrieve data using `query_cimis()`:
 
 
 ```r
-get_data(targets = 170, start.date = "2018-09-25", end.date = "2018-10-01")
+cimis_data(targets = 170, start.date = "2018-09-25", end.date = "2018-10-01")
 #> # A tibble: 98 x 13
 #>    Name  Type  Owner Date       Julian Station Standard ZipCodes Scope
 #>    <chr> <chr> <chr> <date>      <int> <chr>   <chr>    <chr>    <chr>
@@ -182,10 +178,36 @@ The data are returned in tidy format, i.e. the `"Value"` column
 displays the recorded value for the data item specified in the 
 `"Item"`column. The CIMIS Web API returns a predefined set of data 
 items by default, but custom item sets can also be passed to 
-`get_data()`. 
+`cimis_data()`. Data queries also support zipcodes, spatial coordinates 
+(latitude and longitude, in decimal degrees) and street addresses, 
+as well as additional options for data units and data providers. See 
+`?cimis_data` and the 
+[CIMIS Web API documentation](http://et.water.ca.gov/Rest/Index) for
+more information. 
 
 When hourly data is retrieved, an additional column `"Hour"` is 
-returned. The `to_datetime()` function provides a quick way to convert
+returned. The `cimis_to_datetime()` function provides a quick way to convert
 these two columns to a single `"Datetime"` column. Note that when mixed
 daily and hourly data is present in the dataframe, the daily values are
 assumed to correspond to midnight (00:00).
+
+
+```r
+cimis_to_datetime(cimis_data(targets = 170, start.date = "2018-09-25",
+  end.date = "2018-09-27", items = c("hly-soil-tmp", "day-air-tmp-avg")))
+#> # A tibble: 75 x 13
+#>    Name  Type  Owner Datetime            Julian Station Standard ZipCodes
+#>    <chr> <chr> <chr> <dttm>               <int> <chr>   <chr>    <chr>   
+#>  1 cimis stat~ wate~ 2018-09-25 00:00:00    268 170     english  94529, ~
+#>  2 cimis stat~ wate~ 2018-09-26 00:00:00    269 170     english  94529, ~
+#>  3 cimis stat~ wate~ 2018-09-27 00:00:00    270 170     english  94529, ~
+#>  4 cimis stat~ wate~ 2018-09-25 01:00:00    268 170     english  94529, ~
+#>  5 cimis stat~ wate~ 2018-09-25 02:00:00    268 170     english  94529, ~
+#>  6 cimis stat~ wate~ 2018-09-25 03:00:00    268 170     english  94529, ~
+#>  7 cimis stat~ wate~ 2018-09-25 04:00:00    268 170     english  94529, ~
+#>  8 cimis stat~ wate~ 2018-09-25 05:00:00    268 170     english  94529, ~
+#>  9 cimis stat~ wate~ 2018-09-25 06:00:00    268 170     english  94529, ~
+#> 10 cimis stat~ wate~ 2018-09-25 07:00:00    268 170     english  94529, ~
+#> # ... with 65 more rows, and 5 more variables: Scope <chr>, Item <chr>,
+#> #   Value <dbl>, Qc <chr>, Unit <chr>
+```
