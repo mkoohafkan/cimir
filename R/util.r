@@ -12,18 +12,18 @@
 #'     end.date = Sys.Date() - 1, items = "hly-air-tmp")
 #'   cimis_to_datetime(d)
 #' } 
-#' @importFrom dplyr select mutate if_else
+#' @importFrom dplyr select mutate if_else rename
 #' @importFrom stringr str_c
 #' @export
 cimis_to_datetime = function(d) {
   if (!("Hour" %in% names(d)))
     d = mutate(d, Hour = "0000")
-  select(mutate(d,
+  rename(select(mutate(d,
     Hour = if_else(is.na(.data$Hour), "0000", .data$Hour),
-    Datetime = as.POSIXct(str_c(.data$Date, " ", .data$Hour),
+    Date = as.POSIXct(str_c(.data$Date, " ", .data$Hour),
       format = "%Y-%m-%d %H%M")),
-    -.data$Date, -.data$Hour
-  )
+    -.data$Hour
+  ), Datetime = .data$Date)
 }
 
 #' Record to Data Frame
