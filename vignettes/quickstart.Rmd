@@ -186,10 +186,10 @@ as well as additional options for data units and data providers. See
 more information. 
 
 When hourly data is retrieved, an additional column `"Hour"` is 
-returned. The `cimis_to_datetime()` function provides a quick way to convert
-these two columns to a single `"Datetime"` column. Note that when mixed
-daily and hourly data is present in the dataframe, the daily values are
-assumed to correspond to midnight (00:00).
+returned. The `cimis_to_datetime()` function provides a quick way to 
+combine the columns `"Date"` and `"Hour"` to a single `"Datetime"` column. 
+Note that when mixed daily and hourly data is present in the dataframe, 
+the daily values are assumed to correspond to midnight (00:00).
 
 
 ```r
