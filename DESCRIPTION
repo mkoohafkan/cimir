@@ -9,7 +9,7 @@ Authors@R:
 Description: Connect to the California Irrigation Management 
     Information System (CIMIS) Web API. See the CIMIS main page 
     <https://cimis.water.ca.gov/> and web API documentation
-    <http://et.water.ca.gov> for more information.
+    <https://et.water.ca.gov> for more information.
 License: GPL (>= 3)
 URL: https://github.com/mkoohafkan/cimir
 BugReports: https://github.com/mkoohafkan/cimir/issues

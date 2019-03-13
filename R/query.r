@@ -1,3 +1,6 @@
+base.url = "https://et.water.ca.gov/api"
+
+
 # Default CIMIS query items
 default.items = c("day-asce-eto", "day-precip", "day-sol-rad-avg",
   "day-vap-pres-avg", "day-air-tmp-max", "day-air-tmp-min",
@@ -92,13 +95,13 @@ cimis_data = function(targets, start.date, end.date, items,
   end.date = as.Date(end.date)
   # query
   result = basic_query(
-    glue("http://et.water.ca.gov/api/data?",
+    glue("{base.url}/data?",
       "appKey={authenv$appkey}", "&",
       "targets={str_c(targets, collapse = target.sep)}", "&",
       "startDate={start.date}", "&",
       "endDate={end.date}", "&",
       "dataItems={str_c(items, collapse = ',')}", "&",
-      "unitOfMeasure={measure.unit}", ";",
+      "unitOfMeasure={measure.unit}", "&",
       "prioritizeSCS={prioritize.SCS}"
     )
   )
@@ -126,9 +129,9 @@ cimis_data = function(targets, start.date, end.date, items,
 #' @export
 cimis_station = function(station) {
   if (missing(station)) {
-    url = "http://et.water.ca.gov/api/station"
+    url = glue("{base.url}/station")
   } else {
-    url = glue("http://et.water.ca.gov/api/station/{station}")
+    url = glue("{base.url}/station/{station}")
   }
   result = map(url, basic_query)
   map_dfr(result, function(s) map_dfr(s$Stations, as_tibble))
@@ -146,9 +149,9 @@ cimis_station = function(station) {
 #' @export
 cimis_spatial_zipcode = function(zipcode) {
   if (missing(zipcode)) {
-    url = "http://et.water.ca.gov/api/spatialzipcode"
+    url = glue("{base.url}/spatialzipcode")
   } else {
-    url = glue("http://et.water.ca.gov/api/spatialzipcode/{zipcode}")
+    url = glue("{base.url}/spatialzipcode/{zipcode}")
   }
   result = map(url, basic_query)
   map_dfr(result, function(s) map_dfr(s$ZipCodes, as_tibble))
@@ -163,9 +166,9 @@ cimis_spatial_zipcode = function(zipcode) {
 #' @export
 cimis_zipcode = function(zipcode) {
   if (missing(zipcode)) {
-    url = "http://et.water.ca.gov/api/stationzipcode"
+    url = glue("{base.url}/stationzipcode")
   } else {
-    url = glue("http://et.water.ca.gov/api/stationzipcode/{zipcode}")
+    url = glue("{base.url}/stationzipcode/{zipcode}")
   }
   result = map(url, basic_query)
   map_dfr(result, function(s) map_dfr(s$ZipCodes, as_tibble))
