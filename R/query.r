@@ -34,7 +34,7 @@ cimis_items = function(type = c("Daily", "Hourly")) {
   filter(dataitems, .data$Class %in% type)
 }
 
-#' Query CIMIS
+#' Query CIMIS Data
 #'
 #' Query CIMIS data using the Web API.
 #'
@@ -109,7 +109,7 @@ cimis_data = function(targets, start.date, end.date, items,
 }
 
 
-#' Query CIMIS Station Data
+#' Query CIMIS Station Metadata
 #'
 #' Query CIMIS station metadata.
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/query.r
 \name{cimis_data}
 \alias{cimis_data}
-\title{Query CIMIS}
+\title{Query CIMIS Data}
 \usage{
 cimis_data(targets, start.date, end.date, items, measure.unit = c("E",
   "M"), prioritize.SCS = TRUE)

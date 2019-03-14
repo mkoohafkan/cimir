@@ -4,7 +4,7 @@
 \alias{cimis_station}
 \alias{cimis_spatial_zipcode}
 \alias{cimis_zipcode}
-\title{Query CIMIS Station Data}
+\title{Query CIMIS Station Metadata}
 \usage{
 cimis_station(station)
 

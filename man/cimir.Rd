@@ -7,8 +7,8 @@
 \title{cimir: Interface to CIMIS}
 \description{
 This package provides an R interface to the
-\href{https://cimis.water.ca.gov/}{California Irrigation Management Information System}
-(CIMIS) \href{https://et.water.ca.gov/Home/Index}{Web API}. In order to use
+\href{https://cimis.water.ca.gov}{California Irrigation Management Information System}
+(CIMIS) \href{https://et.water.ca.gov}{Web API}. In order to use
 this package, you will need to
 \href{https://cimis.water.ca.gov/Auth/Register.aspx}{create a CIMIS account}
 and request a web services AppKey.
