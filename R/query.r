@@ -194,7 +194,7 @@ basic_query = function(url) {
   opts = curlOptions(connecttimeout = options()[["cimir.timeout"]])
   getURL(url, httpheader = c(Accept = "application/json"),
     header = FALSE, headerfunction = header$update,
-    write = content$update, curl = authenv$handle,
+    write = content$update, curl = cimir_handle(),
     .opts = opts)
 
   if (header$value()[['status']] != "200")
@@ -205,4 +205,14 @@ basic_query = function(url) {
 
   fromJSON(str_replace_all(content$value(), ":null", ':[null]'),
     simplifyDataFrame = FALSE)
+}
+
+#' cimir RCurl handle
+#'
+#' Get the handle for RCurl URL handling in cimir.
+#'
+#' @importFrom RCurl getCurlHandle
+#' @keywords internal
+cimir_handle = function() {
+  getCurlHandle()
 }
