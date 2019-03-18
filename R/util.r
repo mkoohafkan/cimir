@@ -61,13 +61,13 @@ record_to_df = function(record) {
 #' @return A data frame.
 #'
 #' @importFrom tidyr unnest
-#' @importFrom purrr map
+#' @importFrom purrr map_dfr
 #' @importFrom dplyr mutate bind_rows as_tibble
 #' @importFrom rlang .data
 #' @keywords internal
 bind_records = function(result) {
   mutate(unnest(mutate(
-    bind_rows(map(result[[c("Data", "Providers")]], as_tibble)),
+    map_dfr(result[[c("Data", "Providers")]], as_tibble),
     Records = map(.data$Records, record_to_df)
   )), Value = as.numeric(.data$Value))
 }
