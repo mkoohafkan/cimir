@@ -1,4 +1,4 @@
-# title: "cimir: Interface to CIMIS" <a href='https://github.com/mkoohafkan/cimir'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# cimir: Interface to CIMIS <a href='https://github.com/mkoohafkan/cimir'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 [![Build Status](https://travis-ci.org/mkoohafkan/cimir.svg?branch=master)](https://travis-ci.org/mkoohafkan/cimir)
 
