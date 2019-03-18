@@ -1,7 +1,4 @@
----
-title: "cimir: R Interface to CIMIS"
-output: html_document
----
+# title: "cimir: Interface to CIMIS" <a href='https://dplyr.tidyverse.org'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 [![Build Status](https://travis-ci.org/mkoohafkan/cimir.svg?branch=master)](https://travis-ci.org/mkoohafkan/cimir)
 
