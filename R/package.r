@@ -44,6 +44,7 @@
       '"CIMIS_APPKEY" environment variable.')
   } else {
     remove_key()
+    packageStartupMessage('Set your CIMIS App Key with "set_key()".')
   }
   if (is.null(options()[["cimir.timeout"]])) {
     options(cimir.timeout = 30)
