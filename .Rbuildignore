@@ -16,3 +16,5 @@ README.md
 vignettes/_quickstart.rmd
 vignettes/markdown.rmd
 ^_build_vignette.r$
+^dataitems.tsv$
+^_build_dataitems.r$
