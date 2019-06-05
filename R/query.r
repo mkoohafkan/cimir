@@ -182,7 +182,7 @@ cimis_zipcode = function(zipcode) {
 #' @param url The query URL.
 #' @return The parsed JSON string, as a list.
 #'
-#' @importFrom curl curl_fetch_memory
+#' @importFrom curl curl_fetch_memory parse_headers
 #' @importFrom jsonlite fromJSON
 #' @importFrom stringr str_replace_all
 #' @keywords internal
@@ -192,6 +192,7 @@ basic_query = function(url) {
   result = curl_fetch_memory(url, handle = cimir_handle())
   if (result$status_code != 200L)
     stop("CIMIS query failed with status ",
+      parse_headers(result$headers)[1], "\n  ",
       "URL request: ", result$url,
       call. = FALSE)
   value = rawToChar(result$content)
