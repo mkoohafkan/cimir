@@ -182,28 +182,20 @@ cimis_zipcode = function(zipcode) {
 #' @param url The query URL.
 #' @return The parsed JSON string, as a list.
 #'
-#' @importFrom RCurl getURL basicHeaderGatherer basicTextGatherer curlOptions
+#' @importFrom curl curl_fetch_memory
 #' @importFrom jsonlite fromJSON
 #' @importFrom stringr str_replace_all
 #' @keywords internal
 basic_query = function(url) {
   if (length(authenv$appkey) < 1)
     stop('No API key available. Specify key with "set_key()".')
-  header = basicHeaderGatherer()
-  content = basicTextGatherer()
-  opts = curlOptions(connecttimeout = options()[["cimir.timeout"]])
-  getURL(url, httpheader = c(Accept = "application/json"),
-    header = FALSE, headerfunction = header$update,
-    write = content$update, curl = cimir_handle(),
-    .opts = opts)
-
-  if (header$value()[['status']] != "200")
-    stop("CIMIS query failed. HTTP status ",
-      header$value()[["status"]], ": ",
-      header$value()[["statusMessage"]], "\n",
-      parse(text = content$value()), call. = FALSE)
-
-  fromJSON(str_replace_all(content$value(), ":null", ':[null]'),
+  result = curl_fetch_memory(url, handle = cimir_handle())
+  if (result$status_code != 200L)
+    stop("CIMIS query failed with status ",
+      "URL request: ", result$url,
+      call. = FALSE)
+  value = rawToChar(result$content)
+  fromJSON(str_replace_all(value, ":null", ':[null]'),
     simplifyDataFrame = FALSE)
 }
 
@@ -211,8 +203,11 @@ basic_query = function(url) {
 #'
 #' Get the handle for RCurl URL handling in cimir.
 #'
-#' @importFrom RCurl getCurlHandle
+#' @importFrom curl new_handle handle_setopt handle_setheaders
 #' @keywords internal
 cimir_handle = function() {
-  getCurlHandle()
+  h = new_handle()
+  handle_setopt(h, connecttimeout = options()[["cimir.timeout"]])
+  handle_setheaders(h, Accept = "application/json")
+  h
 }
