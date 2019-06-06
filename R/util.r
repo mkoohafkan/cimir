@@ -62,7 +62,7 @@ record_to_df = function(record) {
 #'
 #' @importFrom tidyr unnest
 #' @importFrom purrr map_dfr
-#' @importFrom dplyr mutate bind_rows as_tibble
+#' @importFrom dplyr mutate bind_rows as_tibble case_when
 #' @importFrom rlang .data
 #' @keywords internal
 bind_records = function(result) {
@@ -70,4 +70,21 @@ bind_records = function(result) {
     map_dfr(result[[c("Data", "Providers")]], as_tibble),
     Records = map(.data$Records, record_to_df)
   )), Value = as.numeric(.data$Value))
+}
+
+#' @keywords internal
+split_query = function(targets, start, end, items) {
+  d = as.data.frame(expand.grid(target = targets, items = items,
+    start = start, end = end))
+  d['type'] = case_when(
+    d$items %in% cimis_items("Daily")$Item ~ "Daily",
+    d$items %in% cimis_items("Hourly")$Item ~ "Hourly",
+    TRUE ~ NA_character_)
+
+  interval = as.integer(ceiling((end - start)/365))
+  daily.seq.start = seq(start, end, length.out = interval)
+  starts = head(daily.seq.start, -1)
+  ends = c(head(tail(daily.seq.start, -1), -1) - 1, tail(daily.seq.start, 1))
+
+  cbind(paste(starts), paste(ends))
 }
