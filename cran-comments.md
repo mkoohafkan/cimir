@@ -7,8 +7,10 @@ This release includes the following changes:
   identified and added to output of `cimis_items()`.
 - Function `cimis_to_datetime()` now explicitly uses Etc/GMT+8 
   timezone to ensure match with standard timezone used by CIMIS (PST).
-- New helper function `cimis_split_query` to split a long-duration query
+- New helper function `cimis_split_query` splits a long-duration query
   into multiple smaller-duration queries.
+- New helper function `cimis_compass_to_degrees` returns the middle azimuths
+- of a vector of compass direction labels.
 
 ## Test environments
 
