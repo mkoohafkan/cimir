@@ -2,6 +2,7 @@ Submission of cimir 0.3-0.
 
 This release includes the following changes:
 
+- **(Breaking change)** Deprecated functions are now defunct.
 - Package import "Rcurl" replaced with "curl" (>= 3.3).
 - Data items not listed in the CIMIS Web API documentation were 
   identified and added to output of `cimis_items()`.
@@ -10,7 +11,11 @@ This release includes the following changes:
 - New helper function `cimis_split_query` splits a long-duration query
   into multiple smaller-duration queries.
 - New helper function `cimis_compass_to_degrees` returns the middle azimuths
-- of a vector of compass direction labels.
+  of a vector of compass direction labels.
+- New helper function `cimis_format_location` formats station latitudes 
+  and longitudes as either decimal degrees (numeric) or Hours Minutes Seconds.
+- Text encoding of Web API results are set to "UTF-8", fixing potential formatting
+  issues.
 
 ## Test environments
 
