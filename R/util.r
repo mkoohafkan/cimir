@@ -111,3 +111,41 @@ cimis_split_query = function(targets, start.date, end.date, items, num.days = 36
     start.date = starts, end.date = ends
   )
 }
+
+#' Compass Direction To Degrees
+#'
+#' Convert the Compass direction labels to degrees.
+#'
+#' @param x A vector of compass directions, i.e. the data item labels
+#'  "DayWindNnw", "DayWindSse", etc. Recognized directions are 
+#'   North-northeast (NNE), East-northeast (ENE), East-southeast (ESE),
+#'   South-southeast (SSE), South-southwest (SSW), West-southwest (WSW),
+#'   West-northwest (WNW), and North-northwest (NNW).
+#'
+#' @return A numeric vector of degrees corresponding to the middle azimumth
+#'   of the corresponding compass direction.
+#'
+#' @examples
+#' cimis_compass_to_degrees("day-wind-nne")
+#' cimis_compass_to_degrees(c("SSE", "SSW", "wsw", "Wnw", "nnw"))
+#'
+#' @importFrom dplyr case_when
+#' @importFrom stringr str_to_upper str_detect
+#' @export
+cimis_compass_to_degrees = function(x) {
+  x = str_to_upper(x)
+  res = case_when(
+    str_detect(x, "NNE$") ~ 22.5,
+    str_detect(x, "ENE$") ~ 67.5,
+    str_detect(x, "ESE$") ~ 112.5,
+    str_detect(x, "SSE$") ~ 157.5,
+    str_detect(x, "SSW$") ~ 202.5,
+    str_detect(x, "WSW$") ~ 247.5,
+    str_detect(x, "WNW$") ~ 292.5,
+    str_detect(x, "NNW$") ~ 337.5,
+    TRUE ~ NA_real_
+  )
+  if (any(is.na(res)))
+    stop('Unrecognized values in arugment "x".')
+  res
+}
