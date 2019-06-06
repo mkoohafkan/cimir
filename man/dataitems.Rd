@@ -4,7 +4,7 @@
 \name{dataitems}
 \alias{dataitems}
 \title{dataitems}
-\format{An object of class \code{data.frame} with 41 rows and 4 columns.}
+\format{An object of class \code{data.frame} with 42 rows and 4 columns.}
 \usage{
 dataitems
 }
