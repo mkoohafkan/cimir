@@ -196,6 +196,7 @@ basic_query = function(url) {
       "URL request: ", result$url,
       call. = FALSE)
   value = rawToChar(result$content)
+  Encoding(value) = "UTF-8"
   fromJSON(str_replace_all(value, ":null", ':[null]'),
     simplifyDataFrame = FALSE)
 }
