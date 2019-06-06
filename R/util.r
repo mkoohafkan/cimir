@@ -77,25 +77,37 @@ bind_records = function(result) {
   )), Value = as.numeric(.data$Value))
 }
 
-#' @keywords internal
-split_query = function(targets, start, end, items, num.days = 365) {
-  d = as.data.frame(expand.grid(target = targets, items = items,
-    start = start, end = end))
-  d['type'] = case_when(
-    d$items %in% cimis_items("Daily")$Item ~ "Daily",
-    d$items %in% cimis_items("Hourly")$Item ~ "Hourly",
-    TRUE ~ NA_character_)
-
-  interval = as.integer(ceiling((end - start)/num.days))
-  daily.seq.start = seq(start, end, length.out = interval)
+#' Split CIMIS Query
+#'
+#' Split a large CIMIS query into multiple smaller queries based on a 
+#' time interval.
+#'
+#' @inheritParams cimis_data
+#' @param num.days The maximum number of days that each query can span.
+#' @return A data frame with columns "targets", "start.date", "end.date", and
+#'   "items". 
+#'
+#' @details Queries are not split by `targets` or `items`, i.e. each resulting
+#'   query will include all targets and items. 
+#'
+#' @examples
+#' cimis_split_query(170, "2010-01-01", "2018-01-01", "hly-air-tmp", 365)
+#'
+#' @importFrom dplyr tibble
+#' @importFrom utils head tail
+#' @export
+cimis_split_query = function(targets, start.date, end.date, items, num.days = 365) {
+  start.date = as.Date(start.date)
+  end.date = as.Date(end.date)
+  interval = as.integer(ceiling((end.date - start.date) / num.days))
+  daily.seq.start = seq(start.date, end.date, length.out = interval)
   starts = head(daily.seq.start, -1)
   ends = c(head(tail(daily.seq.start, -1), -1) - 1,
     tail(daily.seq.start, 1))
 
   tibble(
-    targets = rep(as.list(targets), length(starts)),
-    items = rep(as.list(targets), length(starts)),
-    start = starts, end = ends
+    targets = rep(list(targets), length(starts)),
+    items = rep(list(items), length(starts)),
+    start.date = starts, end.date = ends
   )
-
 }
