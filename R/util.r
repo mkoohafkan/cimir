@@ -6,6 +6,10 @@
 #' @return The data frame, with a new `"Datetime"` column replacing
 #'   the `"Date"` and `"Hour"` columns.
 #'
+#' @details According to the 
+#'   [CIMIS Report FAQs](https://cimis.water.ca.gov/Default.aspx),
+#'   all CIMIS data is based on Pacific Standard Time (PST).
+#'
 #' @examples
 #' if(is_key_set()) {
 #'   d = cimis_data(targets = 170, start.date = Sys.Date() - 4, 
@@ -21,10 +25,11 @@ cimis_to_datetime = function(d) {
   rename(select(mutate(d,
     Hour = if_else(is.na(.data$Hour), "0000", .data$Hour),
     Date = as.POSIXct(str_c(.data$Date, " ", .data$Hour),
-      format = "%Y-%m-%d %H%M")),
+      format = "%Y-%m-%d %H%M"), tz = "Etc/GMT+8"),
     -.data$Hour
   ), Datetime = .data$Date)
 }
+
 
 #' Record to Data Frame
 #'
@@ -73,7 +78,7 @@ bind_records = function(result) {
 }
 
 #' @keywords internal
-split_query = function(targets, start, end, items) {
+split_query = function(targets, start, end, items, num.days = 365) {
   d = as.data.frame(expand.grid(target = targets, items = items,
     start = start, end = end))
   d['type'] = case_when(
@@ -81,10 +86,16 @@ split_query = function(targets, start, end, items) {
     d$items %in% cimis_items("Hourly")$Item ~ "Hourly",
     TRUE ~ NA_character_)
 
-  interval = as.integer(ceiling((end - start)/365))
+  interval = as.integer(ceiling((end - start)/num.days))
   daily.seq.start = seq(start, end, length.out = interval)
   starts = head(daily.seq.start, -1)
-  ends = c(head(tail(daily.seq.start, -1), -1) - 1, tail(daily.seq.start, 1))
+  ends = c(head(tail(daily.seq.start, -1), -1) - 1,
+    tail(daily.seq.start, 1))
 
-  cbind(paste(starts), paste(ends))
+  tibble(
+    targets = rep(as.list(targets), length(starts)),
+    items = rep(as.list(targets), length(starts)),
+    start = starts, end = ends
+  )
+
 }

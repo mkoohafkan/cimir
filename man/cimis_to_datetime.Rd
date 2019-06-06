@@ -16,6 +16,11 @@ the \code{"Date"} and \code{"Hour"} columns.
 \description{
 Collapse The Date and Hour columns to a single DateTime Column.
 }
+\details{
+According to the
+\href{https://cimis.water.ca.gov/Default.aspx}{CIMIS Report FAQs},
+all CIMIS data is based on Pacific Standard Time (PST).
+}
 \examples{
 if(is_key_set()) {
   d = cimis_data(targets = 170, start.date = Sys.Date() - 4, 
