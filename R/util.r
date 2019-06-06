@@ -149,3 +149,42 @@ cimis_compass_to_degrees = function(x) {
     stop('Unrecognized values in arugment "x".')
   res
 }
+
+
+#' Format CIMIS Station Location
+#'
+#' Format the latitude and longitude of station in
+#'   Decimal Degrees (DD) or Hour Minutes Seconds (HMS).
+#'
+#' @inheritParams cimis_to_datetime 
+#' @param format The format to use, either Decimal Degrees (`"DD"`)
+#'   or Hour Minutes Seconds (`"HMS"`).
+#'
+#' @return The data frame, with a new `"Latitude"` and `"Longitude"` 
+#'   columns replacing the `"HmsLatitude"` and `"HmsLongitude"` 
+#'   columns.
+#'
+#' @examples
+#' if(is_key_set()) {
+#'   d = cimis_station(170)
+#'   cimis_format_location(d, "DD")
+#'   cimis_format_location(d, "HMS")
+#' } 
+#'
+#' @importFrom dplyr mutate_at rename
+#' @importFrom stringr str_split str_replace
+#' @export
+cimis_format_location = function (d, format = c("DD", "HMS")) {
+  format = match.arg(str_to_upper(format), c("DD", "HMS"))
+  if (format == "HMS") {
+    fun = function(x)
+      str_replace(str_split(x, " / ", simplify = TRUE)[, 1], "^-", "")
+  } else {
+    fun = function(x)
+      as.numeric(str_split(x, " / ", simplify = TRUE)[, 2])
+  }
+  rename(
+    mutate_at(d, c("HmsLatitude", "HmsLongitude"), fun),
+    Latitude = .data$HmsLatitude, longitude = .data$HmsLongitude
+  ) 
+}
