@@ -14,6 +14,8 @@ This release includes the following changes:
   of a vector of compass direction labels.
 - New helper function `cimis_format_location` formats station latitudes 
   and longitudes as either decimal degrees (numeric) or Hours Minutes Seconds.
+- Text encoding of Web API results are set to "UTF-8", fixing potential formatting
+  issues.
 
 # cimir 0.2-0 (2019-03-14)
 
