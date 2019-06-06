@@ -185,6 +185,6 @@ cimis_format_location = function (d, format = c("DD", "HMS")) {
   }
   rename(
     mutate_at(d, c("HmsLatitude", "HmsLongitude"), fun),
-    Latitude = .data$HmsLatitude, longitude = .data$HmsLongitude
+    Latitude = .data$HmsLatitude, Longitude = .data$HmsLongitude
   ) 
 }
