@@ -1,16 +1,12 @@
-Submission of cimir 0.2-0. 
+Submission of cimir 0.3-0.
 
 This release includes the following changes:
 
-- HTTPS is now used to access the CIMIS web API.
-- The URL formatting has bee updated to reflect a change in
-  how the CIMIS web API formats the prioritizeSCS argument.
-- Function names have been updated to follow best 
-  (or at least better) practices for avoiding
-  naming conflicts and improving clarity. Old function names
-  have been soft-deprecated.
-- The quickstart vignette has been updated to use the new function
-  names.
+- Package import "Rcurl" replaced with "curl" (>= 3.3).
+- Data items not listed in the CIMIS Web API documentation were 
+  identified and added to output of `cimis_items()`.
+- Function `cimis_to_datetime()` now explicitly uses Etc/GMT+8 
+  timezone to ensure match with standard timezone used by CIMIS (PST).
 
 ## Test environments
 
