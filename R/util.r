@@ -97,25 +97,25 @@ bind_records = function(result) {
 #'
 #' @importFrom dplyr tibble n mutate bind_rows
 #' @export
-cimis_split_query = function(targets, start.date, end.date, items, max.length = 1750L) {
+cimis_split_query = function(targets, start.date, end.date, items, max.records = 1750L) {
   hourly.items = intersect(items, cimis_items("Hourly")[["Data Item"]])
   daily.items = intersect(items, cimis_items("Daily")[["Data Item"]])
   if (length(hourly.items) > 0L) {
-    hourly.ranges = date_seq(start.date, end.date, max.length,
-      24 * length(targets) * length(hourly.items))
+    hourly.ranges = mutate(date_seq(start.date, end.date, max.records,
+      24 * length(targets) * length(hourly.items)),
+      items = rep(list(hourly.items), n()))
   } else {
     hourly.ranges = NULL
   }
   if (length(daily.items) > 0L) {
-    daily.ranges = date_seq(start.date, end.date, max.length,
-      length(targets) * length(hourly.items))
+    daily.ranges = mutate(date_seq(start.date, end.date, max.records,
+      length(targets) * length(hourly.items)),
+      items = rep(list(daily.items), n()))
   } else {
     daily.ranges = NULL
   }
-  mutate(bind_rows(
-    mutate(daily.ranges, items = rep(list(daily.items), n())),
-    mutate(hourly.ranges, items = rep(list(hourly.items), n()))
-  ), targets = rep(list(targets), n()))
+  mutate(bind_rows(daily.ranges, hourly.ranges),
+    targets = rep(list(targets), n()))
 }
 
 #' @importFrom dplyr tibble

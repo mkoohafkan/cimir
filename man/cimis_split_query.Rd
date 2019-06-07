@@ -5,7 +5,7 @@
 \title{Split CIMIS Query}
 \usage{
 cimis_split_query(targets, start.date, end.date, items,
-  max.length = 1750L)
+  max.records = 1750L)
 }
 \arguments{
 \item{targets}{geographies or weather stations of interest. This
