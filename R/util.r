@@ -83,7 +83,9 @@ bind_records = function(result) {
 #' time interval.
 #'
 #' @inheritParams cimis_data
-#' @param num.days The maximum number of days that each query can span.
+#' @param max.records The maximum number of records returned by a query. 
+#'   The default value is the the maximum data limit allowed by the 
+#'   CIMIS Web API (1,750 records).
 #' @return A data frame with columns "targets", "start.date", "end.date", and
 #'   "items". 
 #'
@@ -93,24 +95,43 @@ bind_records = function(result) {
 #' @examples
 #' cimis_split_query(170, "2010-01-01", "2018-01-01", "hly-air-tmp", 365)
 #'
+#' @importFrom dplyr tibble n mutate bind_rows
+#' @export
+cimis_split_query = function(targets, start.date, end.date, items, max.length = 1750L) {
+  hourly.items = intersect(items, cimis_items("Hourly")[["Data Item"]])
+  daily.items = intersect(items, cimis_items("Daily")[["Data Item"]])
+  if (length(hourly.items) > 0L) {
+    hourly.ranges = date_seq(start.date, end.date, max.length,
+      24 * length(targets) * length(hourly.items))
+  } else {
+    hourly.ranges = NULL
+  }
+  if (length(daily.items) > 0L) {
+    daily.ranges = date_seq(start.date, end.date, max.length,
+      length(targets) * length(hourly.items))
+  } else {
+    daily.ranges = NULL
+  }
+  mutate(bind_rows(
+    mutate(daily.ranges, items = rep(list(daily.items), n())),
+    mutate(hourly.ranges, items = rep(list(hourly.items), n()))
+  ), targets = rep(list(targets), n()))
+}
+
 #' @importFrom dplyr tibble
 #' @importFrom utils head tail
-#' @export
-cimis_split_query = function(targets, start.date, end.date, items, num.days = 365) {
+#' @keywords internal
+date_seq = function(start.date, end.date, max.length, multiplier) {
   start.date = as.Date(start.date)
   end.date = as.Date(end.date)
-  interval = as.integer(ceiling((end.date - start.date) / num.days))
-  daily.seq.start = seq(start.date, end.date, length.out = interval)
-  starts = head(daily.seq.start, -1)
-  ends = c(head(tail(daily.seq.start, -1), -1) - 1,
-    tail(daily.seq.start, 1))
-
-  tibble(
-    targets = rep(list(targets), length(starts)),
-    items = rep(list(items), length(starts)),
-    start.date = starts, end.date = ends
-  )
+  num.records = (end.date - start.date) * multiplier
+  num.queries = as.integer(ceiling(num.records / max.length))
+  seq.start = seq(start.date, end.date, length.out = num.queries)
+  starts = head(seq.start, -1)
+  ends = c(head(tail(seq.start, -1), -1) - 1, tail(seq.start, 1))
+  tibble(start.date = starts, end.date = ends)
 }
+
 
 #' Compass Direction To Degrees
 #'
