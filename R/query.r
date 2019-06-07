@@ -192,7 +192,8 @@ basic_query = function(url) {
   result = curl_fetch_memory(url, handle = cimir_handle())
   if (result$status_code != 200L)
     stop("CIMIS query failed with status ",
-      parse_headers(result$headers)[1], "\n  ",
+      parse_headers(result$headers)[1], "\n",
+      parse(text = rawToChar(result$content)), "\n",
       "URL request: ", result$url,
       call. = FALSE)
   value = rawToChar(result$content)
