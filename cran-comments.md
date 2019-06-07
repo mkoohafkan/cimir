@@ -16,10 +16,11 @@ This release includes the following changes:
   and longitudes as either decimal degrees (numeric) or Hours Minutes Seconds.
 - Text encoding of Web API results are set to "UTF-8", fixing potential formatting
   issues.
+- Improved error messaging.
 
 ## Test environments
 
-* Local Windows 10 install, R 3.5.1
+* Local Windows 10 install, R 3.6.0
 * Ubuntu 14.04 (on travis-ci), R-oldrel, R-release, R-devel
 
 Because the CIMIS Web API requires an App Key, examples are only

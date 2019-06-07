@@ -16,6 +16,7 @@ This release includes the following changes:
   and longitudes as either decimal degrees (numeric) or Hours Minutes Seconds.
 - Text encoding of Web API results are set to "UTF-8", fixing potential formatting
   issues.
+- HTTP errors now include the message text provided by CIMIS to describe the issue.
 
 # cimir 0.2-0 (2019-03-14)
 
