@@ -93,7 +93,9 @@ bind_records = function(result) {
 #'   query will include all targets and items. 
 #'
 #' @examples
-#' cimis_split_query(170, "2010-01-01", "2018-01-01", "hly-air-tmp", 365)
+#' cimis_split_query(170, "2000-01-01", "2010-12-31", "day-air-tmp-avg")
+#' cimis_split_query(c(149, 170), "2018-01-01", "2018-12-31", 
+#'   c("day-air-tmp-avg", "hly-air-tmp", "hly-rel-hum"))
 #'
 #' @importFrom dplyr tibble n mutate bind_rows
 #' @export
@@ -109,7 +111,7 @@ cimis_split_query = function(targets, start.date, end.date, items, max.records =
   }
   if (length(daily.items) > 0L) {
     daily.ranges = mutate(date_seq(start.date, end.date, max.records,
-      length(targets) * length(hourly.items)),
+      length(targets) * length(daily.items)),
       items = rep(list(daily.items), n()))
   } else {
     daily.ranges = NULL
@@ -124,12 +126,16 @@ cimis_split_query = function(targets, start.date, end.date, items, max.records =
 date_seq = function(start.date, end.date, max.length, multiplier) {
   start.date = as.Date(start.date)
   end.date = as.Date(end.date)
-  num.records = (end.date - start.date) * multiplier
-  num.queries = as.integer(ceiling(num.records / max.length))
-  seq.start = seq(start.date, end.date, length.out = num.queries)
-  starts = head(seq.start, -1)
-  ends = c(head(tail(seq.start, -1), -1) - 1, tail(seq.start, 1))
-  tibble(start.date = starts, end.date = ends)
+  num.records = as.numeric((end.date - start.date) * multiplier)
+  if (num.records < max.length) {
+    tibble(start.date = start.date, end.date = end.date)
+  } else {
+    num.queries = as.integer(ceiling(num.records / max.length))
+    seq.start = seq(start.date, end.date, length.out = num.queries)
+    starts = head(seq.start, -1)
+    ends = c(head(tail(seq.start, -1), -1) - 1, tail(seq.start, 1))
+    tibble(start.date = starts, end.date = ends)
+  }
 }
 
 
