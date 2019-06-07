@@ -24,6 +24,7 @@ r_binary_packages:
 
 r_packages:
  - covr
+ - remotes
 
 after_success:
  - Rscript -e 'library(covr); codecov()'
