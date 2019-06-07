@@ -8,23 +8,3 @@ cache: packages
 # Be strict when checking our package
 warnings_are_errors: true
 
-# System dependencies for HTTP calling
-
-r_binary_packages:
- - curl
- - glue
- - stringr
- - dplyr
- - tidyr
- - jsonlite
- - purrr
- - rlang
- - knitr
- - rmarkdown
-
-r_packages:
- - covr
- - remotes
-
-after_success:
- - Rscript -e 'library(covr); codecov()'
