@@ -1,4 +1,4 @@
-# cimir 0.3-0
+# cimir 0.3-0 (2019-06-10)
 
 This release includes the following changes:
 
