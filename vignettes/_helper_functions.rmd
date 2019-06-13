@@ -1,0 +1,108 @@
+---
+title: "Helper Functions"
+author: "Michael Koohafkan"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Helper Functions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This document gets illustrates some of the helper functions in `cimir `.
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = TRUE
+)
+```
+
+First, simply load the `cimir` library:
+
+```{r eval = FALSE}
+library(cimir)
+```
+
+In this vignette, we'll use some example data from the 
+Markleeville station (#246). The station metadata can be 
+retrieved with `cimis_station()`:
+
+```{r eval = FALSE}
+station.meta = cimis_station(246)
+print(station.meta)
+```
+
+```{r echo = FALSE, results = "markup"}
+station.meta = cimis_station(246)
+knitr::kable(station.meta)
+```
+
+Notice that the station latitude and longitude is provided as a text
+string, in both Hour Minute Second (HMMS) and Decimal Degree (DD) 
+format. We can extract one or the other of these formats using 
+`cimis_format_location()`:
+
+```{r eval = FALSE}
+station.meta = cimis_format_location(station.meta, "DD")
+head(station.meta)
+```
+
+```{r echo = FALSE, results = "markup"}
+station.meta = cimis_format_location(station.meta, "DD")
+knitr::kable(head(station.meta))
+```
+
+Now let's retrieve some data with `cimis_data()`:
+
+
+```{r eval = FALSE}
+station.data = cimis_data(246, "2017-04-01", "2017-04-30",
+  c("day-air-tmp-avg", "hly-air-tmp"))
+head(station.data)
+```
+
+```{r echo = FALSE, results = "markup"}
+station.data = cimis_data(246, "2017-04-01", "2017-04-30",
+  c("day-air-tmp-avg", "hly-air-tmp"))
+knitr::kable(head(station.data))
+```
+
+Notice that hourly data returns timestamps in two columns "Date" and 
+"Hour". Furthermore, since we requested both a daily item and an hourly 
+item, the daily item records have `NA` values for the "Hour" column. We 
+can collapse these columns into a single datetime column using 
+`cimis_to_datetime()`:
+
+```{r eval = FALSE}
+station.data = cimis_to_datetime(station.data)
+head(station.data)
+```
+
+```{r echo = FALSE, results = "markup"}
+station.data = cimis_to_datetime(station.data)
+knitr::kable(head(mutate(station.data, Datetime = paste(Datetime))))
+```
+
+Note that a time of `00:00:00` is used for daily records.
+
+The CIMIS Web API has fairly conservative limitations on the number
+of records you can query at once. Large queries can be split 
+automatically into a series of smaller queries using `cimis_split_queries`:
+
+```{r}
+queries = cimis_split_query(247, "2017-04-01", "2018-04-30",
+  c("day-air-tmp-avg", "hly-air-tmp"))
+queries
+```
+
+The queries can then be run in sequence using e.g. `mapply()` or 
+`purrr::pmap()`:
+
+```{r eval = FALSE}
+purrr::pmap_dfr(queries, cimis_data)
+```
+
+Note that the CIMIS API may reject your requests if you submit too many 
+queries in a short period of time.

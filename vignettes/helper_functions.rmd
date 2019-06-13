@@ -1,0 +1,129 @@
+---
+title: "Helper Functions"
+author: "Michael Koohafkan"
+date: "2019-06-13"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Helper Functions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This document gets illustrates some of the helper functions in `cimir `.
+
+
+
+First, simply load the `cimir` library:
+
+
+```r
+library(cimir)
+```
+
+In this vignette, we'll use some example data from the 
+Markleeville station (#246). The station metadata can be 
+retrieved with `cimis_station()`:
+
+
+```r
+station.meta = cimis_station(246)
+print(station.meta)
+```
+
+
+|StationNbr |Name         |City         |RegionalOffice              |County |ConnectDate |DisconnectDate |IsActive |IsEtoStation |Elevation |GroundCover |HmsLatitude           |HmsLongitude              |ZipCodes |SitingDesc |
+|:----------|:------------|:------------|:---------------------------|:------|:-----------|:--------------|:--------|:------------|:---------|:-----------|:---------------------|:-------------------------|:--------|:----------|
+|246        |Markleeville |Markleeville |North Central Region Office |Alpine |6/13/2014   |12/31/2050     |True     |True         |5517      |Grass       |38º46'24N / 38.773409 |-119º47'31W / -119.791930 |96120    |           |
+|246        |Markleeville |Markleeville |North Central Region Office |Alpine |6/13/2014   |12/31/2050     |True     |True         |5517      |Grass       |38º46'24N / 38.773409 |-119º47'31W / -119.791930 |96133    |           |
+
+Notice that the station latitude and longitude is provided as a text
+string, in both Hour Minute Second (HMMS) and Decimal Degree (DD) 
+format. We can extract one or the other of these formats using 
+`cimis_format_location()`:
+
+
+```r
+station.meta = cimis_format_location(station.meta, "DD")
+head(station.meta)
+```
+
+
+|StationNbr |Name         |City         |RegionalOffice              |County |ConnectDate |DisconnectDate |IsActive |IsEtoStation |Elevation |GroundCover | Latitude| Longitude|ZipCodes |SitingDesc |
+|:----------|:------------|:------------|:---------------------------|:------|:-----------|:--------------|:--------|:------------|:---------|:-----------|--------:|---------:|:--------|:----------|
+|246        |Markleeville |Markleeville |North Central Region Office |Alpine |6/13/2014   |12/31/2050     |True     |True         |5517      |Grass       | 38.77341| -119.7919|96120    |           |
+|246        |Markleeville |Markleeville |North Central Region Office |Alpine |6/13/2014   |12/31/2050     |True     |True         |5517      |Grass       | 38.77341| -119.7919|96133    |           |
+
+Now let's retrieve some data with `cimis_data()`:
+
+
+
+```r
+station.data = cimis_data(246, "2017-04-01", "2017-04-30",
+  c("day-air-tmp-avg", "hly-air-tmp"))
+head(station.data)
+```
+
+
+|Name  |Type    |Owner        |Date       | Julian|Station |Standard |ZipCodes     |Scope |Item         | Value|Qc |Unit |Hour |
+|:-----|:-------|:------------|:----------|------:|:-------|:--------|:------------|:-----|:------------|-----:|:--|:----|:----|
+|cimis |station |water.ca.gov |2017-04-01 |     91|246     |english  |96120, 96133 |daily |DayAirTmpAvg |  42.8|   |(F)  |NA   |
+|cimis |station |water.ca.gov |2017-04-02 |     92|246     |english  |96120, 96133 |daily |DayAirTmpAvg |  45.7|   |(F)  |NA   |
+|cimis |station |water.ca.gov |2017-04-03 |     93|246     |english  |96120, 96133 |daily |DayAirTmpAvg |  41.1|   |(F)  |NA   |
+|cimis |station |water.ca.gov |2017-04-04 |     94|246     |english  |96120, 96133 |daily |DayAirTmpAvg |  47.0|   |(F)  |NA   |
+|cimis |station |water.ca.gov |2017-04-05 |     95|246     |english  |96120, 96133 |daily |DayAirTmpAvg |  52.4|   |(F)  |NA   |
+|cimis |station |water.ca.gov |2017-04-06 |     96|246     |english  |96120, 96133 |daily |DayAirTmpAvg |  48.9|   |(F)  |NA   |
+
+Notice that hourly data returns timestamps in two columns "Date" and 
+"Hour". Furthermore, since we requested both a daily item and an hourly 
+item, the daily item records have `NA` values for the "Hour" column. We 
+can collapse these columns into a single datetime column using 
+`cimis_to_datetime()`:
+
+
+```r
+station.data = cimis_to_datetime(station.data)
+head(station.data)
+```
+
+
+|Name  |Type    |Owner        |Datetime            | Julian|Station |Standard |ZipCodes     |Scope |Item         | Value|Qc |Unit |
+|:-----|:-------|:------------|:-------------------|------:|:-------|:--------|:------------|:-----|:------------|-----:|:--|:----|
+|cimis |station |water.ca.gov |2017-04-01 00:00:00 |     91|246     |english  |96120, 96133 |daily |DayAirTmpAvg |  42.8|   |(F)  |
+|cimis |station |water.ca.gov |2017-04-02 00:00:00 |     92|246     |english  |96120, 96133 |daily |DayAirTmpAvg |  45.7|   |(F)  |
+|cimis |station |water.ca.gov |2017-04-03 00:00:00 |     93|246     |english  |96120, 96133 |daily |DayAirTmpAvg |  41.1|   |(F)  |
+|cimis |station |water.ca.gov |2017-04-04 00:00:00 |     94|246     |english  |96120, 96133 |daily |DayAirTmpAvg |  47.0|   |(F)  |
+|cimis |station |water.ca.gov |2017-04-05 00:00:00 |     95|246     |english  |96120, 96133 |daily |DayAirTmpAvg |  52.4|   |(F)  |
+|cimis |station |water.ca.gov |2017-04-06 00:00:00 |     96|246     |english  |96120, 96133 |daily |DayAirTmpAvg |  48.9|   |(F)  |
+
+Note that a time of `00:00:00` is used for daily records.
+
+The CIMIS Web API has fairly conservative limitations on the number
+of records you can query at once. Large queries can be split 
+automatically into a series of smaller queries using `cimis_split_queries`:
+
+
+```r
+queries = cimis_split_query(247, "2017-04-01", "2018-04-30",
+  c("day-air-tmp-avg", "hly-air-tmp"))
+queries
+#> # A tibble: 7 x 4
+#>   start.date end.date   items     targets  
+#>   <date>     <date>     <list>    <list>   
+#> 1 2017-04-01 2018-04-30 <chr [1]> <dbl [1]>
+#> 2 2017-04-01 2017-06-04 <chr [1]> <dbl [1]>
+#> 3 2017-06-05 2017-08-09 <chr [1]> <dbl [1]>
+#> 4 2017-08-10 2017-10-14 <chr [1]> <dbl [1]>
+#> 5 2017-10-15 2017-12-18 <chr [1]> <dbl [1]>
+#> 6 2017-12-19 2018-02-22 <chr [1]> <dbl [1]>
+#> 7 2018-02-23 2018-04-30 <chr [1]> <dbl [1]>
+```
+
+The queries can then be run in sequence using e.g. `mapply` or `purrr_pmap`:
+
+
+```r
+purrr::pmap_dfr(queries, cimis_data)
+```
+
+Note that the CIMIS API may reject your requests if you submit too many 
+queries in a short period of time.
