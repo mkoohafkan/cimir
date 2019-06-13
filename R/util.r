@@ -25,7 +25,7 @@ cimis_to_datetime = function(d) {
   rename(select(mutate(d,
     Hour = if_else(is.na(.data$Hour), "0000", .data$Hour),
     Date = as.POSIXct(str_c(.data$Date, " ", .data$Hour),
-      format = "%Y-%m-%d %H%M"), tz = "Etc/GMT+8"),
+      format = "%Y-%m-%d %H%M", tz = "Etc/GMT+8")),
     -.data$Hour
   ), Datetime = .data$Date)
 }
@@ -126,12 +126,12 @@ cimis_split_query = function(targets, start.date, end.date, items, max.records =
 date_seq = function(start.date, end.date, max.length, multiplier) {
   start.date = as.Date(start.date)
   end.date = as.Date(end.date)
-  num.records = as.numeric((end.date - start.date) * multiplier)
+  num.records = as.numeric(end.date - start.date) * multiplier
   if (num.records < max.length) {
     tibble(start.date = start.date, end.date = end.date)
   } else {
     num.queries = as.integer(ceiling(num.records / max.length))
-    seq.start = seq(start.date, end.date, length.out = num.queries)
+    seq.start = seq(start.date, end.date, length.out = num.queries + 1)
     starts = head(seq.start, -1)
     ends = c(head(tail(seq.start, -1), -1) - 1, tail(seq.start, 1))
     tibble(start.date = starts, end.date = ends)
