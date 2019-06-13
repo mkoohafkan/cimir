@@ -152,7 +152,7 @@ cimis_spatial_zipcode()
 ```
 
 Once the stations or regions of interest are identified, 
-you can retrieve data using `query_cimis()`:
+you can retrieve data using `cimis_data()`:
 
 
 ```r
