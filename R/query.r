@@ -34,6 +34,31 @@ cimis_items = function(type = c("Daily", "Hourly")) {
   filter(dataitems, .data$Class %in% type)
 }
 
+#' CIMIS Data Flags
+#'
+#' List CIMIS data quality control flags.
+#'
+#' @param type The type of data flag, i.e. `"Severe"` or `"Informative"`.
+#' @param period The Time period that data was collected, i.e. "Current" or
+#'   "Former" (pre-1995).
+#' @return a dataframe of data flags.
+#'
+#' @seealso [CIMIS Data Overview - Quality Control](https://cimis.water.ca.gov/Resources.aspx)
+#'
+#' @examples
+#' cimis_flags()
+#' cimis_flags("Informative")
+#' cimis_flags("Severe", period = "Former")
+#'
+#' @importFrom stringr str_to_title
+#' @importFrom dplyr filter
+#' @export
+cimis_flags = function(type = c("Severe", "Informative"), period = "Current") {
+  type = match.arg(str_to_title(type), c("Severe", "Informative"), TRUE)
+  period = match.arg(str_to_title(period), c("Current", "Former"), TRUE)
+  filter(dataflags, .data$Class %in% type, .data$Period %in% period)
+}
+
 #' Query CIMIS Data
 #'
 #' Query CIMIS data using the Web API.

@@ -2,6 +2,7 @@
 
 export(cimis_compass_to_degrees)
 export(cimis_data)
+export(cimis_flags)
 export(cimis_format_location)
 export(cimis_items)
 export(cimis_spatial_zipcode)
