@@ -149,7 +149,7 @@ date_seq = function(start.date, end.date, max.length, multiplier) {
 #'   South-southeast (SSE), South-southwest (SSW), West-southwest (WSW),
 #'   West-northwest (WNW), and North-northwest (NNW).
 #'
-#' @return A numeric vector of degrees corresponding to the middle azimumth
+#' @return A numeric vector of degrees corresponding to the middle azimuth
 #'   of the corresponding compass direction.
 #'
 #' @examples
