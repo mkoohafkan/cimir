@@ -25,3 +25,6 @@ cimis_compass_to_degrees("day-wind-nne")
 cimis_compass_to_degrees(c("SSE", "SSW", "wsw", "Wnw", "nnw"))
 
 }
+\seealso{
+\code{\link[=cimis_degrees_to_compass]{cimis_degrees_to_compass()}}
+}

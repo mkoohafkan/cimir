@@ -156,6 +156,8 @@ date_seq = function(start.date, end.date, max.length, multiplier) {
 #' cimis_compass_to_degrees("day-wind-nne")
 #' cimis_compass_to_degrees(c("SSE", "SSW", "wsw", "Wnw", "nnw"))
 #'
+#' @seealso [cimis_degrees_to_compass()]
+#'
 #' @importFrom dplyr case_when
 #' @importFrom stringr str_to_upper str_detect
 #' @export
@@ -175,6 +177,30 @@ cimis_compass_to_degrees = function(x) {
   if (any(is.na(res)))
     stop('Unrecognized values in arugment "x".')
   res
+}
+
+#' Degrees to Compass Direction
+#'
+#' Convert decimal degrees to Compass direction.
+#'
+#' @param x A vector of directions in degrees.
+#' @return A factor vector of compass directions.
+#'
+#' @details Degrees are labeled with their corresponding 
+#'   Primary InterCardinal compass direction, following the
+#'   convention of the CIMIS daily wind data items.
+#' 
+#' @examples
+#' cimis_degrees_to_compass(c(30, 83, 120, 140, 190, 240, 300, 330))
+#' cimis_degrees_to_compass(cimis_compass_to_degrees(c("NNE", "ENE", "ESE", 
+#'   "SSE", "SSW", "WSW", "WNW", "NNW"))
+#'
+#' @seealso [cimis_compass_to_degrees()]
+#' @export
+cimis_degrees_to_compass = function(x) {
+  breaks = c(0, 45, 90, 135, 180, 225, 270, 315, 360)
+  labels = c("NNE", "ENE", "ESE", "SSE", "SSW", "WSW", "WNW", "NNW")
+  cut(x, breaks, labels, include.lowest = TRUE)
 }
 
 
@@ -201,17 +227,17 @@ cimis_compass_to_degrees = function(x) {
 #' @importFrom dplyr mutate_at rename
 #' @importFrom stringr str_split str_replace
 #' @export
-cimis_format_location = function (d, format = c("DD", "HMS")) {
+cimis_format_location = function(d, format = c("DD", "HMS")) {
   format = match.arg(str_to_upper(format), c("DD", "HMS"))
   if (format == "HMS") {
     fun = function(x)
       str_replace(str_split(x, " / ", simplify = TRUE)[, 1], "^-", "")
-  } else {
-    fun = function(x)
-      as.numeric(str_split(x, " / ", simplify = TRUE)[, 2])
-  }
+    } else {
+      fun = function(x)
+        as.numeric(str_split(x, " / ", simplify = TRUE)[, 2])
+      }
   rename(
     mutate_at(d, c("HmsLatitude", "HmsLongitude"), fun),
     Latitude = .data$HmsLatitude, Longitude = .data$HmsLongitude
-  ) 
+  )
 }
