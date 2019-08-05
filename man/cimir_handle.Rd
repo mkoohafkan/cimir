@@ -2,11 +2,11 @@
 % Please edit documentation in R/query.r
 \name{cimir_handle}
 \alias{cimir_handle}
-\title{cimir RCurl handle}
+\title{cimir curl handle}
 \usage{
 cimir_handle()
 }
 \description{
-Get the handle for RCurl URL handling in cimir.
+Get the handle for curl URL handling in cimir.
 }
 \keyword{internal}

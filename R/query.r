@@ -227,15 +227,15 @@ basic_query = function(url) {
     simplifyDataFrame = FALSE)
 }
 
-#' cimir RCurl handle
+#' cimir curl handle
 #'
-#' Get the handle for RCurl URL handling in cimir.
+#' Get the handle for curl URL handling in cimir.
 #'
 #' @importFrom curl new_handle handle_setopt handle_setheaders
 #' @keywords internal
 cimir_handle = function() {
   h = new_handle()
-  handle_setopt(h, connecttimeout = options()[["cimir.timeout"]])
+  handle_setopt(h, connecttimeout = getOption("cimir.timeout"))
   handle_setheaders(h, Accept = "application/json")
   h
 }
