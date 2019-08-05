@@ -7,7 +7,7 @@
 cimis_degrees_to_compass(x)
 }
 \arguments{
-\item{x}{A vector of directions in degrees.}
+\item{x}{A vector of directions in decimal degrees.}
 }
 \value{
 A factor vector of compass directions.
@@ -23,7 +23,7 @@ convention of the CIMIS daily wind data items.
 \examples{
 cimis_degrees_to_compass(c(30, 83, 120, 140, 190, 240, 300, 330))
 cimis_degrees_to_compass(cimis_compass_to_degrees(c("NNE", "ENE", "ESE", 
-  "SSE", "SSW", "WSW", "WNW", "NNW"))
+  "SSE", "SSW", "WSW", "WNW", "NNW")))
 
 }
 \seealso{

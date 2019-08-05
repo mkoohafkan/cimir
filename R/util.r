@@ -183,7 +183,7 @@ cimis_compass_to_degrees = function(x) {
 #'
 #' Convert decimal degrees to Compass direction.
 #'
-#' @param x A vector of directions in degrees.
+#' @param x A vector of directions in decimal degrees.
 #' @return A factor vector of compass directions.
 #'
 #' @details Degrees are labeled with their corresponding 
@@ -193,7 +193,7 @@ cimis_compass_to_degrees = function(x) {
 #' @examples
 #' cimis_degrees_to_compass(c(30, 83, 120, 140, 190, 240, 300, 330))
 #' cimis_degrees_to_compass(cimis_compass_to_degrees(c("NNE", "ENE", "ESE", 
-#'   "SSE", "SSW", "WSW", "WNW", "NNW"))
+#'   "SSE", "SSW", "WSW", "WNW", "NNW")))
 #'
 #' @seealso [cimis_compass_to_degrees()]
 #' @export
