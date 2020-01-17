@@ -1,7 +1,7 @@
 ---
 title: "Quick Start"
 author: "Michael Koohafkan"
-date: "2019-03-18"
+date: "2020-01-17"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Quick Start}
@@ -44,48 +44,50 @@ the function  `cimis_items()`:
 
 ```r
 cimis_items()
-#>                Item                      Name  Class  Provider
-#> 1   day-air-tmp-avg   Average Air Temperature  Daily       WSN
-#> 2   day-air-tmp-avg   Average Air Temperature  Daily       WSN
-#> 3   day-air-tmp-min   Minimum Air Temperature  Daily       WSN
-#> 4       day-dew-pnt                 Dew Point  Daily       WSN
-#> 5           day-eto                 CIMIS ETo  Daily       WSN
-#> 6      day-asce-eto                  ASCE ETo  Daily WSN & SCS
-#> 7      day-asce-etr                  ASCE ETr  Daily       WSN
-#> 8        day-precip             Precipitation  Daily       WSN
-#> 9   day-rel-hum-avg Average Relative Humidity  Daily       WSN
-#> 10  day-rel-hum-max Maximum Relative Humidity  Daily       WSN
-#> 11  day-rel-hum-min Minimum Relative Humidity  Daily       WSN
-#> 12 day-soil-tmp-avg  Average Soil Temperature  Daily       WSN
-#> 13 day-soil-tmp-max  Maximum Soil Temperature  Daily       WSN
-#> 14 day-soil-tmp-min  Minimum Soil Temperature  Daily       WSN
-#> 15  day-sol-rad-avg   Average Solar Radiation  Daily WSN & SCS
-#> 16  day-sol-rad-net       Net Solar Radiation  Daily       WSN
-#> 17 day-vap-pres-max    Maximum Vapor Pressure  Daily       WSN
-#> 18 day-vap-pres-avg    Average Vapor Pressure  Daily       WSN
-#> 19     day-wind-ene      Wind East-North-East  Daily       WSN
-#> 20     day-wind-ese      Wind East-South-East  Daily       WSN
-#> 21     day-wind-nne     Wind North-North-East  Daily       WSN
-#> 22     day-wind-nnw     Wind North-North-West  Daily       WSN
-#> 23     day-wind-run                  Wind Run  Daily       WSN
-#> 24 day-wind-spd-avg        Average Wind Speed  Daily       WSN
-#> 25     day-wind-ssw     Wind South-South-West  Daily       WSN
-#> 26     day-wind-wnw      Wind West-North-West  Daily       WSN
-#> 27     day-wind-wsw      Wind West-South-West  Daily       WSN
-#> 28      hly-air-tmp           Air Temperature Hourly       WSN
-#> 29      hly-dew-pnt                 Dew Point Hourly       WSN
-#> 30          hly-eto                 CIMIS ETo Hourly       WSN
-#> 31      hly-net-rad             Net Radiation Hourly       WSN
-#> 32     hly-asce-eto                  ASCE ETo Hourly       WSN
-#> 33     hly-asce-etr                  ASCE ETr Hourly       WSN
-#> 34       hly-precip             Precipitation Hourly       WSN
-#> 35      hly-rel-hum         Relative Humidity Hourly       WSN
-#> 36     hly-res-wind            Resultant Wind Hourly       WSN
-#> 37     hly-soil-tmp          Soil Temperature Hourly       WSN
-#> 38      hly-sol-rad           Solar Radiation Hourly       WSN
-#> 39     hly-vap-pres            Vapor Pressure Hourly       WSN
-#> 40     hly-wind-dir            Wind Direction Hourly       WSN
-#> 41     hly-wind-spd                Wind Speed Hourly       WSN
+#>                         Name        Data Item  Class Data Provider Support
+#> 1    Average Air Temperature  day-air-tmp-avg  Daily                   WSN
+#> 2    Maximum Air Temperature  day-air-tmp-max  Daily                   WSN
+#> 3    Minimum Air Temperature  day-air-tmp-min  Daily                   WSN
+#> 4                  Dew Point      day-dew-pnt  Daily                   WSN
+#> 5                  CIMIS ETo          day-eto  Daily                   WSN
+#> 6                   ASCE ETo     day-asce-eto  Daily             WSN & SCS
+#> 7                   ASCE ETr     day-asce-etr  Daily                   WSN
+#> 8              Precipitation       day-precip  Daily                   WSN
+#> 9  Average Relative Humidity  day-rel-hum-avg  Daily                   WSN
+#> 10 Maximum Relative Humidity  day-rel-hum-max  Daily                   WSN
+#> 11 Minimum Relative Humidity  day-rel-hum-min  Daily                   WSN
+#> 12  Average Soil Temperature day-soil-tmp-avg  Daily                   WSN
+#> 13  Maximum Soil Temperature day-soil-tmp-max  Daily                   WSN
+#> 14  Minimum Soil Temperature day-soil-tmp-min  Daily                   WSN
+#> 15   Average Solar Radiation  day-sol-rad-avg  Daily             WSN & SCS
+#> 16       Net Solar Radiation  day-sol-rad-net  Daily                   WSN
+#> 17    Average Vapor Pressure day-vap-pres-avg  Daily                   WSN
+#> 18    Maximum Vapor Pressure day-vap-pres-max  Daily                   WSN
+#> 19    Minimum Vapor Pressure day-vap-pres-min  Daily                   WSN
+#> 20      Wind East-North-East     day-wind-ene  Daily                   WSN
+#> 21      Wind East-South-East     day-wind-ese  Daily                   WSN
+#> 22     Wind North-North-East     day-wind-nne  Daily                   WSN
+#> 23     Wind North-North-West     day-wind-nnw  Daily                   WSN
+#> 24                  Wind Run     day-wind-run  Daily                   WSN
+#> 25        Average Wind Speed day-wind-spd-avg  Daily                   WSN
+#> 26     Wind South-South-East     day-wind-sse  Daily                   WSN
+#> 27     Wind South-South-West     day-wind-ssw  Daily                   WSN
+#> 28      Wind West-North-West     day-wind-wnw  Daily                   WSN
+#> 29      Wind West-South-West     day-wind-wsw  Daily                   WSN
+#> 30           Air Temperature      hly-air-tmp Hourly                   WSN
+#> 31                 Dew Point      hly-dew-pnt Hourly                   WSN
+#> 32                 CIMIS ETo          hly-eto Hourly                   WSN
+#> 33             Net Radiation      hly-net-rad Hourly                   WSN
+#> 34                  ASCE ETo     hly-asce-eto Hourly                   WSN
+#> 35                  ASCE ETr     hly-asce-etr Hourly                   WSN
+#> 36             Precipitation       hly-precip Hourly                   WSN
+#> 37         Relative Humidity      hly-rel-hum Hourly                   WSN
+#> 38            Resultant Wind     hly-res-wind Hourly                   WSN
+#> 39          Soil Temperature     hly-soil-tmp Hourly                   WSN
+#> 40           Solar Radiation      hly-sol-rad Hourly                   WSN
+#> 41            Vapor Pressure     hly-vap-pres Hourly                   WSN
+#> 42            Wind Direction     hly-wind-dir Hourly                   WSN
+#> 43                Wind Speed     hly-wind-spd Hourly                   WSN
 ```
 
 To get a list of station IDs, use  `cimis_station()`:
@@ -93,7 +95,7 @@ To get a list of station IDs, use  `cimis_station()`:
 
 ```r
 cimis_station()
-#> # A tibble: 1,394 x 15
+#> # A tibble: 1,406 x 15
 #>    StationNbr Name  City  RegionalOffice County ConnectDate DisconnectDate
 #>    <chr>      <chr> <chr> <chr>          <chr>  <chr>       <chr>         
 #>  1 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
@@ -106,10 +108,9 @@ cimis_station()
 #>  8 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
 #>  9 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
 #> 10 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
-#> # ... with 1,384 more rows, and 8 more variables: IsActive <chr>,
-#> #   IsEtoStation <chr>, Elevation <chr>, GroundCover <chr>,
-#> #   HmsLatitude <chr>, HmsLongitude <chr>, ZipCodes <chr>,
-#> #   SitingDesc <chr>
+#> # ... with 1,396 more rows, and 8 more variables: IsActive <chr>,
+#> #   IsEtoStation <chr>, Elevation <chr>, GroundCover <chr>, HmsLatitude <chr>,
+#> #   HmsLongitude <chr>, ZipCodes <chr>, SitingDesc <chr>
 ```
 
 To get metadata for a subset of stations, simply pass a vector of 
@@ -120,7 +121,7 @@ with a particular zipcode (or spatial zipcode)
 
 ```r
 cimis_zipcode()
-#> # A tibble: 1,394 x 5
+#> # A tibble: 1,406 x 5
 #>    StationNbr ZipCode ConnectDate DisconnectDate IsActive
 #>         <int> <chr>   <chr>       <chr>          <chr>   
 #>  1         99 90401   12/11/1992  5/8/2050       True    
@@ -133,7 +134,7 @@ cimis_zipcode()
 #>  8         99 90408   12/11/1992  5/8/2050       True    
 #>  9         99 90409   12/11/1992  5/8/2050       True    
 #> 10         99 90410   12/11/1992  5/8/2050       True    
-#> # ... with 1,384 more rows
+#> # ... with 1,396 more rows
 cimis_spatial_zipcode()
 #> # A tibble: 1,715 x 4
 #>    ZipCode ConnectDate DisconnectDate IsActive
@@ -158,20 +159,20 @@ you can retrieve data using `cimis_data()`:
 ```r
 cimis_data(targets = 170, start.date = "2018-09-25", end.date = "2018-10-01")
 #> # A tibble: 98 x 13
-#>    Name  Type  Owner Date       Julian Station Standard ZipCodes Scope
-#>    <chr> <chr> <chr> <date>      <int> <chr>   <chr>    <chr>    <chr>
-#>  1 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
-#>  2 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
-#>  3 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
-#>  4 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
-#>  5 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
-#>  6 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
-#>  7 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
-#>  8 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
-#>  9 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
-#> 10 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily
-#> # ... with 88 more rows, and 4 more variables: Item <chr>, Value <dbl>,
-#> #   Qc <chr>, Unit <chr>
+#>    Name  Type  Owner Date       Julian Station Standard ZipCodes Scope Item 
+#>    <chr> <chr> <chr> <date>      <int> <chr>   <chr>    <chr>    <chr> <chr>
+#>  1 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayA~
+#>  2 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayA~
+#>  3 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayA~
+#>  4 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayD~
+#>  5 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayA~
+#>  6 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayP~
+#>  7 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayR~
+#>  8 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayR~
+#>  9 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayR~
+#> 10 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayS~
+#> # ... with 88 more rows, and 3 more variables: Value <dbl>, Qc <chr>,
+#> #   Unit <chr>
 ```
 
 The data are returned in tidy format, i.e. the `"Value"` column 
@@ -198,18 +199,64 @@ the daily values are assumed to correspond to midnight (00:00).
 cimis_to_datetime(cimis_data(targets = 170, start.date = "2018-09-25",
   end.date = "2018-09-27", items = c("hly-soil-tmp", "day-air-tmp-avg")))
 #> # A tibble: 75 x 13
-#>    Name  Type  Owner Datetime            Julian Station Standard ZipCodes
-#>    <chr> <chr> <chr> <dttm>               <int> <chr>   <chr>    <chr>   
-#>  1 cimis stat~ wate~ 2018-09-25 00:00:00    268 170     english  94529, ~
-#>  2 cimis stat~ wate~ 2018-09-26 00:00:00    269 170     english  94529, ~
-#>  3 cimis stat~ wate~ 2018-09-27 00:00:00    270 170     english  94529, ~
-#>  4 cimis stat~ wate~ 2018-09-25 01:00:00    268 170     english  94529, ~
-#>  5 cimis stat~ wate~ 2018-09-25 02:00:00    268 170     english  94529, ~
-#>  6 cimis stat~ wate~ 2018-09-25 03:00:00    268 170     english  94529, ~
-#>  7 cimis stat~ wate~ 2018-09-25 04:00:00    268 170     english  94529, ~
-#>  8 cimis stat~ wate~ 2018-09-25 05:00:00    268 170     english  94529, ~
-#>  9 cimis stat~ wate~ 2018-09-25 06:00:00    268 170     english  94529, ~
-#> 10 cimis stat~ wate~ 2018-09-25 07:00:00    268 170     english  94529, ~
-#> # ... with 65 more rows, and 5 more variables: Scope <chr>, Item <chr>,
-#> #   Value <dbl>, Qc <chr>, Unit <chr>
+#>    Name  Type  Owner Datetime            Julian Station Standard ZipCodes Scope
+#>    <chr> <chr> <chr> <dttm>               <int> <chr>   <chr>    <chr>    <chr>
+#>  1 cimis stat~ wate~ 2018-09-25 00:00:00    268 170     english  94529, ~ daily
+#>  2 cimis stat~ wate~ 2018-09-26 00:00:00    269 170     english  94529, ~ daily
+#>  3 cimis stat~ wate~ 2018-09-27 00:00:00    270 170     english  94529, ~ daily
+#>  4 cimis stat~ wate~ 2018-09-25 01:00:00    268 170     english  94529, ~ hour~
+#>  5 cimis stat~ wate~ 2018-09-25 02:00:00    268 170     english  94529, ~ hour~
+#>  6 cimis stat~ wate~ 2018-09-25 03:00:00    268 170     english  94529, ~ hour~
+#>  7 cimis stat~ wate~ 2018-09-25 04:00:00    268 170     english  94529, ~ hour~
+#>  8 cimis stat~ wate~ 2018-09-25 05:00:00    268 170     english  94529, ~ hour~
+#>  9 cimis stat~ wate~ 2018-09-25 06:00:00    268 170     english  94529, ~ hour~
+#> 10 cimis stat~ wate~ 2018-09-25 07:00:00    268 170     english  94529, ~ hour~
+#> # ... with 65 more rows, and 4 more variables: Item <chr>, Value <dbl>,
+#> #   Qc <chr>, Unit <chr>
 ```
+
+CIMIS data sometimes includes quality control flags in the `Qc` column that
+indicate potential issues with returned data. Descriptions of these flags
+can be retrieved `cimis_flags()`:
+
+
+```r
+cimis_flags()
+#>    Flag       Class  Period
+#> 1     I      Severe Current
+#> 2     M      Severe Current
+#> 3     S      Severe Current
+#> 4     A Informative Current
+#> 5     E Informative Current
+#> 6     T Informative Current
+#> 7     H Informative Current
+#> 8     J Informative Current
+#> 9     K Informative Current
+#> 10    L Informative Current
+#> 11    N Informative Current
+#> 12    P Informative Current
+#> 13    Q Informative Current
+#> 14    R Informative Current
+#> 15    Y Informative Current
+#>                                                                                                                                              Description
+#> 1                                                                                                                      Data value has no meaning/ignore.
+#> 2                                                                                                                                               Missing.
+#> 3                                                                                           Sensor is not in service or data is out of sensor threshold.
+#> 4                                                                                                                                    Historical average.
+#> 5                                                                                Historical average of one of the sensors used to calculate a parameter.
+#> 6                                                                                Historical average of one of the sensors used to calculate a parameter.
+#> 7  Daily data value flagged when corresponding hourly data is flagged M, Q, and S. This flag is not set when the corresponding hourly data is flagged N.
+#> 8                                                                                           Monthly data value flagged when some daily data are missing.
+#> 9                                                                                         Monthly data value flagged when daily data values are flagged.
+#> 10                                                                     Monthly data value flagged when some daily data are missing and some are flagged.
+#> 11                                                                                                          Data value is not collected by this station.
+#> 12                                                                                                                                 Quality test pending.
+#> 13       All quality control could not be performed because a comparison sensor is severe. This flag is not set when the comparison sensor is flagged N.
+#> 14                                                                                                                 Data is far out of historical limits.
+#> 15                                                                                                          Data is moderately out of historical limits.
+```
+
+Note that quality control flag designations were changed in 1993. For more
+information, see the 
+[CIMIS Data Overview - Quality Control](https://cimis.water.ca.gov/Resources.aspx).
+web page.

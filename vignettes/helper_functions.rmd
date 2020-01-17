@@ -1,7 +1,7 @@
 ---
 title: "Helper Functions"
 author: "Michael Koohafkan"
-date: "2019-06-13"
+date: "2020-01-17"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Helper Functions}
@@ -118,7 +118,8 @@ queries
 #> 7 2018-02-23 2018-04-30 <chr [1]> <dbl [1]>
 ```
 
-The queries can then be run in sequence using e.g. `mapply` or `purrr_pmap`:
+The queries can then be run in sequence using e.g. `mapply()` or 
+`purrr::pmap()`:
 
 
 ```r
