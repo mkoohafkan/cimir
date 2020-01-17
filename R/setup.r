@@ -12,9 +12,12 @@
 #' }
 #'
 #' @export
-set_key = function(key) {
+set_key = function(key = NULL) {
+  if (is.null(key) || !nzchar(key)) {
+    stop("argument \"key\" is NULL or empty string")
+  }
   assign("appkey", key, envir = authenv)
-  assign("is_key_set", TRUE, envir = authenv)  
+  assign("is_key_set", TRUE, envir = authenv)
   invisible(TRUE)
 }
 

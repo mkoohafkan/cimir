@@ -113,7 +113,7 @@ cimis_data = function(targets, start.date, end.date, items,
     target.sep = ","
   }
   if (missing(items))
-    items = default.items 
+    items = default.items
   measure.unit = match.arg(str_to_upper(measure.unit), c("E", "M"), FALSE)
   prioritize.SCS = ifelse(prioritize.SCS, "Y", "N")
   start.date = as.Date(start.date)
@@ -212,8 +212,8 @@ cimis_zipcode = function(zipcode) {
 #' @importFrom stringr str_replace_all
 #' @keywords internal
 basic_query = function(url) {
-  if (length(authenv$appkey) < 1)
-    stop('No API key available. Specify key with "set_key()".')
+  if (!is_key_set())
+    stop("No API key available. Specify key with \"set_key()\".")
   result = curl_fetch_memory(url, handle = cimir_handle())
   if (result$status_code != 200L)
     stop("CIMIS query failed with status ",
@@ -223,7 +223,13 @@ basic_query = function(url) {
       call. = FALSE)
   value = rawToChar(result$content)
   Encoding(value) = "UTF-8"
-  fromJSON(str_replace_all(value, ":null", ':[null]'),
+  # check if request was rejected
+  if (str_detect(value, "Request Rejected")) {
+    stop("The CIMIS API returned an error. Check that your API key is correct.",
+      "\n", "CIMIS error message:", "\n",
+      value, call. = FALSE)
+  }
+  fromJSON(str_replace_all(value, ":null", ":[null]"),
     simplifyDataFrame = FALSE)
 }
 
