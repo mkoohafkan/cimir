@@ -55,7 +55,7 @@ record_to_df = function(record) {
     Julian = as.integer(.data$Julian),
     Data = list(bind_rows(map(record[data.names], as_tibble),
       .id = "Item"))
-  ), cols = c(Data))
+  ), cols = c(.data$Data))
 }
 
 
