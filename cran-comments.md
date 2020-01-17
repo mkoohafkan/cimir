@@ -5,17 +5,23 @@ Submission of cimir 0.4-0.
 This release includes the following changes:
 
 - References to defunct functions were removed.
-- New function `cimis_flags()` provides information on CIMIS data 
-  quality control flags.
-- Fixed a bug in function `cimis_to_datetime()` regarding timezone 
+- Minor changes to internals to meet new requirements in latest versions 
+  of `tidyr` and `rlang` packages.
+- Fixed bug in function `cimis_to_datetime()` regarding timezone 
   specification.
-- Fixed a bug in function `cimis_split_query` where sub-queries 
+- Fixed bug in function `cimis_split_query()` where sub-queries 
   sometimes exceeded the specified length.
+- New function `cimis_flags()` provides information on CIMIS Quality 
+  Control flags.
 - Added a new vignette describing helper functions.
+- Error is returned if an empty or NULL API key is passed to 
+  `set_key()`.
+- Informative error message is returned when the CIMIS API itself 
+  rejects a request.
 
 ## Test environments
 
-* Local Windows 10 install, R 3.6.0
+* Local Windows 10 install, R 3.6.2
 * Ubuntu 14.04 (on travis-ci), R-oldrel, R-release, R-devel
 
 Because the CIMIS Web API requires an App Key, examples are only

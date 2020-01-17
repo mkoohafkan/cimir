@@ -1,7 +1,7 @@
 Package: cimir
 Title: Interface to the CIMIS Web API
-Version: 0.3-1
-Authors@R: 
+Version: 0.4-0
+Authors@R:
     person(given = "Michael",
            family = "Koohafkan",
            role = c("aut", "cre"),

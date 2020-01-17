@@ -3,6 +3,8 @@
 This release includes the following changes:
 
 - References to defunct functions were removed.
+- Minor changes to internals to meet new requirements in latest versions 
+  of `tidyr` and `rlang` packages.
 - Fixed bug in function `cimis_to_datetime()` regarding timezone 
   specification.
 - Fixed bug in function `cimis_split_query()` where sub-queries 
@@ -10,7 +12,10 @@ This release includes the following changes:
 - New function `cimis_flags()` provides information on CIMIS Quality 
   Control flags.
 - Added a new vignette describing helper functions.
-
+- Error is returned if an empty or NULL API key is passed to 
+  `set_key()`.
+- Informative error message is returned when the CIMIS API itself 
+  rejects a request.
 
 
 # cimir 0.3-0 (2019-06-10)
