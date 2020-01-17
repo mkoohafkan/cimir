@@ -6,7 +6,7 @@
 \alias{is_key_set}
 \title{Specify CIMIS API key}
 \usage{
-set_key(key)
+set_key(key = NULL)
 
 remove_key()
 

@@ -29,5 +29,5 @@ Suggests:
     knitr (>= 1.21),
     rmarkdown (>= 1.11)
 VignetteBuilder: knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Roxygen: list(markdown = TRUE)

@@ -10,8 +10,14 @@
 \alias{data_items}
 \title{Defunct functions in package \pkg{cimir}.}
 \usage{
-get_data(targets, start.date, end.date, items, measure.unit = c("E",
-  "M"), prioritize.SCS = TRUE)
+get_data(
+  targets,
+  start.date,
+  end.date,
+  items,
+  measure.unit = c("E", "M"),
+  prioritize.SCS = TRUE
+)
 
 get_station(station)
 

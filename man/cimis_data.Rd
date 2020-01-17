@@ -4,8 +4,14 @@
 \alias{cimis_data}
 \title{Query CIMIS Data}
 \usage{
-cimis_data(targets, start.date, end.date, items, measure.unit = c("E",
-  "M"), prioritize.SCS = TRUE)
+cimis_data(
+  targets,
+  start.date,
+  end.date,
+  items,
+  measure.unit = c("E", "M"),
+  prioritize.SCS = TRUE
+)
 }
 \arguments{
 \item{targets}{geographies or weather stations of interest. This
