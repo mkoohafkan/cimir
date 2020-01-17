@@ -1,3 +1,5 @@
+cimis.tz = "Etc/GMT+8"
+
 #' To Datetime
 #'
 #' Collapse The Date and Hour columns to a single DateTime Column.
@@ -25,7 +27,7 @@ cimis_to_datetime = function(d) {
   rename(select(mutate(d,
     Hour = if_else(is.na(.data$Hour), "0000", .data$Hour),
     Date = as.POSIXct(str_c(.data$Date, " ", .data$Hour),
-      format = "%Y-%m-%d %H%M", tz = "Etc/GMT+8")),
+      format = "%Y-%m-%d %H%M", tz = cimis.tz)),
     -.data$Hour
   ), Datetime = .data$Date)
 }
@@ -53,7 +55,7 @@ record_to_df = function(record) {
     Julian = as.integer(.data$Julian),
     Data = list(bind_rows(map(record[data.names], as_tibble),
       .id = "Item"))
-  ))
+  ), cols = c(Data))
 }
 
 
@@ -73,8 +75,8 @@ record_to_df = function(record) {
 bind_records = function(result) {
   mutate(unnest(mutate(
     map_dfr(result[[c("Data", "Providers")]], as_tibble),
-    Records = map(.data$Records, record_to_df)
-  )), Value = as.numeric(.data$Value))
+    Records = map(.data$Records, record_to_df)),
+    cols = c(.data$Records)), Value = as.numeric(.data$Value))
 }
 
 #' Split CIMIS Query
