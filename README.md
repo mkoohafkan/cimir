@@ -1,7 +1,10 @@
 # cimir: Interface to CIMIS <a href='https://github.com/mkoohafkan/cimir'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
-[![Build Status](https://travis-ci.org/mkoohafkan/cimir.svg?branch=master)](https://travis-ci.org/mkoohafkan/cimir)
+<!-- badges: start -->
+[![R build status](https://github.com/mkoohafkan/cimir/workflows/R-CMD-check/badge.svg)](https://github.com/mkoohafkan/cimir/actions)
 ![CRAN Release](https://www.r-pkg.org/badges/version-last-release/cimir)
+<!-- badges: end -->
+
 
 This package provides an R interface to the 
 [California Irrigation Management Information System](https://cimis.water.ca.gov/)

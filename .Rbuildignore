@@ -20,3 +20,4 @@ vignettes/markdown.rmd
 ^dataitems.xlsx$
 ^dataflags.xlsx$
 ^_build_dataitems.r$
+^\.github$
