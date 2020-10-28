@@ -12,4 +12,4 @@ this package, you will need to
 [create a CIMIS account](https://cimis.water.ca.gov/Auth/Register.aspx) 
 and [request a web services AppKey](https://et.water.ca.gov/Home/Register/). 
 Browse the documentation at 
-[mkoohafkan.github.io/cimir](https://mkoohafkan.github.io/cimir).
+[mkoohafkan.github.io/cimir](https://mkoohafkan.github.io/cimir/).
