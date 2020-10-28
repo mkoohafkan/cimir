@@ -21,3 +21,6 @@ vignettes/markdown.rmd
 ^dataflags.xlsx$
 ^_build_dataitems.r$
 ^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
