@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Defunct functions in package cimir. — cimir-defunct • cimir</title>
+<title>Quick Fix to as_tibble — as_tibble_fix • cimir</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,11 +46,9 @@
 
 
 
-<meta property="og:title" content="Defunct functions in package cimir. — cimir-defunct" />
-<meta property="og:description" content="The functions listed below were deprecated in the previous
-release and are now defunct. Alternative functions with similar
-functionality are mentioned. Help pages for defunct functions are
-available at help(&quot;cimir-defunct&quot;)." />
+<meta property="og:title" content="Quick Fix to as_tibble — as_tibble_fix" />
+<meta property="og:description" content="Handle empty lists when coercing to tibble. See
+tibble issue 851." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -137,68 +135,30 @@ available at help(&quot;cimir-defunct&quot;)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Defunct functions in package <span class="pkg">cimir</span>.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/mkoohafkan/cimir/blob/master/R/defunct.r'><code>R/defunct.r</code></a></small>
-    <div class="hidden name"><code>cimir-defunct.Rd</code></div>
+    <h1>Quick Fix to as_tibble</h1>
+    <small class="dont-index">Source: <a href='https://github.com/mkoohafkan/cimir/blob/master/R/util.r'><code>R/util.r</code></a></small>
+    <div class="hidden name"><code>as_tibble_fix.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The functions listed below were deprecated in the previous
-release and are now defunct. Alternative functions with similar
-functionality are mentioned. Help pages for defunct functions are
-available at <code>help("cimir-defunct")</code>.</p>
+    <p>Handle empty lists when coercing to tibble. See
+<a href='https://github.com/tidyverse/tibble/issues/851'>tibble issue 851</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_data</span><span class='op'>(</span>
-  <span class='va'>targets</span>,
-  <span class='va'>start.date</span>,
-  <span class='va'>end.date</span>,
-  <span class='va'>items</span>,
-  measure.unit <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"E"</span>, <span class='st'>"M"</span><span class='op'>)</span>,
-  prioritize.SCS <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span>
+    <pre class="usage"><span class='fu'>as_tibble_fix</span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span></pre>
 
-<span class='fu'>get_station</span><span class='op'>(</span><span class='va'>station</span><span class='op'>)</span>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>d</th>
+      <td><p>An object to coerce to a tibble.</p></td>
+    </tr>
+    </table>
 
-<span class='fu'>get_station_spatial_zipcode</span><span class='op'>(</span><span class='va'>zipcode</span><span class='op'>)</span>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-<span class='fu'>get_station_zipcode</span><span class='op'>(</span><span class='va'>zipcode</span><span class='op'>)</span>
-
-<span class='fu'>to_datetime</span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>
-
-<span class='fu'>data_items</span><span class='op'>(</span>type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Daily"</span>, <span class='st'>"Hourly"</span><span class='op'>)</span><span class='op'>)</span></pre>
-
-
-    <h2 class="hasAnchor" id="get-data"><a class="anchor" href="#get-data"></a><code>get_data</code></h2>
-
-    
-
-<p>For <code>get_data</code>, use <code><a href='cimis_data.html'>cimis_data</a></code>.</p>
-    <h2 class="hasAnchor" id="get-station"><a class="anchor" href="#get-station"></a><code>get_station</code></h2>
-
-    
-
-<p>For <code>get_station</code>, use <code><a href='cimis_station.html'>cimis_station</a></code>.</p>
-    <h2 class="hasAnchor" id="get-station-spatial-zipcode"><a class="anchor" href="#get-station-spatial-zipcode"></a><code>get_station_spatial_zipcode</code></h2>
-
-    
-
-<p>For <code>get_station_spatial_zipcode</code>, use <code><a href='cimis_station.html'>cimis_spatial_zipcode</a></code>.</p>
-    <h2 class="hasAnchor" id="get-station-zipcode"><a class="anchor" href="#get-station-zipcode"></a><code>get_station_zipcode</code></h2>
-
-    
-
-<p>For <code>get_station_zipcode</code>, use <code><a href='cimis_station.html'>cimis_zipcode</a></code>.</p>
-    <h2 class="hasAnchor" id="to-datetime"><a class="anchor" href="#to-datetime"></a><code>to_datetime</code></h2>
-
-    
-
-<p>For <code>to_datetime</code>, use <code><a href='cimis_to_datetime.html'>cimis_to_datetime</a></code>.</p>
-    <h2 class="hasAnchor" id="data-items"><a class="anchor" href="#data-items"></a><code>data_items</code></h2>
-
-    
-
-<p>For <code>data_items</code>, use <code><a href='cimis_items.html'>cimis_items</a></code>.</p>
+    <p>a tibble.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
