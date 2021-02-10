@@ -36,21 +36,21 @@ day-air-tmp-min, day-air-tmp-avg, day-rel-hum-max,
 day-rel-hum-min, day-rel-hum-avg, day-dew-pnt, day-wind-spd-avg,
 day-wind-run, day-soil-tmp-avg.}
 
-\item{max.records}{The maximum number of records returned by a query.
-The default value is the the maximum data limit allowed by the
-CIMIS Web API (1,750 records).}
+\item{max.records}{The maximum number of records returned by a
+query. The default value is the the maximum data limit allowed by
+the CIMIS Web API (1,750 records).}
 }
 \value{
-A data frame with columns "targets", "start.date", "end.date", and
-"items".
+A data frame with columns "targets", "start.date",
+"end.date", and "items".
 }
 \description{
 Split a large CIMIS query into multiple smaller queries based on a
 time interval.
 }
 \details{
-Queries are not split by \code{targets} or \code{items}, i.e. each resulting
-query will include all targets and items.
+Queries are not split by \code{targets} or \code{items}, i.e. each
+resulting query will include all targets and items.
 }
 \examples{
 cimis_split_query(170, "2000-01-01", "2010-12-31", "day-air-tmp-avg")
