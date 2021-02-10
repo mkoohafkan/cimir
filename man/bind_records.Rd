@@ -14,6 +14,6 @@ A data frame.
 }
 \description{
 Bind CIMIS records into a single data frame. This function
-is used internally
+is used internally.
 }
 \keyword{internal}

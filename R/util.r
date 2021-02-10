@@ -1,5 +1,32 @@
 cimis.tz = "Etc/GMT+8"
 
+empty.record = tibble(
+  Date = as.Date(character(0)),
+  Hour = character(0),
+  Julian = integer(0),
+  Station = character(0),
+  Standard = character(0),
+  ZipCodes = character(0),
+  Scope = character(0),
+  Item = character(0),
+  Value = character(0),
+  Qc = character(0)
+)
+
+#' Quick Fix to as_tibble
+#'
+#' Handle empty lists when coercing to tibble. See
+#' [tibble issue 851](https://github.com/tidyverse/tibble/issues/851).
+#'
+#' @param d An object to coerce to a tibble.
+#' @return a tibble.
+#' @importFrom purrr modify_if
+#' @keywords internal
+as_tibble_fix = function(d) {
+  as_tibble(modify_if(d, ~ identical(.x, list()),
+    ~ list(NULL)))
+}
+
 #' To Datetime
 #'
 #' Collapse The Date and Hour columns to a single DateTime Column.
@@ -8,16 +35,16 @@ cimis.tz = "Etc/GMT+8"
 #' @return The data frame, with a new `"Datetime"` column replacing
 #'   the `"Date"` and `"Hour"` columns.
 #'
-#' @details According to the 
+#' @details According to the
 #'   [CIMIS Report FAQs](https://cimis.water.ca.gov/Default.aspx),
 #'   all CIMIS data is based on Pacific Standard Time (PST).
 #'
 #' @examples
 #' if(is_key_set()) {
-#'   d = cimis_data(targets = 170, start.date = Sys.Date() - 4, 
+#'   d = cimis_data(targets = 170, start.date = Sys.Date() - 4,
 #'     end.date = Sys.Date() - 1, items = "hly-air-tmp")
 #'   cimis_to_datetime(d)
-#' } 
+#' }
 #' @importFrom dplyr select mutate if_else rename
 #' @importFrom stringr str_c
 #' @export
@@ -47,7 +74,11 @@ cimis_to_datetime = function(d) {
 #' @importFrom rlang .data
 #' @keywords internal
 record_to_df = function(record) {
-  fixed = c("Date", "Hour", "Julian", "Station", "Standard", "ZipCodes", "Scope")
+  if (is.null(record)) {
+    return(empty.record)
+  }
+  fixed = c("Date", "Hour", "Julian", "Station", "Standard",
+    "ZipCodes", "Scope")
   data.names = setdiff(names(record), fixed)
   other.names = setdiff(names(record), data.names)
   unnest(mutate(as_tibble(record[other.names]),
@@ -61,8 +92,8 @@ record_to_df = function(record) {
 
 #' Bind Records
 #'
-#' Bind CIMIS records into a single data frame. This function 
-#'   is used internally
+#' Bind CIMIS records into a single data frame. This function
+#'   is used internally.
 #'
 #' @param result CIMIS query results.
 #' @return A data frame.
@@ -70,29 +101,30 @@ record_to_df = function(record) {
 #' @importFrom tidyr unnest
 #' @importFrom purrr map_dfr
 #' @importFrom dplyr mutate bind_rows as_tibble case_when
+#'   across matches
 #' @importFrom rlang .data
 #' @keywords internal
 bind_records = function(result) {
   mutate(unnest(mutate(
-    map_dfr(result[[c("Data", "Providers")]], as_tibble),
+    map_dfr(result[[c("Data", "Providers")]], as_tibble_fix),
     Records = map(.data$Records, record_to_df)),
-    cols = c(.data$Records)), Value = as.numeric(.data$Value))
+    cols = c(.data$Records)), across(matches("Value"), as.numeric))
 }
 
 #' Split CIMIS Query
 #'
-#' Split a large CIMIS query into multiple smaller queries based on a 
+#' Split a large CIMIS query into multiple smaller queries based on a
 #' time interval.
 #'
 #' @inheritParams cimis_data
-#' @param max.records The maximum number of records returned by a query. 
-#'   The default value is the the maximum data limit allowed by the 
-#'   CIMIS Web API (1,750 records).
-#' @return A data frame with columns "targets", "start.date", "end.date", and
-#'   "items". 
+#' @param max.records The maximum number of records returned by a
+#'   query. The default value is the the maximum data limit allowed by
+#'   the CIMIS Web API (1,750 records).
+#' @return A data frame with columns "targets", "start.date",
+#'   "end.date", and "items".
 #'
-#' @details Queries are not split by `targets` or `items`, i.e. each resulting
-#'   query will include all targets and items. 
+#' @details Queries are not split by `targets` or `items`, i.e. each
+#'   resulting query will include all targets and items.
 #'
 #' @examples
 #' cimis_split_query(170, "2000-01-01", "2010-12-31", "day-air-tmp-avg")
