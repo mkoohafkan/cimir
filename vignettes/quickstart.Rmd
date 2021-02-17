@@ -1,7 +1,7 @@
 ---
 title: "Quick Start"
 author: "Michael Koohafkan"
-date: "2020-01-17"
+date: "2021-02-17"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Quick Start}
@@ -95,7 +95,7 @@ To get a list of station IDs, use  `cimis_station()`:
 
 ```r
 cimis_station()
-#> # A tibble: 1,406 x 15
+#> # A tibble: 1,473 x 15
 #>    StationNbr Name  City  RegionalOffice County ConnectDate DisconnectDate
 #>    <chr>      <chr> <chr> <chr>          <chr>  <chr>       <chr>         
 #>  1 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
@@ -108,7 +108,7 @@ cimis_station()
 #>  8 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
 #>  9 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
 #> 10 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     
-#> # ... with 1,396 more rows, and 8 more variables: IsActive <chr>,
+#> # ... with 1,463 more rows, and 8 more variables: IsActive <chr>,
 #> #   IsEtoStation <chr>, Elevation <chr>, GroundCover <chr>, HmsLatitude <chr>,
 #> #   HmsLongitude <chr>, ZipCodes <chr>, SitingDesc <chr>
 ```
@@ -121,7 +121,7 @@ with a particular zipcode (or spatial zipcode)
 
 ```r
 cimis_zipcode()
-#> # A tibble: 1,406 x 5
+#> # A tibble: 1,471 x 5
 #>    StationNbr ZipCode ConnectDate DisconnectDate IsActive
 #>         <int> <chr>   <chr>       <chr>          <chr>   
 #>  1         99 90401   12/11/1992  5/8/2050       True    
@@ -134,7 +134,7 @@ cimis_zipcode()
 #>  8         99 90408   12/11/1992  5/8/2050       True    
 #>  9         99 90409   12/11/1992  5/8/2050       True    
 #> 10         99 90410   12/11/1992  5/8/2050       True    
-#> # ... with 1,396 more rows
+#> # ... with 1,461 more rows
 cimis_spatial_zipcode()
 #> # A tibble: 1,715 x 4
 #>    ZipCode ConnectDate DisconnectDate IsActive
