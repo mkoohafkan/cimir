@@ -1,28 +1,25 @@
-Submission of cimir 0.4-0.
+Submission of cimir 0.4-1.
 
-# cimir 0.4-0
+# cimir 0.4-1
 
-This release includes the following changes:
-
-- References to defunct functions were removed.
-- Minor changes to internals to meet new requirements in latest versions 
-  of `tidyr` and `rlang` packages.
-- Fixed bug in function `cimis_to_datetime()` regarding timezone 
-  specification.
-- Fixed bug in function `cimis_split_query()` where sub-queries 
-  sometimes exceeded the specified length.
-- New function `cimis_flags()` provides information on CIMIS Quality 
-  Control flags.
-- Added a new vignette describing helper functions.
-- Error is returned if an empty or NULL API key is passed to 
-  `set_key()`.
-- Informative error message is returned when the CIMIS API itself 
-  rejects a request.
+This patch provides better handling of queries
+that return empty record sets. Functionality is
+otherwise unchanged.
 
 ## Test environments
 
-* Local Windows 10 install, R 3.6.2
-* Ubuntu 14.04 (on travis-ci), R-oldrel, R-release, R-devel
+
+R-CMD-check using GitHub Actions and the following environments:
+
+- {os: macOS-latest,   r: 'devel'}
+- {os: macOS-latest,   r: 'release'}
+- {os: macOS-latest,   r: 'oldrel'}
+- {os: windows-latest, r: 'devel'}
+- {os: windows-latest, r: 'release'}
+- {os: windows-latest, r: 'oldrel'}
+- {os: ubuntu-16.04,   r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest", http-user-agent: "R/4.0.0 (ubuntu-16.04) R (4.0.0 x86_64-pc-linux-gnu x86_64 linux-gnu) on GitHub Actions" }
+- {os: ubuntu-16.04,   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+- {os: ubuntu-16.04,   r: 'oldrel',  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
 
 Because the CIMIS Web API requires an App Key, examples are only
 run on build if the App Key is defined. In my test environments, 
