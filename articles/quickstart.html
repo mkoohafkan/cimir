@@ -95,7 +95,7 @@
       <h1 data-toc-skip>Quick Start</h1>
                         <h4 class="author">Michael Koohafkan</h4>
             
-            <h4 class="date">2020-01-17</h4>
+            <h4 class="date">2021-02-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mkoohafkan/cimir/blob/master/vignettes/quickstart.Rmd"><code>vignettes/quickstart.Rmd</code></a></small>
       <div class="hidden name"><code>quickstart.Rmd</code></div>
@@ -161,7 +161,7 @@
 <p>To get a list of station IDs, use <code><a href="../reference/cimis_station.html">cimis_station()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cimis_station.html">cimis_station</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1,406 x 15</span>
+<span class="co">#&gt; # A tibble: 1,473 x 15</span>
 <span class="co">#&gt;    StationNbr Name  City  RegionalOffice County ConnectDate DisconnectDate</span>
 <span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;  &lt;chr&gt;       &lt;chr&gt;         </span>
 <span class="co">#&gt;  1 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span>
@@ -174,13 +174,13 @@
 <span class="co">#&gt;  8 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span>
 <span class="co">#&gt;  9 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span>
 <span class="co">#&gt; 10 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span>
-<span class="co">#&gt; # ... with 1,396 more rows, and 8 more variables: IsActive &lt;chr&gt;,</span>
+<span class="co">#&gt; # ... with 1,463 more rows, and 8 more variables: IsActive &lt;chr&gt;,</span>
 <span class="co">#&gt; #   IsEtoStation &lt;chr&gt;, Elevation &lt;chr&gt;, GroundCover &lt;chr&gt;, HmsLatitude &lt;chr&gt;,</span>
 <span class="co">#&gt; #   HmsLongitude &lt;chr&gt;, ZipCodes &lt;chr&gt;, SitingDesc &lt;chr&gt;</span></code></pre></div>
 <p>To get metadata for a subset of stations, simply pass a vector of station IDs. You can also query metadata for stations associated with a particular zipcode (or spatial zipcode) <code><a href="../reference/cimis_station.html">cimis_zipcode()</a></code> and <code><a href="../reference/cimis_station.html">cimis_spatial_zipcode()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cimis_station.html">cimis_zipcode</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1,406 x 5</span>
+<span class="co">#&gt; # A tibble: 1,471 x 5</span>
 <span class="co">#&gt;    StationNbr ZipCode ConnectDate DisconnectDate IsActive</span>
 <span class="co">#&gt;         &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;          &lt;chr&gt;   </span>
 <span class="co">#&gt;  1         99 90401   12/11/1992  5/8/2050       True    </span>
@@ -193,7 +193,7 @@
 <span class="co">#&gt;  8         99 90408   12/11/1992  5/8/2050       True    </span>
 <span class="co">#&gt;  9         99 90409   12/11/1992  5/8/2050       True    </span>
 <span class="co">#&gt; 10         99 90410   12/11/1992  5/8/2050       True    </span>
-<span class="co">#&gt; # ... with 1,396 more rows</span>
+<span class="co">#&gt; # ... with 1,461 more rows</span>
 <span class="fu"><a href="../reference/cimis_station.html">cimis_spatial_zipcode</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 1,715 x 4</span>
 <span class="co">#&gt;    ZipCode ConnectDate DisconnectDate IsActive</span>
