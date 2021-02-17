@@ -38,9 +38,10 @@ cimis_items = function(type = c("Daily", "Hourly")) {
 #'
 #' List CIMIS data quality control flags.
 #'
-#' @param type The type of data flag, i.e. `"Severe"` or `"Informative"`.
-#' @param period The Time period that data was collected, i.e. "Current" or
-#'   "Former" (pre-1995).
+#' @param type The type of data flag, i.e. `"Severe"` or
+#'   `"Informative"`.
+#' @param period The Time period that data was collected, i.e.,
+#'   "Current" or "Former" (pre-1995).
 #' @return a dataframe of data flags.
 #'
 #' @seealso [CIMIS Data Overview - Quality Control](https://cimis.water.ca.gov/Resources.aspx)
@@ -53,7 +54,8 @@ cimis_items = function(type = c("Daily", "Hourly")) {
 #' @importFrom stringr str_to_title
 #' @importFrom dplyr filter
 #' @export
-cimis_flags = function(type = c("Severe", "Informative"), period = "Current") {
+cimis_flags = function(type = c("Severe", "Informative"),
+  period = "Current") {
   type = match.arg(str_to_title(type), c("Severe", "Informative"), TRUE)
   period = match.arg(str_to_title(period), c("Current", "Former"), TRUE)
   filter(dataflags, .data$Class %in% type, .data$Period %in% period)
@@ -63,44 +65,44 @@ cimis_flags = function(type = c("Severe", "Informative"), period = "Current") {
 #'
 #' Query CIMIS data using the Web API.
 #'
-#' @param targets geographies or weather stations of interest. This 
-#'   parameter may specify one or many stations, zip codes, 
-#'   coordinates, or street addresses; however, you are not allowed to 
-#'   mix values from different categories. This means the targets 
-#'   parameter must contain only stations, only zip codes, only 
-#'   coordinates, or only street addresses. You will receive an error 
+#' @param targets geographies or weather stations of interest. This
+#'   parameter may specify one or many stations, zip codes,
+#'   coordinates, or street addresses; however, you are not allowed to
+#'   mix values from different categories. This means the targets
+#'   parameter must contain only stations, only zip codes, only
+#'   coordinates, or only street addresses. You will receive an error
 #'   if you attempt to mix different category types. The formats are
 #'   accepted:
 #'   - A comma delimited list of WSN station numbers
 #'   - A comma delimited list of California zip codes
 #'   - A semicolon delimited list of decimal - degree coordinates
 #'   - A semicolon delimited list of street addresses
-#' @param items specifies one or more comma-delimited data elements to 
-#'   include in your response. See `data_items()` for a complete list 
-#'   of possible data element values. Default: day-asce-eto, 
-#'   day-precip, day-sol-rad-avg, day-vap-pres-avg, day-air-tmp-max, 
-#'   day-air-tmp-min, day-air-tmp-avg, day-rel-hum-max, 
-#'   day-rel-hum-min, day-rel-hum-avg, day-dew-pnt, day-wind-spd-avg, 
+#' @param items specifies one or more comma-delimited data elements to
+#'   include in your response. See `data_items()` for a complete list
+#'   of possible data element values. Default: day-asce-eto,
+#'   day-precip, day-sol-rad-avg, day-vap-pres-avg, day-air-tmp-max,
+#'   day-air-tmp-min, day-air-tmp-avg, day-rel-hum-max,
+#'   day-rel-hum-min, day-rel-hum-avg, day-dew-pnt, day-wind-spd-avg,
 #'   day-wind-run, day-soil-tmp-avg.
-#' @param start.date Specifies the start date. The data format is 
-#'   `"yyyy-mm-dd"`. 
-#' @param end.date Specifies the end date. The data format is 
+#' @param start.date Specifies the start date. The data format is
 #'   `"yyyy-mm-dd"`.
-#' @param measure.unit The unit of measure may be either `"E"` for 
-#'   English units or `"M"` for metric units. The value of this 
-#'   parameter will affect data values in the response. For 
-#'   example, designating English units will result in temperature 
+#' @param end.date Specifies the end date. The data format is
+#'   `"yyyy-mm-dd"`.
+#' @param measure.unit The unit of measure may be either `"E"` for
+#'   English units or `"M"` for metric units. The value of this
+#'   parameter will affect data values in the response. For
+#'   example, designating English units will result in temperature
 #'   values being returned in Fahrenheit rather than Celsius.
-#' @param prioritize.SCS This parameter is relevant only when the 
+#' @param prioritize.SCS This parameter is relevant only when the
 #'   targets parameter contains zip code(s). If `TRUE`, the Spatial
 #'   CIMIS System (SCS) will be used as the preferred data provider.
 #' @return A `tibble` object.
 #'
 #' @examples
 #' if(is_key_set()) {
-#'   cimis_data(targets = 170, start.date = Sys.Date() - 4, 
+#'   cimis_data(targets = 170, start.date = Sys.Date() - 4,
 #'     end.date = Sys.Date() - 1)
-#' } 
+#' }
 #'
 #' @importFrom glue glue
 #' @importFrom stringr str_c str_to_upper
@@ -114,7 +116,8 @@ cimis_data = function(targets, start.date, end.date, items,
   }
   if (missing(items))
     items = default.items
-  measure.unit = match.arg(str_to_upper(measure.unit), c("E", "M"), FALSE)
+  measure.unit = match.arg(str_to_upper(measure.unit), c("E", "M"),
+    FALSE)
   prioritize.SCS = ifelse(prioritize.SCS, "Y", "N")
   start.date = as.Date(start.date)
   end.date = as.Date(end.date)
@@ -147,7 +150,7 @@ cimis_data = function(targets, start.date, end.date, items,
 #'   cimis_station()
 #'   cimis_zipcode()
 #'   cimis_spatial_zipcode()
-#' } 
+#' }
 #' @importFrom purrr map map_dfr
 #' @importFrom glue glue
 #' @importFrom dplyr as_tibble bind_rows
@@ -165,7 +168,7 @@ cimis_station = function(station) {
 
 #' @rdname cimis_station
 #'
-#' @param zipcode The (spatial) zip code. If missing, metadata for all 
+#' @param zipcode The (spatial) zip code. If missing, metadata for all
 #'   stations is returned.
 #'
 #' @importFrom purrr map_dfr
@@ -225,12 +228,16 @@ basic_query = function(url) {
   Encoding(value) = "UTF-8"
   # check if request was rejected
   if (str_detect(value, "Request Rejected")) {
-    stop("The CIMIS API returned an error. Check that your API key is correct.",
+    stop("The CIMIS API returned an error. ",
+      "Check that your API key is correct.",
       "\n", "CIMIS error message:", "\n",
       value, call. = FALSE)
   }
-  fromJSON(str_replace_all(value, ":null", ":[null]"),
+  fromJSON(
+    str_replace_all(value, c(":null" = ":[null]",
+      ":\\[\\]" = ":\\[\\[\\]\\]")),
     simplifyDataFrame = FALSE)
+  # can also replace [] with [[]] or [null]
 }
 
 #' cimir curl handle

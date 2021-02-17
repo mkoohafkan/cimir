@@ -74,7 +74,7 @@ cimis_to_datetime = function(d) {
 #' @importFrom rlang .data
 #' @keywords internal
 record_to_df = function(record) {
-  if (is.null(record)) {
+  if (identical(record, list())) {
     return(empty.record)
   }
   fixed = c("Date", "Hour", "Julian", "Station", "Standard",
@@ -106,7 +106,7 @@ record_to_df = function(record) {
 #' @keywords internal
 bind_records = function(result) {
   mutate(unnest(mutate(
-    map_dfr(result[[c("Data", "Providers")]], as_tibble_fix),
+    map_dfr(result[[c("Data", "Providers")]], as_tibble),
     Records = map(.data$Records, record_to_df)),
     cols = c(.data$Records)), across(matches("Value"), as.numeric))
 }
@@ -128,12 +128,13 @@ bind_records = function(result) {
 #'
 #' @examples
 #' cimis_split_query(170, "2000-01-01", "2010-12-31", "day-air-tmp-avg")
-#' cimis_split_query(c(149, 170), "2018-01-01", "2018-12-31", 
+#' cimis_split_query(c(149, 170), "2018-01-01", "2018-12-31",
 #'   c("day-air-tmp-avg", "hly-air-tmp", "hly-rel-hum"))
 #'
 #' @importFrom dplyr tibble n mutate bind_rows
 #' @export
-cimis_split_query = function(targets, start.date, end.date, items, max.records = 1750L) {
+cimis_split_query = function(targets, start.date, end.date, items,
+  max.records = 1750L) {
   hourly.items = intersect(items, cimis_items("Hourly")[["Data Item"]])
   daily.items = intersect(items, cimis_items("Daily")[["Data Item"]])
   if (length(hourly.items) > 0L) {
@@ -178,13 +179,13 @@ date_seq = function(start.date, end.date, max.length, multiplier) {
 #' Convert the Compass direction labels to degrees.
 #'
 #' @param x A vector of compass directions, i.e. the data item labels
-#'  "DayWindNnw", "DayWindSse", etc. Recognized directions are 
+#'  "DayWindNnw", "DayWindSse", etc. Recognized directions are
 #'   North-northeast (NNE), East-northeast (ENE), East-southeast (ESE),
 #'   South-southeast (SSE), South-southwest (SSW), West-southwest (WSW),
 #'   West-northwest (WNW), and North-northwest (NNW).
 #'
-#' @return A numeric vector of degrees corresponding to the middle azimuth
-#'   of the corresponding compass direction.
+#' @return A numeric vector of degrees corresponding to the middle
+#'   azimuth of the corresponding compass direction.
 #'
 #' @examples
 #' cimis_compass_to_degrees("day-wind-nne")
@@ -209,7 +210,7 @@ cimis_compass_to_degrees = function(x) {
     TRUE ~ NA_real_
   )
   if (any(is.na(res)))
-    stop('Unrecognized values in arugment "x".')
+    stop("Unrecognized values in arugment \"x\".")
   res
 }
 
@@ -220,14 +221,14 @@ cimis_compass_to_degrees = function(x) {
 #' @param x A vector of directions in decimal degrees.
 #' @return A factor vector of compass directions.
 #'
-#' @details Degrees are labeled with their corresponding 
+#' @details Degrees are labeled with their corresponding
 #'   Primary InterCardinal compass direction, following the
 #'   convention of the CIMIS daily wind data items.
-#' 
+#'
 #' @examples
 #' cimis_degrees_to_compass(c(30, 83, 120, 140, 190, 240, 300, 330))
-#' cimis_degrees_to_compass(cimis_compass_to_degrees(c("NNE", "ENE", "ESE", 
-#'   "SSE", "SSW", "WSW", "WNW", "NNW")))
+#' cimis_degrees_to_compass(cimis_compass_to_degrees(c("NNE", "ENE",
+#'   "ESE", "SSE", "SSW", "WSW", "WNW", "NNW")))
 #'
 #' @seealso [cimis_compass_to_degrees()]
 #' @export
@@ -243,12 +244,12 @@ cimis_degrees_to_compass = function(x) {
 #' Format the latitude and longitude of station in
 #'   Decimal Degrees (DD) or Hour Minutes Seconds (HMS).
 #'
-#' @inheritParams cimis_to_datetime 
+#' @inheritParams cimis_to_datetime
 #' @param format The format to use, either Decimal Degrees (`"DD"`)
 #'   or Hour Minutes Seconds (`"HMS"`).
 #'
-#' @return The data frame, with a new `"Latitude"` and `"Longitude"` 
-#'   columns replacing the `"HmsLatitude"` and `"HmsLongitude"` 
+#' @return The data frame, with a new `"Latitude"` and `"Longitude"`
+#'   columns replacing the `"HmsLatitude"` and `"HmsLongitude"`
 #'   columns.
 #'
 #' @examples
@@ -256,7 +257,7 @@ cimis_degrees_to_compass = function(x) {
 #'   d = cimis_station(170)
 #'   cimis_format_location(d, "DD")
 #'   cimis_format_location(d, "HMS")
-#' } 
+#' }
 #'
 #' @importFrom dplyr mutate_at rename
 #' @importFrom stringr str_split str_replace
