@@ -22,8 +22,8 @@ convention of the CIMIS daily wind data items.
 }
 \examples{
 cimis_degrees_to_compass(c(30, 83, 120, 140, 190, 240, 300, 330))
-cimis_degrees_to_compass(cimis_compass_to_degrees(c("NNE", "ENE", "ESE", 
-  "SSE", "SSW", "WSW", "WNW", "NNW")))
+cimis_degrees_to_compass(cimis_compass_to_degrees(c("NNE", "ENE",
+  "ESE", "SSE", "SSW", "WSW", "WNW", "NNW")))
 
 }
 \seealso{

@@ -7,10 +7,11 @@
 cimis_flags(type = c("Severe", "Informative"), period = "Current")
 }
 \arguments{
-\item{type}{The type of data flag, i.e. \code{"Severe"} or \code{"Informative"}.}
+\item{type}{The type of data flag, i.e. \code{"Severe"} or
+\code{"Informative"}.}
 
-\item{period}{The Time period that data was collected, i.e. "Current" or
-"Former" (pre-1995).}
+\item{period}{The Time period that data was collected, i.e.,
+"Current" or "Former" (pre-1995).}
 }
 \value{
 a dataframe of data flags.

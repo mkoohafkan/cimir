@@ -30,5 +30,5 @@ if(is_key_set()) {
   cimis_station()
   cimis_zipcode()
   cimis_spatial_zipcode()
-} 
+}
 }

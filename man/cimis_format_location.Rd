@@ -26,6 +26,6 @@ if(is_key_set()) {
   d = cimis_station(170)
   cimis_format_location(d, "DD")
   cimis_format_location(d, "HMS")
-} 
+}
 
 }

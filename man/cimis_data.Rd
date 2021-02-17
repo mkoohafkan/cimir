@@ -61,8 +61,8 @@ Query CIMIS data using the Web API.
 }
 \examples{
 if(is_key_set()) {
-  cimis_data(targets = 170, start.date = Sys.Date() - 4, 
+  cimis_data(targets = 170, start.date = Sys.Date() - 4,
     end.date = Sys.Date() - 1)
-} 
+}
 
 }

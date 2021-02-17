@@ -14,8 +14,8 @@ South-southeast (SSE), South-southwest (SSW), West-southwest (WSW),
 West-northwest (WNW), and North-northwest (NNW).}
 }
 \value{
-A numeric vector of degrees corresponding to the middle azimuth
-of the corresponding compass direction.
+A numeric vector of degrees corresponding to the middle
+azimuth of the corresponding compass direction.
 }
 \description{
 Convert the Compass direction labels to degrees.

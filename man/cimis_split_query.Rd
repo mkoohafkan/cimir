@@ -54,7 +54,7 @@ resulting query will include all targets and items.
 }
 \examples{
 cimis_split_query(170, "2000-01-01", "2010-12-31", "day-air-tmp-avg")
-cimis_split_query(c(149, 170), "2018-01-01", "2018-12-31", 
+cimis_split_query(c(149, 170), "2018-01-01", "2018-12-31",
   c("day-air-tmp-avg", "hly-air-tmp", "hly-rel-hum"))
 
 }
