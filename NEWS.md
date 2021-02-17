@@ -1,4 +1,9 @@
-# cimir 0.4-0
+# cimir 0.4-1 (2021-02-17)
+
+This patch provides better handling of queries
+that return empty record sets.
+
+# cimir 0.4-0 (2020-01-22)
 
 This release includes the following changes:
 
