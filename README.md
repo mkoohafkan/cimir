@@ -1,8 +1,8 @@
 # cimir: Interface to CIMIS <a href='https://github.com/mkoohafkan/cimir'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
-[![R build status](https://github.com/mkoohafkan/cimir/workflows/R-CMD-check/badge.svg)](https://github.com/mkoohafkan/cimir/actions)
 ![CRAN Release](https://www.r-pkg.org/badges/version-last-release/cimir)
+[![R-CMD-check](https://github.com/mkoohafkan/cimir/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mkoohafkan/cimir/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 This package provides an R interface to the 
