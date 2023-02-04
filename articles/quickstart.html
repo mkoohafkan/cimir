@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,23 +40,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cimir</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4-1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -74,7 +70,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/mkoohafkan/cimir/">
+  <a href="https://github.com/mkoohafkan/cimir/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -93,196 +89,196 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Quick Start</h1>
-                        <h4 class="author">Michael Koohafkan</h4>
+                        <h4 data-toc-skip class="author">Michael Koohafkan</h4>
             
-            <h4 class="date">2021-02-17</h4>
+            <h4 data-toc-skip class="date">2021-02-17</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/mkoohafkan/cimir/blob/master/vignettes/quickstart.Rmd"><code>vignettes/quickstart.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mkoohafkan/cimir/blob/HEAD/vignettes/quickstart.Rmd" class="external-link"><code>vignettes/quickstart.Rmd</code></a></small>
       <div class="hidden name"><code>quickstart.Rmd</code></div>
 
     </div>
 
     
     
-<p>This document gets you up and running with <code>cimir</code>, an R interface to the <a href="https://cimis.water.ca.gov/">California Irrigiation Management Information System</a> (CIMIS) <a href="http://et.water.ca.gov/Home/Index">Web API</a>. In order to use this package, you will need to <a href="https://cimis.water.ca.gov/Auth/Register.aspx">create a CIMIS account</a> and <a href="http://et.water.ca.gov/Home/Register/">request a web services AppKey</a>.</p>
+<p>This document gets you up and running with <code>cimir</code>, an R interface to the <a href="https://cimis.water.ca.gov/" class="external-link">California Irrigiation Management Information System</a> (CIMIS) <a href="http://et.water.ca.gov/Home/Index" class="external-link">Web API</a>. In order to use this package, you will need to <a href="https://cimis.water.ca.gov/Auth/Register.aspx" class="external-link">create a CIMIS account</a> and <a href="http://et.water.ca.gov/Home/Register/" class="external-link">request a web services AppKey</a>.</p>
 <p>First, simply load the <code>cimir</code> library:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mkoohafkan/cimir">cimir</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mkoohafkan/cimir" class="external-link">cimir</a></span><span class="op">)</span></span></code></pre></div>
 <p>If you want <code>cimir</code> to automatically use an existing AppKey when you attach the library, you can either set the option <code>cimir.appkey</code> in your <code>.Rprofile</code> or create an environment variable <code>CIMIS_APPKEY</code>. To set an AppKey for a single session, use <code><a href="../reference/set_key.html">set_key()</a></code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/set_key.html">set_key</a></span><span class="op">(</span><span class="st">"YOUR-APP-KEY-HERE"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/set_key.html">set_key</a></span><span class="op">(</span><span class="st">"YOUR-APP-KEY-HERE"</span><span class="op">)</span></span></code></pre></div>
 <p>There are two types of CIMIS queries: station queries and data queries. Station queries return metadata on stations, while data queries return environmental monitoring data. For a list of possible data items, use the function <code><a href="../reference/cimis_items.html">cimis_items()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cimis_items.html">cimis_items</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;                         Name        Data Item  Class Data Provider Support</span>
-<span class="co">#&gt; 1    Average Air Temperature  day-air-tmp-avg  Daily                   WSN</span>
-<span class="co">#&gt; 2    Maximum Air Temperature  day-air-tmp-max  Daily                   WSN</span>
-<span class="co">#&gt; 3    Minimum Air Temperature  day-air-tmp-min  Daily                   WSN</span>
-<span class="co">#&gt; 4                  Dew Point      day-dew-pnt  Daily                   WSN</span>
-<span class="co">#&gt; 5                  CIMIS ETo          day-eto  Daily                   WSN</span>
-<span class="co">#&gt; 6                   ASCE ETo     day-asce-eto  Daily             WSN &amp; SCS</span>
-<span class="co">#&gt; 7                   ASCE ETr     day-asce-etr  Daily                   WSN</span>
-<span class="co">#&gt; 8              Precipitation       day-precip  Daily                   WSN</span>
-<span class="co">#&gt; 9  Average Relative Humidity  day-rel-hum-avg  Daily                   WSN</span>
-<span class="co">#&gt; 10 Maximum Relative Humidity  day-rel-hum-max  Daily                   WSN</span>
-<span class="co">#&gt; 11 Minimum Relative Humidity  day-rel-hum-min  Daily                   WSN</span>
-<span class="co">#&gt; 12  Average Soil Temperature day-soil-tmp-avg  Daily                   WSN</span>
-<span class="co">#&gt; 13  Maximum Soil Temperature day-soil-tmp-max  Daily                   WSN</span>
-<span class="co">#&gt; 14  Minimum Soil Temperature day-soil-tmp-min  Daily                   WSN</span>
-<span class="co">#&gt; 15   Average Solar Radiation  day-sol-rad-avg  Daily             WSN &amp; SCS</span>
-<span class="co">#&gt; 16       Net Solar Radiation  day-sol-rad-net  Daily                   WSN</span>
-<span class="co">#&gt; 17    Average Vapor Pressure day-vap-pres-avg  Daily                   WSN</span>
-<span class="co">#&gt; 18    Maximum Vapor Pressure day-vap-pres-max  Daily                   WSN</span>
-<span class="co">#&gt; 19    Minimum Vapor Pressure day-vap-pres-min  Daily                   WSN</span>
-<span class="co">#&gt; 20      Wind East-North-East     day-wind-ene  Daily                   WSN</span>
-<span class="co">#&gt; 21      Wind East-South-East     day-wind-ese  Daily                   WSN</span>
-<span class="co">#&gt; 22     Wind North-North-East     day-wind-nne  Daily                   WSN</span>
-<span class="co">#&gt; 23     Wind North-North-West     day-wind-nnw  Daily                   WSN</span>
-<span class="co">#&gt; 24                  Wind Run     day-wind-run  Daily                   WSN</span>
-<span class="co">#&gt; 25        Average Wind Speed day-wind-spd-avg  Daily                   WSN</span>
-<span class="co">#&gt; 26     Wind South-South-East     day-wind-sse  Daily                   WSN</span>
-<span class="co">#&gt; 27     Wind South-South-West     day-wind-ssw  Daily                   WSN</span>
-<span class="co">#&gt; 28      Wind West-North-West     day-wind-wnw  Daily                   WSN</span>
-<span class="co">#&gt; 29      Wind West-South-West     day-wind-wsw  Daily                   WSN</span>
-<span class="co">#&gt; 30           Air Temperature      hly-air-tmp Hourly                   WSN</span>
-<span class="co">#&gt; 31                 Dew Point      hly-dew-pnt Hourly                   WSN</span>
-<span class="co">#&gt; 32                 CIMIS ETo          hly-eto Hourly                   WSN</span>
-<span class="co">#&gt; 33             Net Radiation      hly-net-rad Hourly                   WSN</span>
-<span class="co">#&gt; 34                  ASCE ETo     hly-asce-eto Hourly                   WSN</span>
-<span class="co">#&gt; 35                  ASCE ETr     hly-asce-etr Hourly                   WSN</span>
-<span class="co">#&gt; 36             Precipitation       hly-precip Hourly                   WSN</span>
-<span class="co">#&gt; 37         Relative Humidity      hly-rel-hum Hourly                   WSN</span>
-<span class="co">#&gt; 38            Resultant Wind     hly-res-wind Hourly                   WSN</span>
-<span class="co">#&gt; 39          Soil Temperature     hly-soil-tmp Hourly                   WSN</span>
-<span class="co">#&gt; 40           Solar Radiation      hly-sol-rad Hourly                   WSN</span>
-<span class="co">#&gt; 41            Vapor Pressure     hly-vap-pres Hourly                   WSN</span>
-<span class="co">#&gt; 42            Wind Direction     hly-wind-dir Hourly                   WSN</span>
-<span class="co">#&gt; 43                Wind Speed     hly-wind-spd Hourly                   WSN</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/cimis_items.html">cimis_items</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                         Name        Data Item  Class Data Provider Support</span></span>
+<span><span class="co">#&gt; 1    Average Air Temperature  day-air-tmp-avg  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 2    Maximum Air Temperature  day-air-tmp-max  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 3    Minimum Air Temperature  day-air-tmp-min  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 4                  Dew Point      day-dew-pnt  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 5                  CIMIS ETo          day-eto  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 6                   ASCE ETo     day-asce-eto  Daily             WSN &amp; SCS</span></span>
+<span><span class="co">#&gt; 7                   ASCE ETr     day-asce-etr  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 8              Precipitation       day-precip  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 9  Average Relative Humidity  day-rel-hum-avg  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 10 Maximum Relative Humidity  day-rel-hum-max  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 11 Minimum Relative Humidity  day-rel-hum-min  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 12  Average Soil Temperature day-soil-tmp-avg  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 13  Maximum Soil Temperature day-soil-tmp-max  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 14  Minimum Soil Temperature day-soil-tmp-min  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 15   Average Solar Radiation  day-sol-rad-avg  Daily             WSN &amp; SCS</span></span>
+<span><span class="co">#&gt; 16       Net Solar Radiation  day-sol-rad-net  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 17    Average Vapor Pressure day-vap-pres-avg  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 18    Maximum Vapor Pressure day-vap-pres-max  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 19    Minimum Vapor Pressure day-vap-pres-min  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 20      Wind East-North-East     day-wind-ene  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 21      Wind East-South-East     day-wind-ese  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 22     Wind North-North-East     day-wind-nne  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 23     Wind North-North-West     day-wind-nnw  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 24                  Wind Run     day-wind-run  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 25        Average Wind Speed day-wind-spd-avg  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 26     Wind South-South-East     day-wind-sse  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 27     Wind South-South-West     day-wind-ssw  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 28      Wind West-North-West     day-wind-wnw  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 29      Wind West-South-West     day-wind-wsw  Daily                   WSN</span></span>
+<span><span class="co">#&gt; 30           Air Temperature      hly-air-tmp Hourly                   WSN</span></span>
+<span><span class="co">#&gt; 31                 Dew Point      hly-dew-pnt Hourly                   WSN</span></span>
+<span><span class="co">#&gt; 32                 CIMIS ETo          hly-eto Hourly                   WSN</span></span>
+<span><span class="co">#&gt; 33             Net Radiation      hly-net-rad Hourly                   WSN</span></span>
+<span><span class="co">#&gt; 34                  ASCE ETo     hly-asce-eto Hourly                   WSN</span></span>
+<span><span class="co">#&gt; 35                  ASCE ETr     hly-asce-etr Hourly                   WSN</span></span>
+<span><span class="co">#&gt; 36             Precipitation       hly-precip Hourly                   WSN</span></span>
+<span><span class="co">#&gt; 37         Relative Humidity      hly-rel-hum Hourly                   WSN</span></span>
+<span><span class="co">#&gt; 38            Resultant Wind     hly-res-wind Hourly                   WSN</span></span>
+<span><span class="co">#&gt; 39          Soil Temperature     hly-soil-tmp Hourly                   WSN</span></span>
+<span><span class="co">#&gt; 40           Solar Radiation      hly-sol-rad Hourly                   WSN</span></span>
+<span><span class="co">#&gt; 41            Vapor Pressure     hly-vap-pres Hourly                   WSN</span></span>
+<span><span class="co">#&gt; 42            Wind Direction     hly-wind-dir Hourly                   WSN</span></span>
+<span><span class="co">#&gt; 43                Wind Speed     hly-wind-spd Hourly                   WSN</span></span></code></pre></div>
 <p>To get a list of station IDs, use <code><a href="../reference/cimis_station.html">cimis_station()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cimis_station.html">cimis_station</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1,473 x 15</span>
-<span class="co">#&gt;    StationNbr Name  City  RegionalOffice County ConnectDate DisconnectDate</span>
-<span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;  &lt;chr&gt;       &lt;chr&gt;         </span>
-<span class="co">#&gt;  1 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span>
-<span class="co">#&gt;  2 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span>
-<span class="co">#&gt;  3 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span>
-<span class="co">#&gt;  4 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span>
-<span class="co">#&gt;  5 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span>
-<span class="co">#&gt;  6 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span>
-<span class="co">#&gt;  7 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span>
-<span class="co">#&gt;  8 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span>
-<span class="co">#&gt;  9 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span>
-<span class="co">#&gt; 10 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span>
-<span class="co">#&gt; # ... with 1,463 more rows, and 8 more variables: IsActive &lt;chr&gt;,</span>
-<span class="co">#&gt; #   IsEtoStation &lt;chr&gt;, Elevation &lt;chr&gt;, GroundCover &lt;chr&gt;, HmsLatitude &lt;chr&gt;,</span>
-<span class="co">#&gt; #   HmsLongitude &lt;chr&gt;, ZipCodes &lt;chr&gt;, SitingDesc &lt;chr&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/cimis_station.html">cimis_station</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1,473 x 15</span></span>
+<span><span class="co">#&gt;    StationNbr Name  City  RegionalOffice County ConnectDate DisconnectDate</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;  &lt;chr&gt;       &lt;chr&gt;         </span></span>
+<span><span class="co">#&gt;  1 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span></span>
+<span><span class="co">#&gt;  2 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span></span>
+<span><span class="co">#&gt;  3 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span></span>
+<span><span class="co">#&gt;  4 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span></span>
+<span><span class="co">#&gt;  5 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span></span>
+<span><span class="co">#&gt;  6 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span></span>
+<span><span class="co">#&gt;  7 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span></span>
+<span><span class="co">#&gt;  8 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span></span>
+<span><span class="co">#&gt;  9 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span></span>
+<span><span class="co">#&gt; 10 1          Fres~ Fres~ South Central~ Fresno 6/7/1982    9/25/1988     </span></span>
+<span><span class="co">#&gt; # ... with 1,463 more rows, and 8 more variables: IsActive &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   IsEtoStation &lt;chr&gt;, Elevation &lt;chr&gt;, GroundCover &lt;chr&gt;, HmsLatitude &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   HmsLongitude &lt;chr&gt;, ZipCodes &lt;chr&gt;, SitingDesc &lt;chr&gt;</span></span></code></pre></div>
 <p>To get metadata for a subset of stations, simply pass a vector of station IDs. You can also query metadata for stations associated with a particular zipcode (or spatial zipcode) <code><a href="../reference/cimis_station.html">cimis_zipcode()</a></code> and <code><a href="../reference/cimis_station.html">cimis_spatial_zipcode()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cimis_station.html">cimis_zipcode</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1,471 x 5</span>
-<span class="co">#&gt;    StationNbr ZipCode ConnectDate DisconnectDate IsActive</span>
-<span class="co">#&gt;         &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;          &lt;chr&gt;   </span>
-<span class="co">#&gt;  1         99 90401   12/11/1992  5/8/2050       True    </span>
-<span class="co">#&gt;  2         99 90402   12/11/1992  5/8/2050       True    </span>
-<span class="co">#&gt;  3         99 90403   12/11/1992  5/8/2050       True    </span>
-<span class="co">#&gt;  4         99 90404   12/11/1992  5/8/2050       True    </span>
-<span class="co">#&gt;  5         99 90405   12/11/1992  5/8/2050       True    </span>
-<span class="co">#&gt;  6         99 90406   12/11/1992  5/8/2050       True    </span>
-<span class="co">#&gt;  7         99 90407   12/11/1992  5/8/2050       True    </span>
-<span class="co">#&gt;  8         99 90408   12/11/1992  5/8/2050       True    </span>
-<span class="co">#&gt;  9         99 90409   12/11/1992  5/8/2050       True    </span>
-<span class="co">#&gt; 10         99 90410   12/11/1992  5/8/2050       True    </span>
-<span class="co">#&gt; # ... with 1,461 more rows</span>
-<span class="fu"><a href="../reference/cimis_station.html">cimis_spatial_zipcode</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1,715 x 4</span>
-<span class="co">#&gt;    ZipCode ConnectDate DisconnectDate IsActive</span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;          &lt;chr&gt;   </span>
-<span class="co">#&gt;  1 85328   2/20/2003   12/31/2030     True    </span>
-<span class="co">#&gt;  2 85334   2/20/2003   12/31/2030     True    </span>
-<span class="co">#&gt;  3 85344   2/20/2003   12/31/2030     True    </span>
-<span class="co">#&gt;  4 85364   2/20/2003   12/31/2030     True    </span>
-<span class="co">#&gt;  5 85365   2/20/2003   12/31/2030     True    </span>
-<span class="co">#&gt;  6 86440   2/20/2003   12/31/2030     True    </span>
-<span class="co">#&gt;  7 89003   2/20/2003   12/31/2030     True    </span>
-<span class="co">#&gt;  8 89010   2/20/2003   12/31/2030     True    </span>
-<span class="co">#&gt;  9 89013   2/20/2003   12/31/2030     True    </span>
-<span class="co">#&gt; 10 89019   2/20/2003   12/31/2030     True    </span>
-<span class="co">#&gt; # ... with 1,705 more rows</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/cimis_station.html">cimis_zipcode</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1,471 x 5</span></span>
+<span><span class="co">#&gt;    StationNbr ZipCode ConnectDate DisconnectDate IsActive</span></span>
+<span><span class="co">#&gt;         &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;          &lt;chr&gt;   </span></span>
+<span><span class="co">#&gt;  1         99 90401   12/11/1992  5/8/2050       True    </span></span>
+<span><span class="co">#&gt;  2         99 90402   12/11/1992  5/8/2050       True    </span></span>
+<span><span class="co">#&gt;  3         99 90403   12/11/1992  5/8/2050       True    </span></span>
+<span><span class="co">#&gt;  4         99 90404   12/11/1992  5/8/2050       True    </span></span>
+<span><span class="co">#&gt;  5         99 90405   12/11/1992  5/8/2050       True    </span></span>
+<span><span class="co">#&gt;  6         99 90406   12/11/1992  5/8/2050       True    </span></span>
+<span><span class="co">#&gt;  7         99 90407   12/11/1992  5/8/2050       True    </span></span>
+<span><span class="co">#&gt;  8         99 90408   12/11/1992  5/8/2050       True    </span></span>
+<span><span class="co">#&gt;  9         99 90409   12/11/1992  5/8/2050       True    </span></span>
+<span><span class="co">#&gt; 10         99 90410   12/11/1992  5/8/2050       True    </span></span>
+<span><span class="co">#&gt; # ... with 1,461 more rows</span></span>
+<span><span class="fu"><a href="../reference/cimis_station.html">cimis_spatial_zipcode</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1,715 x 4</span></span>
+<span><span class="co">#&gt;    ZipCode ConnectDate DisconnectDate IsActive</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;          &lt;chr&gt;   </span></span>
+<span><span class="co">#&gt;  1 85328   2/20/2003   12/31/2030     True    </span></span>
+<span><span class="co">#&gt;  2 85334   2/20/2003   12/31/2030     True    </span></span>
+<span><span class="co">#&gt;  3 85344   2/20/2003   12/31/2030     True    </span></span>
+<span><span class="co">#&gt;  4 85364   2/20/2003   12/31/2030     True    </span></span>
+<span><span class="co">#&gt;  5 85365   2/20/2003   12/31/2030     True    </span></span>
+<span><span class="co">#&gt;  6 86440   2/20/2003   12/31/2030     True    </span></span>
+<span><span class="co">#&gt;  7 89003   2/20/2003   12/31/2030     True    </span></span>
+<span><span class="co">#&gt;  8 89010   2/20/2003   12/31/2030     True    </span></span>
+<span><span class="co">#&gt;  9 89013   2/20/2003   12/31/2030     True    </span></span>
+<span><span class="co">#&gt; 10 89019   2/20/2003   12/31/2030     True    </span></span>
+<span><span class="co">#&gt; # ... with 1,705 more rows</span></span></code></pre></div>
 <p>Once the stations or regions of interest are identified, you can retrieve data using <code><a href="../reference/cimis_data.html">cimis_data()</a></code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cimis_data.html">cimis_data</a></span><span class="op">(</span>targets <span class="op">=</span> <span class="fl">170</span>, start.date <span class="op">=</span> <span class="st">"2018-09-25"</span>, end.date <span class="op">=</span> <span class="st">"2018-10-01"</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 98 x 13</span>
-<span class="co">#&gt;    Name  Type  Owner Date       Julian Station Standard ZipCodes Scope Item </span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;date&gt;      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;</span>
-<span class="co">#&gt;  1 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayA~</span>
-<span class="co">#&gt;  2 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayA~</span>
-<span class="co">#&gt;  3 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayA~</span>
-<span class="co">#&gt;  4 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayD~</span>
-<span class="co">#&gt;  5 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayA~</span>
-<span class="co">#&gt;  6 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayP~</span>
-<span class="co">#&gt;  7 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayR~</span>
-<span class="co">#&gt;  8 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayR~</span>
-<span class="co">#&gt;  9 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayR~</span>
-<span class="co">#&gt; 10 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayS~</span>
-<span class="co">#&gt; # ... with 88 more rows, and 3 more variables: Value &lt;dbl&gt;, Qc &lt;chr&gt;,</span>
-<span class="co">#&gt; #   Unit &lt;chr&gt;</span></code></pre></div>
-<p>The data are returned in tidy format, i.e. the <code>"Value"</code> column displays the recorded value for the data item specified in the <code>"Item"</code> column. The CIMIS Web API returns a predefined set of data items by default, but custom item sets can also be passed to <code><a href="../reference/cimis_data.html">cimis_data()</a></code>. Data queries also support zipcodes, spatial coordinates (latitude and longitude, in decimal degrees) and street addresses, as well as additional options for data units and data providers. See <code><a href="../reference/cimis_data.html">?cimis_data</a></code> and the <a href="http://et.water.ca.gov/Rest/Index">CIMIS Web API documentation</a> for more information.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/cimis_data.html">cimis_data</a></span><span class="op">(</span>targets <span class="op">=</span> <span class="fl">170</span>, start.date <span class="op">=</span> <span class="st">"2018-09-25"</span>, end.date <span class="op">=</span> <span class="st">"2018-10-01"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 98 x 13</span></span>
+<span><span class="co">#&gt;    Name  Type  Owner Date       Julian Station Standard ZipCodes Scope Item </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;date&gt;      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;</span></span>
+<span><span class="co">#&gt;  1 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayA~</span></span>
+<span><span class="co">#&gt;  2 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayA~</span></span>
+<span><span class="co">#&gt;  3 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayA~</span></span>
+<span><span class="co">#&gt;  4 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayD~</span></span>
+<span><span class="co">#&gt;  5 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayA~</span></span>
+<span><span class="co">#&gt;  6 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayP~</span></span>
+<span><span class="co">#&gt;  7 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayR~</span></span>
+<span><span class="co">#&gt;  8 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayR~</span></span>
+<span><span class="co">#&gt;  9 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayR~</span></span>
+<span><span class="co">#&gt; 10 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayS~</span></span>
+<span><span class="co">#&gt; # ... with 88 more rows, and 3 more variables: Value &lt;dbl&gt;, Qc &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   Unit &lt;chr&gt;</span></span></code></pre></div>
+<p>The data are returned in tidy format, i.e. the <code>"Value"</code> column displays the recorded value for the data item specified in the <code>"Item"</code> column. The CIMIS Web API returns a predefined set of data items by default, but custom item sets can also be passed to <code><a href="../reference/cimis_data.html">cimis_data()</a></code>. Data queries also support zipcodes, spatial coordinates (latitude and longitude, in decimal degrees) and street addresses, as well as additional options for data units and data providers. See <code><a href="../reference/cimis_data.html">?cimis_data</a></code> and the <a href="http://et.water.ca.gov/Rest/Index" class="external-link">CIMIS Web API documentation</a> for more information.</p>
 <p>When hourly data is retrieved, an additional column <code>"Hour"</code> is returned. If both hourly and daily data items are requested, the <code>"Hour"</code> column will be filled with <code>NA</code> values for the daily data items. The <code><a href="../reference/cimis_to_datetime.html">cimis_to_datetime()</a></code> function provides a quick way to combine the columns <code>"Date"</code> and <code>"Hour"</code> to a single <code>"Datetime"</code> column. Note that when mixed daily and hourly data is present in the dataframe, the daily values are assumed to correspond to midnight (00:00).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cimis_to_datetime.html">cimis_to_datetime</a></span><span class="op">(</span><span class="fu"><a href="../reference/cimis_data.html">cimis_data</a></span><span class="op">(</span>targets <span class="op">=</span> <span class="fl">170</span>, start.date <span class="op">=</span> <span class="st">"2018-09-25"</span>,
-  end.date <span class="op">=</span> <span class="st">"2018-09-27"</span>, items <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hly-soil-tmp"</span>, <span class="st">"day-air-tmp-avg"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 75 x 13</span>
-<span class="co">#&gt;    Name  Type  Owner Datetime            Julian Station Standard ZipCodes Scope</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dttm&gt;               &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;</span>
-<span class="co">#&gt;  1 cimis stat~ wate~ 2018-09-25 00:00:00    268 170     english  94529, ~ daily</span>
-<span class="co">#&gt;  2 cimis stat~ wate~ 2018-09-26 00:00:00    269 170     english  94529, ~ daily</span>
-<span class="co">#&gt;  3 cimis stat~ wate~ 2018-09-27 00:00:00    270 170     english  94529, ~ daily</span>
-<span class="co">#&gt;  4 cimis stat~ wate~ 2018-09-25 01:00:00    268 170     english  94529, ~ hour~</span>
-<span class="co">#&gt;  5 cimis stat~ wate~ 2018-09-25 02:00:00    268 170     english  94529, ~ hour~</span>
-<span class="co">#&gt;  6 cimis stat~ wate~ 2018-09-25 03:00:00    268 170     english  94529, ~ hour~</span>
-<span class="co">#&gt;  7 cimis stat~ wate~ 2018-09-25 04:00:00    268 170     english  94529, ~ hour~</span>
-<span class="co">#&gt;  8 cimis stat~ wate~ 2018-09-25 05:00:00    268 170     english  94529, ~ hour~</span>
-<span class="co">#&gt;  9 cimis stat~ wate~ 2018-09-25 06:00:00    268 170     english  94529, ~ hour~</span>
-<span class="co">#&gt; 10 cimis stat~ wate~ 2018-09-25 07:00:00    268 170     english  94529, ~ hour~</span>
-<span class="co">#&gt; # ... with 65 more rows, and 4 more variables: Item &lt;chr&gt;, Value &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Qc &lt;chr&gt;, Unit &lt;chr&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/cimis_to_datetime.html">cimis_to_datetime</a></span><span class="op">(</span><span class="fu"><a href="../reference/cimis_data.html">cimis_data</a></span><span class="op">(</span>targets <span class="op">=</span> <span class="fl">170</span>, start.date <span class="op">=</span> <span class="st">"2018-09-25"</span>,</span>
+<span>  end.date <span class="op">=</span> <span class="st">"2018-09-27"</span>, items <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hly-soil-tmp"</span>, <span class="st">"day-air-tmp-avg"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 75 x 13</span></span>
+<span><span class="co">#&gt;    Name  Type  Owner Datetime            Julian Station Standard ZipCodes Scope</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dttm&gt;               &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;</span></span>
+<span><span class="co">#&gt;  1 cimis stat~ wate~ 2018-09-25 00:00:00    268 170     english  94529, ~ daily</span></span>
+<span><span class="co">#&gt;  2 cimis stat~ wate~ 2018-09-26 00:00:00    269 170     english  94529, ~ daily</span></span>
+<span><span class="co">#&gt;  3 cimis stat~ wate~ 2018-09-27 00:00:00    270 170     english  94529, ~ daily</span></span>
+<span><span class="co">#&gt;  4 cimis stat~ wate~ 2018-09-25 01:00:00    268 170     english  94529, ~ hour~</span></span>
+<span><span class="co">#&gt;  5 cimis stat~ wate~ 2018-09-25 02:00:00    268 170     english  94529, ~ hour~</span></span>
+<span><span class="co">#&gt;  6 cimis stat~ wate~ 2018-09-25 03:00:00    268 170     english  94529, ~ hour~</span></span>
+<span><span class="co">#&gt;  7 cimis stat~ wate~ 2018-09-25 04:00:00    268 170     english  94529, ~ hour~</span></span>
+<span><span class="co">#&gt;  8 cimis stat~ wate~ 2018-09-25 05:00:00    268 170     english  94529, ~ hour~</span></span>
+<span><span class="co">#&gt;  9 cimis stat~ wate~ 2018-09-25 06:00:00    268 170     english  94529, ~ hour~</span></span>
+<span><span class="co">#&gt; 10 cimis stat~ wate~ 2018-09-25 07:00:00    268 170     english  94529, ~ hour~</span></span>
+<span><span class="co">#&gt; # ... with 65 more rows, and 4 more variables: Item &lt;chr&gt;, Value &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   Qc &lt;chr&gt;, Unit &lt;chr&gt;</span></span></code></pre></div>
 <p>CIMIS data sometimes includes quality control flags in the <code>Qc</code> column that indicate potential issues with returned data. Descriptions of these flags can be retrieved <code><a href="../reference/cimis_flags.html">cimis_flags()</a></code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cimis_flags.html">cimis_flags</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;    Flag       Class  Period</span>
-<span class="co">#&gt; 1     I      Severe Current</span>
-<span class="co">#&gt; 2     M      Severe Current</span>
-<span class="co">#&gt; 3     S      Severe Current</span>
-<span class="co">#&gt; 4     A Informative Current</span>
-<span class="co">#&gt; 5     E Informative Current</span>
-<span class="co">#&gt; 6     T Informative Current</span>
-<span class="co">#&gt; 7     H Informative Current</span>
-<span class="co">#&gt; 8     J Informative Current</span>
-<span class="co">#&gt; 9     K Informative Current</span>
-<span class="co">#&gt; 10    L Informative Current</span>
-<span class="co">#&gt; 11    N Informative Current</span>
-<span class="co">#&gt; 12    P Informative Current</span>
-<span class="co">#&gt; 13    Q Informative Current</span>
-<span class="co">#&gt; 14    R Informative Current</span>
-<span class="co">#&gt; 15    Y Informative Current</span>
-<span class="co">#&gt;                                                                                                                                              Description</span>
-<span class="co">#&gt; 1                                                                                                                      Data value has no meaning/ignore.</span>
-<span class="co">#&gt; 2                                                                                                                                               Missing.</span>
-<span class="co">#&gt; 3                                                                                           Sensor is not in service or data is out of sensor threshold.</span>
-<span class="co">#&gt; 4                                                                                                                                    Historical average.</span>
-<span class="co">#&gt; 5                                                                                Historical average of one of the sensors used to calculate a parameter.</span>
-<span class="co">#&gt; 6                                                                                Historical average of one of the sensors used to calculate a parameter.</span>
-<span class="co">#&gt; 7  Daily data value flagged when corresponding hourly data is flagged M, Q, and S. This flag is not set when the corresponding hourly data is flagged N.</span>
-<span class="co">#&gt; 8                                                                                           Monthly data value flagged when some daily data are missing.</span>
-<span class="co">#&gt; 9                                                                                         Monthly data value flagged when daily data values are flagged.</span>
-<span class="co">#&gt; 10                                                                     Monthly data value flagged when some daily data are missing and some are flagged.</span>
-<span class="co">#&gt; 11                                                                                                          Data value is not collected by this station.</span>
-<span class="co">#&gt; 12                                                                                                                                 Quality test pending.</span>
-<span class="co">#&gt; 13       All quality control could not be performed because a comparison sensor is severe. This flag is not set when the comparison sensor is flagged N.</span>
-<span class="co">#&gt; 14                                                                                                                 Data is far out of historical limits.</span>
-<span class="co">#&gt; 15                                                                                                          Data is moderately out of historical limits.</span></code></pre></div>
-<p>Note that quality control flag designations were changed in 1993. For more information, see the <a href="https://cimis.water.ca.gov/Resources.aspx">CIMIS Data Overview - Quality Control</a>. web page.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/cimis_flags.html">cimis_flags</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    Flag       Class  Period</span></span>
+<span><span class="co">#&gt; 1     I      Severe Current</span></span>
+<span><span class="co">#&gt; 2     M      Severe Current</span></span>
+<span><span class="co">#&gt; 3     S      Severe Current</span></span>
+<span><span class="co">#&gt; 4     A Informative Current</span></span>
+<span><span class="co">#&gt; 5     E Informative Current</span></span>
+<span><span class="co">#&gt; 6     T Informative Current</span></span>
+<span><span class="co">#&gt; 7     H Informative Current</span></span>
+<span><span class="co">#&gt; 8     J Informative Current</span></span>
+<span><span class="co">#&gt; 9     K Informative Current</span></span>
+<span><span class="co">#&gt; 10    L Informative Current</span></span>
+<span><span class="co">#&gt; 11    N Informative Current</span></span>
+<span><span class="co">#&gt; 12    P Informative Current</span></span>
+<span><span class="co">#&gt; 13    Q Informative Current</span></span>
+<span><span class="co">#&gt; 14    R Informative Current</span></span>
+<span><span class="co">#&gt; 15    Y Informative Current</span></span>
+<span><span class="co">#&gt;                                                                                                                                              Description</span></span>
+<span><span class="co">#&gt; 1                                                                                                                      Data value has no meaning/ignore.</span></span>
+<span><span class="co">#&gt; 2                                                                                                                                               Missing.</span></span>
+<span><span class="co">#&gt; 3                                                                                           Sensor is not in service or data is out of sensor threshold.</span></span>
+<span><span class="co">#&gt; 4                                                                                                                                    Historical average.</span></span>
+<span><span class="co">#&gt; 5                                                                                Historical average of one of the sensors used to calculate a parameter.</span></span>
+<span><span class="co">#&gt; 6                                                                                Historical average of one of the sensors used to calculate a parameter.</span></span>
+<span><span class="co">#&gt; 7  Daily data value flagged when corresponding hourly data is flagged M, Q, and S. This flag is not set when the corresponding hourly data is flagged N.</span></span>
+<span><span class="co">#&gt; 8                                                                                           Monthly data value flagged when some daily data are missing.</span></span>
+<span><span class="co">#&gt; 9                                                                                         Monthly data value flagged when daily data values are flagged.</span></span>
+<span><span class="co">#&gt; 10                                                                     Monthly data value flagged when some daily data are missing and some are flagged.</span></span>
+<span><span class="co">#&gt; 11                                                                                                          Data value is not collected by this station.</span></span>
+<span><span class="co">#&gt; 12                                                                                                                                 Quality test pending.</span></span>
+<span><span class="co">#&gt; 13       All quality control could not be performed because a comparison sensor is severe. This flag is not set when the comparison sensor is flagged N.</span></span>
+<span><span class="co">#&gt; 14                                                                                                                 Data is far out of historical limits.</span></span>
+<span><span class="co">#&gt; 15                                                                                                          Data is moderately out of historical limits.</span></span></code></pre></div>
+<p>Note that quality control flag designations were changed in 1993. For more information, see the <a href="https://cimis.water.ca.gov/Resources.aspx" class="external-link">CIMIS Data Overview - Quality Control</a>. web page.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -294,11 +290,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Koohafkan.</p>
+  <p></p>
+<p>Developed by Michael Koohafkan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -306,6 +304,8 @@
 
   
 
+
+  
 
   </body>
 </html>

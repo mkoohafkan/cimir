@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,23 +40,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cimir</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4-1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -74,7 +70,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/mkoohafkan/cimir/">
+  <a href="https://github.com/mkoohafkan/cimir/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -93,11 +89,11 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Helper Functions</h1>
-                        <h4 class="author">Michael Koohafkan</h4>
+                        <h4 data-toc-skip class="author">Michael Koohafkan</h4>
             
-            <h4 class="date">2021-02-17</h4>
+            <h4 data-toc-skip class="date">2021-02-17</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/mkoohafkan/cimir/blob/master/vignettes/helper_functions.rmd"><code>vignettes/helper_functions.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mkoohafkan/cimir/blob/HEAD/vignettes/helper_functions.rmd" class="external-link"><code>vignettes/helper_functions.rmd</code></a></small>
       <div class="hidden name"><code>helper_functions.rmd</code></div>
 
     </div>
@@ -107,12 +103,12 @@
 <p>This document gets illustrates some of the helper functions in <code>cimir</code>.</p>
 <p>First, simply load the <code>cimir</code> library:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mkoohafkan/cimir">cimir</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mkoohafkan/cimir" class="external-link">cimir</a></span><span class="op">)</span></span></code></pre></div>
 <p>In this vignette, we’ll use some example data from the Markleeville station (#246). The station metadata can be retrieved with <code><a href="../reference/cimis_station.html">cimis_station()</a></code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">station.meta</span> <span class="op">=</span> <span class="fu"><a href="../reference/cimis_station.html">cimis_station</a></span><span class="op">(</span><span class="fl">246</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">station.meta</span><span class="op">)</span></code></pre></div>
-<table class="table">
+<code class="sourceCode R"><span><span class="va">station.meta</span> <span class="op">=</span> <span class="fu"><a href="../reference/cimis_station.html">cimis_station</a></span><span class="op">(</span><span class="fl">246</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">station.meta</span><span class="op">)</span></span></code></pre></div>
+<table style="width:100%;" class="table">
 <colgroup>
 <col width="5%">
 <col width="6%">
@@ -186,9 +182,9 @@
 </table>
 <p>Notice that the station latitude and longitude is provided as a text string, in both Hour Minute Second (HMMS) and Decimal Degree (DD) format. We can extract one or the other of these formats using <code><a href="../reference/cimis_format_location.html">cimis_format_location()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">station.meta</span> <span class="op">=</span> <span class="fu"><a href="../reference/cimis_format_location.html">cimis_format_location</a></span><span class="op">(</span><span class="va">station.meta</span>, <span class="st">"DD"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">station.meta</span><span class="op">)</span></code></pre></div>
-<table class="table">
+<code class="sourceCode R"><span><span class="va">station.meta</span> <span class="op">=</span> <span class="fu"><a href="../reference/cimis_format_location.html">cimis_format_location</a></span><span class="op">(</span><span class="va">station.meta</span>, <span class="st">"DD"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">station.meta</span><span class="op">)</span></span></code></pre></div>
+<table style="width:100%;" class="table">
 <colgroup>
 <col width="6%">
 <col width="7%">
@@ -262,10 +258,10 @@
 </table>
 <p>Now let’s retrieve some data with <code><a href="../reference/cimis_data.html">cimis_data()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">station.data</span> <span class="op">=</span> <span class="fu"><a href="../reference/cimis_data.html">cimis_data</a></span><span class="op">(</span><span class="fl">246</span>, <span class="st">"2017-04-01"</span>, <span class="st">"2017-04-30"</span>,
-  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"day-air-tmp-avg"</span>, <span class="st">"hly-air-tmp"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">station.data</span><span class="op">)</span></code></pre></div>
-<table class="table">
+<code class="sourceCode R"><span><span class="va">station.data</span> <span class="op">=</span> <span class="fu"><a href="../reference/cimis_data.html">cimis_data</a></span><span class="op">(</span><span class="fl">246</span>, <span class="st">"2017-04-01"</span>, <span class="st">"2017-04-30"</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"day-air-tmp-avg"</span>, <span class="st">"hly-air-tmp"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">station.data</span><span class="op">)</span></span></code></pre></div>
+<table style="width:100%;" class="table">
 <colgroup>
 <col width="5%">
 <col width="7%">
@@ -399,9 +395,9 @@
 </table>
 <p>Notice that hourly data returns timestamps in two columns “Date” and “Hour”. Furthermore, since we requested both a daily item and an hourly item, the daily item records have <code>NA</code> values for the “Hour” column. We can collapse these columns into a single datetime column using <code><a href="../reference/cimis_to_datetime.html">cimis_to_datetime()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">station.data</span> <span class="op">=</span> <span class="fu"><a href="../reference/cimis_to_datetime.html">cimis_to_datetime</a></span><span class="op">(</span><span class="va">station.data</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">station.data</span><span class="op">)</span></code></pre></div>
-<table class="table">
+<code class="sourceCode R"><span><span class="va">station.data</span> <span class="op">=</span> <span class="fu"><a href="../reference/cimis_to_datetime.html">cimis_to_datetime</a></span><span class="op">(</span><span class="va">station.data</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">station.data</span><span class="op">)</span></span></code></pre></div>
+<table style="width:100%;" class="table">
 <colgroup>
 <col width="5%">
 <col width="6%">
@@ -528,22 +524,22 @@
 <p>Note that a time of <code>00:00:00</code> is used for daily records.</p>
 <p>The CIMIS Web API has fairly conservative limitations on the number of records you can query at once. Large queries can be split automatically into a series of smaller queries using <code>cimis_split_queries</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">queries</span> <span class="op">=</span> <span class="fu"><a href="../reference/cimis_split_query.html">cimis_split_query</a></span><span class="op">(</span><span class="fl">247</span>, <span class="st">"2017-04-01"</span>, <span class="st">"2018-04-30"</span>,
-  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"day-air-tmp-avg"</span>, <span class="st">"hly-air-tmp"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">queries</span>
-<span class="co">#&gt; # A tibble: 7 x 4</span>
-<span class="co">#&gt;   start.date end.date   items     targets  </span>
-<span class="co">#&gt;   &lt;date&gt;     &lt;date&gt;     &lt;list&gt;    &lt;list&gt;   </span>
-<span class="co">#&gt; 1 2017-04-01 2018-04-30 &lt;chr [1]&gt; &lt;dbl [1]&gt;</span>
-<span class="co">#&gt; 2 2017-04-01 2017-06-04 &lt;chr [1]&gt; &lt;dbl [1]&gt;</span>
-<span class="co">#&gt; 3 2017-06-05 2017-08-09 &lt;chr [1]&gt; &lt;dbl [1]&gt;</span>
-<span class="co">#&gt; 4 2017-08-10 2017-10-14 &lt;chr [1]&gt; &lt;dbl [1]&gt;</span>
-<span class="co">#&gt; 5 2017-10-15 2017-12-18 &lt;chr [1]&gt; &lt;dbl [1]&gt;</span>
-<span class="co">#&gt; 6 2017-12-19 2018-02-22 &lt;chr [1]&gt; &lt;dbl [1]&gt;</span>
-<span class="co">#&gt; 7 2018-02-23 2018-04-30 &lt;chr [1]&gt; &lt;dbl [1]&gt;</span></code></pre></div>
-<p>The queries can then be run in sequence using e.g. <code><a href="https://rdrr.io/r/base/mapply.html">mapply()</a></code> or <code><a href="https://purrr.tidyverse.org/reference/map2.html">purrr::pmap()</a></code>:</p>
+<code class="sourceCode R"><span><span class="va">queries</span> <span class="op">=</span> <span class="fu"><a href="../reference/cimis_split_query.html">cimis_split_query</a></span><span class="op">(</span><span class="fl">247</span>, <span class="st">"2017-04-01"</span>, <span class="st">"2018-04-30"</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"day-air-tmp-avg"</span>, <span class="st">"hly-air-tmp"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">queries</span></span>
+<span><span class="co">#&gt; # A tibble: 7 x 4</span></span>
+<span><span class="co">#&gt;   start.date end.date   items     targets  </span></span>
+<span><span class="co">#&gt;   &lt;date&gt;     &lt;date&gt;     &lt;list&gt;    &lt;list&gt;   </span></span>
+<span><span class="co">#&gt; 1 2017-04-01 2018-04-30 &lt;chr [1]&gt; &lt;dbl [1]&gt;</span></span>
+<span><span class="co">#&gt; 2 2017-04-01 2017-06-04 &lt;chr [1]&gt; &lt;dbl [1]&gt;</span></span>
+<span><span class="co">#&gt; 3 2017-06-05 2017-08-09 &lt;chr [1]&gt; &lt;dbl [1]&gt;</span></span>
+<span><span class="co">#&gt; 4 2017-08-10 2017-10-14 &lt;chr [1]&gt; &lt;dbl [1]&gt;</span></span>
+<span><span class="co">#&gt; 5 2017-10-15 2017-12-18 &lt;chr [1]&gt; &lt;dbl [1]&gt;</span></span>
+<span><span class="co">#&gt; 6 2017-12-19 2018-02-22 &lt;chr [1]&gt; &lt;dbl [1]&gt;</span></span>
+<span><span class="co">#&gt; 7 2018-02-23 2018-04-30 &lt;chr [1]&gt; &lt;dbl [1]&gt;</span></span></code></pre></div>
+<p>The queries can then be run in sequence using e.g. <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code> or <code><a href="https://purrr.tidyverse.org/reference/pmap.html" class="external-link">purrr::pmap()</a></code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">pmap_dfr</a></span><span class="op">(</span><span class="va">queries</span>, <span class="va">cimis_data</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">pmap_dfr</a></span><span class="op">(</span><span class="va">queries</span>, <span class="va">cimis_data</span><span class="op">)</span></span></code></pre></div>
 <p>Note that the CIMIS API may reject your requests if you submit too many queries in a short period of time.</p>
   </div>
 
@@ -556,11 +552,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Koohafkan.</p>
+  <p></p>
+<p>Developed by Michael Koohafkan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -568,6 +566,8 @@
 
   
 
+
+  
 
   </body>
 </html>
