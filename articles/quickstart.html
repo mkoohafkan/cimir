@@ -85,11 +85,12 @@
 
       
 
-      </header><script src="quickstart_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Quick Start</h1>
-                        <h4 data-toc-skip class="author">Michael Koohafkan</h4>
+                        <h4 data-toc-skip class="author">Michael
+Koohafkan</h4>
             
             <h4 data-toc-skip class="date">2021-02-17</h4>
       
@@ -100,14 +101,26 @@
 
     
     
-<p>This document gets you up and running with <code>cimir</code>, an R interface to the <a href="https://cimis.water.ca.gov/" class="external-link">California Irrigiation Management Information System</a> (CIMIS) <a href="http://et.water.ca.gov/Home/Index" class="external-link">Web API</a>. In order to use this package, you will need to <a href="https://cimis.water.ca.gov/Auth/Register.aspx" class="external-link">create a CIMIS account</a> and <a href="http://et.water.ca.gov/Home/Register/" class="external-link">request a web services AppKey</a>.</p>
+<p>This document gets you up and running with <code>cimir</code>, an R
+interface to the <a href="https://cimis.water.ca.gov/" class="external-link">California
+Irrigiation Management Information System</a> (CIMIS) <a href="http://et.water.ca.gov/Home/Index" class="external-link">Web API</a>. In order to use
+this package, you will need to <a href="https://cimis.water.ca.gov/Auth/Register.aspx" class="external-link">create a CIMIS
+account</a> and <a href="http://et.water.ca.gov/Home/Register/" class="external-link">request
+a web services AppKey</a>.</p>
 <p>First, simply load the <code>cimir</code> library:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mkoohafkan/cimir" class="external-link">cimir</a></span><span class="op">)</span></span></code></pre></div>
-<p>If you want <code>cimir</code> to automatically use an existing AppKey when you attach the library, you can either set the option <code>cimir.appkey</code> in your <code>.Rprofile</code> or create an environment variable <code>CIMIS_APPKEY</code>. To set an AppKey for a single session, use <code><a href="../reference/set_key.html">set_key()</a></code>:</p>
+<p>If you want <code>cimir</code> to automatically use an existing
+AppKey when you attach the library, you can either set the option
+<code>cimir.appkey</code> in your <code>.Rprofile</code> or create an
+environment variable <code>CIMIS_APPKEY</code>. To set an AppKey for a
+single session, use <code><a href="../reference/set_key.html">set_key()</a></code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/set_key.html">set_key</a></span><span class="op">(</span><span class="st">"YOUR-APP-KEY-HERE"</span><span class="op">)</span></span></code></pre></div>
-<p>There are two types of CIMIS queries: station queries and data queries. Station queries return metadata on stations, while data queries return environmental monitoring data. For a list of possible data items, use the function <code><a href="../reference/cimis_items.html">cimis_items()</a></code>:</p>
+<p>There are two types of CIMIS queries: station queries and data
+queries. Station queries return metadata on stations, while data queries
+return environmental monitoring data. For a list of possible data items,
+use the function <code><a href="../reference/cimis_items.html">cimis_items()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cimis_items.html">cimis_items</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                         Name        Data Item  Class Data Provider Support</span></span>
@@ -173,7 +186,10 @@
 <span><span class="co">#&gt; # ... with 1,463 more rows, and 8 more variables: IsActive &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   IsEtoStation &lt;chr&gt;, Elevation &lt;chr&gt;, GroundCover &lt;chr&gt;, HmsLatitude &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   HmsLongitude &lt;chr&gt;, ZipCodes &lt;chr&gt;, SitingDesc &lt;chr&gt;</span></span></code></pre></div>
-<p>To get metadata for a subset of stations, simply pass a vector of station IDs. You can also query metadata for stations associated with a particular zipcode (or spatial zipcode) <code><a href="../reference/cimis_station.html">cimis_zipcode()</a></code> and <code><a href="../reference/cimis_station.html">cimis_spatial_zipcode()</a></code>:</p>
+<p>To get metadata for a subset of stations, simply pass a vector of
+station IDs. You can also query metadata for stations associated with a
+particular zipcode (or spatial zipcode) <code><a href="../reference/cimis_station.html">cimis_zipcode()</a></code> and
+<code><a href="../reference/cimis_station.html">cimis_spatial_zipcode()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cimis_station.html">cimis_zipcode</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 1,471 x 5</span></span>
@@ -205,7 +221,8 @@
 <span><span class="co">#&gt;  9 89013   2/20/2003   12/31/2030     True    </span></span>
 <span><span class="co">#&gt; 10 89019   2/20/2003   12/31/2030     True    </span></span>
 <span><span class="co">#&gt; # ... with 1,705 more rows</span></span></code></pre></div>
-<p>Once the stations or regions of interest are identified, you can retrieve data using <code><a href="../reference/cimis_data.html">cimis_data()</a></code>:</p>
+<p>Once the stations or regions of interest are identified, you can
+retrieve data using <code><a href="../reference/cimis_data.html">cimis_data()</a></code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cimis_data.html">cimis_data</a></span><span class="op">(</span>targets <span class="op">=</span> <span class="fl">170</span>, start.date <span class="op">=</span> <span class="st">"2018-09-25"</span>, end.date <span class="op">=</span> <span class="st">"2018-10-01"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 98 x 13</span></span>
@@ -223,8 +240,24 @@
 <span><span class="co">#&gt; 10 cimis stat~ wate~ 2018-09-25    268 170     english  94529, ~ daily DayS~</span></span>
 <span><span class="co">#&gt; # ... with 88 more rows, and 3 more variables: Value &lt;dbl&gt;, Qc &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   Unit &lt;chr&gt;</span></span></code></pre></div>
-<p>The data are returned in tidy format, i.e. the <code>"Value"</code> column displays the recorded value for the data item specified in the <code>"Item"</code> column. The CIMIS Web API returns a predefined set of data items by default, but custom item sets can also be passed to <code><a href="../reference/cimis_data.html">cimis_data()</a></code>. Data queries also support zipcodes, spatial coordinates (latitude and longitude, in decimal degrees) and street addresses, as well as additional options for data units and data providers. See <code><a href="../reference/cimis_data.html">?cimis_data</a></code> and the <a href="http://et.water.ca.gov/Rest/Index" class="external-link">CIMIS Web API documentation</a> for more information.</p>
-<p>When hourly data is retrieved, an additional column <code>"Hour"</code> is returned. If both hourly and daily data items are requested, the <code>"Hour"</code> column will be filled with <code>NA</code> values for the daily data items. The <code><a href="../reference/cimis_to_datetime.html">cimis_to_datetime()</a></code> function provides a quick way to combine the columns <code>"Date"</code> and <code>"Hour"</code> to a single <code>"Datetime"</code> column. Note that when mixed daily and hourly data is present in the dataframe, the daily values are assumed to correspond to midnight (00:00).</p>
+<p>The data are returned in tidy format, i.e. the <code>"Value"</code>
+column displays the recorded value for the data item specified in the
+<code>"Item"</code> column. The CIMIS Web API returns a predefined set
+of data items by default, but custom item sets can also be passed to
+<code><a href="../reference/cimis_data.html">cimis_data()</a></code>. Data queries also support zipcodes, spatial
+coordinates (latitude and longitude, in decimal degrees) and street
+addresses, as well as additional options for data units and data
+providers. See <code><a href="../reference/cimis_data.html">?cimis_data</a></code> and the <a href="http://et.water.ca.gov/Rest/Index" class="external-link">CIMIS Web API documentation</a>
+for more information.</p>
+<p>When hourly data is retrieved, an additional column
+<code>"Hour"</code> is returned. If both hourly and daily data items are
+requested, the <code>"Hour"</code> column will be filled with
+<code>NA</code> values for the daily data items. The
+<code><a href="../reference/cimis_to_datetime.html">cimis_to_datetime()</a></code> function provides a quick way to
+combine the columns <code>"Date"</code> and <code>"Hour"</code> to a
+single <code>"Datetime"</code> column. Note that when mixed daily and
+hourly data is present in the dataframe, the daily values are assumed to
+correspond to midnight (00:00).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cimis_to_datetime.html">cimis_to_datetime</a></span><span class="op">(</span><span class="fu"><a href="../reference/cimis_data.html">cimis_data</a></span><span class="op">(</span>targets <span class="op">=</span> <span class="fl">170</span>, start.date <span class="op">=</span> <span class="st">"2018-09-25"</span>,</span>
 <span>  end.date <span class="op">=</span> <span class="st">"2018-09-27"</span>, items <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hly-soil-tmp"</span>, <span class="st">"day-air-tmp-avg"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -243,7 +276,10 @@
 <span><span class="co">#&gt; 10 cimis stat~ wate~ 2018-09-25 07:00:00    268 170     english  94529, ~ hour~</span></span>
 <span><span class="co">#&gt; # ... with 65 more rows, and 4 more variables: Item &lt;chr&gt;, Value &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   Qc &lt;chr&gt;, Unit &lt;chr&gt;</span></span></code></pre></div>
-<p>CIMIS data sometimes includes quality control flags in the <code>Qc</code> column that indicate potential issues with returned data. Descriptions of these flags can be retrieved <code><a href="../reference/cimis_flags.html">cimis_flags()</a></code>:</p>
+<p>CIMIS data sometimes includes quality control flags in the
+<code>Qc</code> column that indicate potential issues with returned
+data. Descriptions of these flags can be retrieved
+<code><a href="../reference/cimis_flags.html">cimis_flags()</a></code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cimis_flags.html">cimis_flags</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    Flag       Class  Period</span></span>
@@ -278,7 +314,9 @@
 <span><span class="co">#&gt; 13       All quality control could not be performed because a comparison sensor is severe. This flag is not set when the comparison sensor is flagged N.</span></span>
 <span><span class="co">#&gt; 14                                                                                                                 Data is far out of historical limits.</span></span>
 <span><span class="co">#&gt; 15                                                                                                          Data is moderately out of historical limits.</span></span></code></pre></div>
-<p>Note that quality control flag designations were changed in 1993. For more information, see the <a href="https://cimis.water.ca.gov/Resources.aspx" class="external-link">CIMIS Data Overview - Quality Control</a>. web page.</p>
+<p>Note that quality control flag designations were changed in 1993. For
+more information, see the <a href="https://cimis.water.ca.gov/Resources.aspx" class="external-link">CIMIS Data Overview -
+Quality Control</a>. web page.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
