@@ -1,4 +1,4 @@
-# cimir: Interface to CIMIS <a href='https://github.com/mkoohafkan/cimir'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# cimir: Interface to CIMIS <a href='https://github.com/mkoohafkan/cimir'><img src='man/figures/logo.png' align="right" height="139" style="float:right; height:139px;" /></a>
 
 <!-- badges: start -->
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/cimir)](http://cran.r-project.org/package=cimir)
