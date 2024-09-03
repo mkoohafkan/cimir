@@ -1,81 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/articles/helper_functions.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/quickstart.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/as_tibble_fix.html</loc>
-  </url>
-  <url>
-    <loc>/reference/basic_query.html</loc>
-  </url>
-  <url>
-    <loc>/reference/bind_records.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cimir-defunct.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cimir.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cimir_handle.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cimis_compass_to_degrees.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cimis_data.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cimis_degrees_to_compass.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cimis_flags.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cimis_format_location.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cimis_items.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cimis_split_query.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cimis_station.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cimis_to_datetime.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dataitems.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/record_to_df.html</loc>
-  </url>
-  <url>
-    <loc>/reference/set_key.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/articles/helper_functions.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/quickstart.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/as_tibble_fix.html</loc></url>
+<url><loc>/reference/basic_query.html</loc></url>
+<url><loc>/reference/bind_records.html</loc></url>
+<url><loc>/reference/cimir-defunct.html</loc></url>
+<url><loc>/reference/cimir.html</loc></url>
+<url><loc>/reference/cimir_handle.html</loc></url>
+<url><loc>/reference/cimis_compass_to_degrees.html</loc></url>
+<url><loc>/reference/cimis_data.html</loc></url>
+<url><loc>/reference/cimis_degrees_to_compass.html</loc></url>
+<url><loc>/reference/cimis_flags.html</loc></url>
+<url><loc>/reference/cimis_format_location.html</loc></url>
+<url><loc>/reference/cimis_items.html</loc></url>
+<url><loc>/reference/cimis_split_query.html</loc></url>
+<url><loc>/reference/cimis_station.html</loc></url>
+<url><loc>/reference/cimis_to_datetime.html</loc></url>
+<url><loc>/reference/dataitems.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/record_to_df.html</loc></url>
+<url><loc>/reference/set_key.html</loc></url>
 </urlset>
+
