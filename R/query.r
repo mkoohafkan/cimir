@@ -160,9 +160,9 @@ cimis_data = function(targets, start.date, end.date, items,hourlyData,
 #' @export
 cimis_station = function(station) {
   if (missing(station)) {
-    url = glue("{base.url}/station")
+    url = glue("{base.url}/StationWeb/GetAllStations")
   } else {
-    url = glue("{base.url}/station/{station}")
+    url = glue("{base.url}/StationWeb/GetStationByStationNumber?stationNbr={station}")
   }
   result = map(url, basic_query)
   map_dfr(result, function(s) map_dfr(s$Stations, as_tibble))
@@ -180,9 +180,9 @@ cimis_station = function(station) {
 #' @export
 cimis_spatial_zipcode = function(zipcode) {
   if (missing(zipcode)) {
-    url = glue("{base.url}/spatialzipcode")
+    url = glue("{base.url}/SpatialWeb/GetAllSpatialZipCodes")
   } else {
-    url = glue("{base.url}/spatialzipcode/{zipcode}")
+    url = glue("{base.url}/SpatialWeb/GetSpatialZipCodeInfoByZipCode?zipCode={zipcode}")
   }
   result = map(url, basic_query)
   map_dfr(result, function(s) map_dfr(s$ZipCodes, as_tibble))
@@ -197,9 +197,9 @@ cimis_spatial_zipcode = function(zipcode) {
 #' @export
 cimis_zipcode = function(zipcode) {
   if (missing(zipcode)) {
-    url = glue("{base.url}/stationzipcode")
+    url = glue("{base.url}/StationWeb/GetAllStationsZipCodes")
   } else {
-    url = glue("{base.url}/stationzipcode/{zipcode}")
+    url = glue("{base.url}/StationWeb/GetStatoinZipCodeInfoByZipCode?zipCode={zipcode}")
   }
   result = map(url, basic_query)
   map_dfr(result, function(s) map_dfr(s$ZipCodes, as_tibble))
