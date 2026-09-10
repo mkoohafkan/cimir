@@ -84,7 +84,7 @@ cimis_flags = function(type = c("Severe", "Informative"),
 #'   day-air-tmp-min, day-air-tmp-avg, day-rel-hum-max,
 #'   day-rel-hum-min, day-rel-hum-avg, day-dew-pnt, day-wind-spd-avg,
 #'   day-wind-run, day-soil-tmp-avg.
-#' @param hourlyData `TRUE` or `FALSE` specifies if querying hourly 
+#' @param hourly.data `TRUE` or `FALSE` specifies if querying hourly 
 #'   or daily data are being return. The items parameter must match.
 #' @param start.date Specifies the start date. The data format is
 #'   `"yyyy-mm-dd"`.
@@ -109,7 +109,7 @@ cimis_flags = function(type = c("Severe", "Informative"),
 #' @importFrom glue glue
 #' @importFrom stringr str_c str_to_upper
 #' @export
-cimis_data = function(targets, start.date, end.date, items,hourlyData,
+cimis_data = function(targets, start.date, end.date, items,hourly.data = FALSE,
   measure.unit = c("E", "M"), prioritize.SCS = TRUE) {
   if (any(is.na(suppressWarnings(as.numeric(targets))))) {
     target.sep = ";"
@@ -120,7 +120,7 @@ cimis_data = function(targets, start.date, end.date, items,hourlyData,
     items = default.items
   measure.unit = match.arg(str_to_upper(measure.unit), c("E", "M"),
     FALSE)
-  isHourly = ifelse(hourlyData, "true", "false") # TODO: add checking for items
+  isHourly = ifelse(hourly.data, "true", "false") # TODO: add checking for items
   prioritize.SCS = ifelse(prioritize.SCS, "Y", "N")
   start.date = as.Date(start.date)
   end.date = as.Date(end.date)
