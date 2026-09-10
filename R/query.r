@@ -252,7 +252,6 @@ basic_query = function(url) {
 cimir_handle = function() {
   h = new_handle()
   handle_setopt(h, connecttimeout = getOption("cimir.timeout"))
-  handle_setheaders(h, Accept = "application/json")
-  handle_setheaders(h, "Ocp-Apim-Subscription-Key" = glue("{authenv$appkey}"))
+  handle_setheaders(h, Accept = "application/json", "Ocp-Apim-Subscription-Key" = glue("{authenv$appkey}"))
   h
 }
