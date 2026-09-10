@@ -1,4 +1,4 @@
-base.url = "https://et.water.ca.gov/"
+base.url = "https://et.water.ca.gov"
 
 
 # Default CIMIS query items
