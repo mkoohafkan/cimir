@@ -1,4 +1,4 @@
-base.url = "https://et.water.ca.gov/api"
+base.url = "https://et.water.ca.gov"
 
 
 # Default CIMIS query items
@@ -84,6 +84,8 @@ cimis_flags = function(type = c("Severe", "Informative"),
 #'   day-air-tmp-min, day-air-tmp-avg, day-rel-hum-max,
 #'   day-rel-hum-min, day-rel-hum-avg, day-dew-pnt, day-wind-spd-avg,
 #'   day-wind-run, day-soil-tmp-avg.
+#' @param hourly.data `TRUE` or `FALSE` specifies if querying hourly 
+#'   or daily data are being return. The items parameter must match.
 #' @param start.date Specifies the start date. The data format is
 #'   `"yyyy-mm-dd"`.
 #' @param end.date Specifies the end date. The data format is
@@ -107,7 +109,7 @@ cimis_flags = function(type = c("Severe", "Informative"),
 #' @importFrom glue glue
 #' @importFrom stringr str_c str_to_upper
 #' @export
-cimis_data = function(targets, start.date, end.date, items,
+cimis_data = function(targets, start.date, end.date, items,hourly.data = FALSE,
   measure.unit = c("E", "M"), prioritize.SCS = TRUE) {
   if (any(is.na(suppressWarnings(as.numeric(targets))))) {
     target.sep = ";"
@@ -118,17 +120,18 @@ cimis_data = function(targets, start.date, end.date, items,
     items = default.items
   measure.unit = match.arg(str_to_upper(measure.unit), c("E", "M"),
     FALSE)
+  isHourly = ifelse(hourly.data, "true", "false") # TODO: add checking for items
   prioritize.SCS = ifelse(prioritize.SCS, "Y", "N")
   start.date = as.Date(start.date)
   end.date = as.Date(end.date)
   # query
   result = basic_query(
-    glue("{base.url}/data?",
-      "appKey={authenv$appkey}", "&",
-      "targets={str_c(targets, collapse = target.sep)}", "&",
+    glue("{base.url}/StationWeb/GetDataByStationNumber?",
+      "stationNbrs={str_c(targets, collapse = target.sep)}", "&",
       "startDate={start.date}", "&",
       "endDate={end.date}", "&",
       "dataItems={str_c(items, collapse = ',')}", "&",
+      "isHourly={isHourly}", "&",
       "unitOfMeasure={measure.unit}", "&",
       "prioritizeSCS={prioritize.SCS}"
     )
@@ -157,9 +160,9 @@ cimis_data = function(targets, start.date, end.date, items,
 #' @export
 cimis_station = function(station) {
   if (missing(station)) {
-    url = glue("{base.url}/station")
+    url = glue("{base.url}/StationWeb/GetAllStations")
   } else {
-    url = glue("{base.url}/station/{station}")
+    url = glue("{base.url}/StationWeb/GetStationByStationNumber?stationNbr={station}")
   }
   result = map(url, basic_query)
   map_dfr(result, function(s) map_dfr(s$Stations, as_tibble))
@@ -177,9 +180,9 @@ cimis_station = function(station) {
 #' @export
 cimis_spatial_zipcode = function(zipcode) {
   if (missing(zipcode)) {
-    url = glue("{base.url}/spatialzipcode")
+    url = glue("{base.url}/SpatialWeb/GetAllSpatialZipCodes")
   } else {
-    url = glue("{base.url}/spatialzipcode/{zipcode}")
+    url = glue("{base.url}/SpatialWeb/GetSpatialZipCodeInfoByZipCode?zipCode={zipcode}")
   }
   result = map(url, basic_query)
   map_dfr(result, function(s) map_dfr(s$ZipCodes, as_tibble))
@@ -194,9 +197,9 @@ cimis_spatial_zipcode = function(zipcode) {
 #' @export
 cimis_zipcode = function(zipcode) {
   if (missing(zipcode)) {
-    url = glue("{base.url}/stationzipcode")
+    url = glue("{base.url}/StationWeb/GetAllStationsZipCodes")
   } else {
-    url = glue("{base.url}/stationzipcode/{zipcode}")
+    url = glue("{base.url}/StationWeb/GetStatoinZipCodeInfoByZipCode?zipCode={zipcode}")
   }
   result = map(url, basic_query)
   map_dfr(result, function(s) map_dfr(s$ZipCodes, as_tibble))
@@ -249,6 +252,6 @@ basic_query = function(url) {
 cimir_handle = function() {
   h = new_handle()
   handle_setopt(h, connecttimeout = getOption("cimir.timeout"))
-  handle_setheaders(h, Accept = "application/json")
+  handle_setheaders(h, Accept = "application/json", "Ocp-Apim-Subscription-Key" = glue("{authenv$appkey}"))
   h
 }
